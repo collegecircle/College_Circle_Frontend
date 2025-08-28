@@ -140,6 +140,8 @@ import "./HomePage.css";
 import ModernNavbar from "./Navbar";
 import TextReveal from "../gobalComponents/TextReveal";
 import RollingGallery from "../gobalComponents/Gallery";
+import TextHoverEffect from "../gobalComponents/TextHoverEffect"
+import { FloatingDockDemo } from "./FloatingDockDemo";
 
 const HomePage = () => {
   const heroRef = useRef(null);
@@ -153,7 +155,7 @@ const HomePage = () => {
   return (
     <>
       {/* Hero Section */}
-      <section id="home" className="hero-section py-4">
+      {/* <section id="home" className="hero-section max-h-screen py-4">
         <div className="particles-container">
           <Particles
             particleColors={["#ffffff", "#f8d00d", "#000000"]}
@@ -168,7 +170,7 @@ const HomePage = () => {
         </div>
 
         <div className="navigation-container">
-          {/* <PillNav
+          <PillNav
             logo={logo}
             logoAlt="Company Logo"
             items={[
@@ -186,61 +188,129 @@ const HomePage = () => {
             pillColor="#000000"
             hoveredPillTextColor="#000000"
             pillTextColor="#ffffff"
-          /> */}
-          <ModernNavbar />
+          />
         </div>
 
         <div
           ref={heroRef}
-          className="hero-content flex justify-center items-center"
+          className="hero-content flex justify-center items-center text-center px-6 py-12"
         >
-          <div className="hero-inner">
-            <h1 className="hero-title">
-              <span className="title-line-1">Learn with Purpose  hey,</span>
-              <span className="title-line-2">
-                grow with confidence
-                <div className="title-underline"></div>
+          <div className="hero-inner max-w-3xl">
+            <h1 className="hero-title text-4xl md:text-6xl font-bold leading-tight">
+              <span className="title-line-1 block text-gray-800">
+                Empower Your Future,
+              </span>
+              <span className="title-line-2 block text-indigo-600 relative">
+                Learn Without Limits
+                <div className="title-underline absolute left-0 bottom-0 w-24 h-1 bg-indigo-500 mt-2"></div>
               </span>
             </h1>
 
-            <div className="hero-divider"></div>
+            <div className="hero-divider my-6 border-t bg-indigo-500"></div>
 
-            <p className="hero-description">
-              At Hashpro we believe that you need to choose a career and not
-              just a course. Our programs don't just focus on teaching you
-              subjects rather help you build yourself.
+            <p className="hero-description text-lg text-gray-600">
+              At <strong>CollegeCircle</strong>, we don't just teach courses—we build careers.
+              Our programs empower you with the skills and confidence to thrive in the real world.
             </p>
 
-            <div className="flex items-center justify-center gap-4">
-              <button className=" black text-white px-4 py-1 border-2 rounded-full">
+            <div className="flex items-center justify-center gap-6 mt-8">
+              <button className="bg-black text-white px-6 py-2 rounded-full font-medium border-2 border-white transition-all duration-300 hover:bg-white hover:text-black hover:text-black ">
                 College Connect
               </button>
 
-              <button className=" white text-white px-4 py-1 border-2 rounded-full">
-                Courses
+              <button className="bg-white text-black px-6 py-2 rounded-full font-medium border-2 border-black transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg">
+                Explore Courses
               </button>
             </div>
-            {/* 
-            <div className="flex flex-col  md:flex-row mx-auto justify center gap-4 w-fit mt-12">
-              <a href="#">
-                <button className="black mx-auto">College Connect</button>
-              </a>
-              <a href="#">
-                <button className="white mx-auto">Get Courses</button>
-              </a>
-            </div> */}
+          </div>
+        </div>
+
+
+        <div className="floating-element floating-1"></div>
+        <div className="floating-element floating-2"></div>
+        <div className="floating-element floating-3"></div>
+      </section> */}
+
+      <section id="home" className="hero-section max-h-screen py-4">
+        <div className="particles-container">
+          <Particles
+            particleColors={["#ffffff", "#f8d00d", "#000000"]}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
+          />
+        </div>
+
+        <div className="navigation-container">
+          <PillNav
+            logo={logo}
+            logoAlt="Company Logo"
+            items={[
+              { label: "Home", href: "#home" },
+              { label: "About", href: "#about" },
+              { label: "Services", href: "#services" },
+              { label: "Event", href: "#announcements" },
+              { label: "Instagram", href: "#instagram" },
+              { label: "Faqs", href: "#faqs" },
+            ]}
+            activeHref="/"
+            className="custom-nav"
+            ease="power2.easeOut"
+            baseColor="#ffffff"
+            pillColor="#000000"
+            hoveredPillTextColor="#000000"
+            pillTextColor="#ffffff"
+          />
+        </div>
+
+        <div
+          ref={heroRef}
+          className="hero-content flex justify-center items-center text-center px-1 py-10"
+        >
+          <div className="hero-inner max-w-3xl">
+            <h1 className="hero-title text-4xl md:text-6xl font-bold">
+              {/* Replace the span with TextHoverEffect */}
+              <div className="title-line-1 block text-gray-800 h-20">
+                <TextHoverEffect text="Grow Bold," duration={0.3} />
+              </div>
+              <span className="title-line-2 block text-[#f8d00d] relative">
+                <TextHoverEffect text="Stronger." duration={1.3} />
+                {/* <div className="title-underline absolute left-0 bottom-0 w-24 h-1 bg-indigo-500 mt-2"></div> */}
+              </span>
+            </h1>
+
+            {/* <div className="hero-divider my-6 border-t bg-indigo-500"></div> */}
+
+            <p className="hero-description text-lg text-gray-600">
+              At <strong>CollegeCircle</strong>, we don't just teach courses—we build careers.
+              Our programs empower you with the skills and confidence to thrive in the real world.
+            </p>
+
+            <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+              <button className="bg-black text-white px-6 py-2 rounded-full font-medium border-2 border-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer">
+                College Connect
+              </button>
+
+              <button className="bg-white text-black px-6 py-2 rounded-full font-medium border-2 border-black transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer">
+                Explore Courses
+              </button>
+            </div>
+
           </div>
         </div>
 
         <div className="floating-element floating-1"></div>
         <div className="floating-element floating-2"></div>
         <div className="floating-element floating-3"></div>
-        <div className="bottom-gradient"></div>
       </section>
       <section
         id="instagram"
         // className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800
-        className="min-h-screen bg-gradient-to-br from-black via-black to-black
+        className="max-h-screen bg-gradient-to-br from-black via-black to-black
              px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 
              py-4 sm:py-12 md:py-16 lg:py-20 
              flex flex-col items-center justify-center"
@@ -271,6 +341,9 @@ const HomePage = () => {
       <section>
         <TextReveal />
       </section>
+      {/* <section>
+        <FloatingDockDemo />
+      </section> */}
     </>
   );
 };

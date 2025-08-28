@@ -324,6 +324,7 @@
 
 import React, { useEffect, useRef } from "react";
 
+
 // Mock GSAP for demo - in real usage, import actual GSAP
 const gsap = {
   set: (elements, props) => {
@@ -473,7 +474,7 @@ const TextReveal = () => {
 
   return (
     <>
-      <section className="relative flex items-center justify-center min-h-screen w-full bg-gradient-to-br from-black via-black to-black py-4 sm:py-6 lg:py-8 overflow-hidden">
+      <section className="relative flex items-center justify-center h-[500px] sm:h-[500px] md:h-screen w-full bg-gradient-to-br from-black via-black to-black  overflow-hidden">
 
         {/* Animated background shapes with slate/amber theme */}
         <div className="absolute inset-0 overflow-hidden">

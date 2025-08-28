@@ -2,7 +2,7 @@
 
 /* Hero Section */
 .hero-section {
-  min-height: 100vh;
+  max-height: 100vh;
   background: linear-gradient(135deg, #000000 0%, #000000 50%, #000000 100%);
   position: relative;
   overflow: hidden;
@@ -81,7 +81,7 @@
 
 .hero-inner {
   text-align: center;
-  max-width: 1152px;
+  /* max-width: 1152px; */
   margin: 0 auto;
 }
 
@@ -89,8 +89,8 @@
 .hero-title {
   font-size: clamp(2.5rem, 8vw, 6rem);
   font-weight: 700;
-  margin-bottom: 2rem;
-  line-height: 1.1;
+  /* margin-bottom: 2rem; */
+  /* line-height: 1.1; */
 }
 
 .title-line-1 {
@@ -269,7 +269,7 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .hero-content {
-    padding: 1rem 2rem;
+    padding: 1rem 1rem;
   }
 
   .navigation-container {
