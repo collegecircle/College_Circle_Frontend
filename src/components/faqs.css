@@ -1,0 +1,75 @@
+.faq {
+  width: 60%;
+  margin: 0 auto;
+}
+
+.faq .faq-list {
+  padding: 0;
+  list-style: none;
+}
+
+.faq .faq-list li {
+  background-color: #e5e511;
+  margin-bottom: 10px;
+  color: #fff;
+  padding: 1.5rem 1rem;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.faq .faq-list button {
+  display: flex;
+  justify-content: space-between;
+  font-size: 16px;
+  font-weight: 600;
+  background: none;
+  border: none;
+  width: 100%;
+  text-align: left;
+  cursor: pointer;
+  padding: 0;
+}
+
+.faq .faq-list .fa-arrow-up {
+  margin-left: 10px;
+  display: block;
+  font-size: 24px !important;
+  transition: transform 0.3s ease;
+}
+
+.faq .faq-list .rotate {
+  transform: rotate(180deg);
+}
+
+.faq .faq-list .collapse {
+  display: none; /* Initially hidden */
+  padding-top: 10px;
+}
+
+.faq .faq-list li.open .collapse {
+  display: block; /* Show when open */
+}
+
+.faq .faq-list li.open .collapse p {
+  font-weight: 400;
+  color: #f9f9f9bc; /* Text color for the visible answer */
+}
+
+.faq .faq-list p {
+  margin: 0;
+  padding: 0;
+  font-size: 15px;
+  /* color: #333333; */
+}
+
+.collapse {
+  visibility: visible;
+  color: #f9f9f9;
+}
+
+@media screen and (max-width: 768px) {
+  .faq {
+    padding: 0 1rem;
+    width: 100%;
+  }
+}
