@@ -142,6 +142,7 @@ import TextReveal from "../gobalComponents/TextReveal";
 import RollingGallery from "../gobalComponents/Gallery";
 import TextHoverEffect from "../gobalComponents/TextHoverEffect"
 import { FloatingDockDemo } from "./FloatingDockDemo";
+import HeroScrollDemo from "./ContainerScroll";
 
 const HomePage = () => {
   const heroRef = useRef(null);
@@ -341,9 +342,9 @@ const HomePage = () => {
       <section>
         <TextReveal />
       </section>
-      {/* <section>
-        <FloatingDockDemo />
-      </section> */}
+      <section>
+        <HeroScrollDemo />
+      </section>
     </>
   );
 };
