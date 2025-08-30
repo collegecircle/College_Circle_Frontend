@@ -17,7 +17,7 @@
 //         ranking: "#2 Engineering",
 //         students: "12,000+",
 //         logo: "https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=50&h=50&fit=crop",
-//         bgColor: "bg-blue-100",
+//         bgColor: "bg-yellow-100",
 //         established: "1961"
 //     },
 //     {
@@ -139,8 +139,8 @@ const CollegesPage = () => {
             <PageHeader
                 title="Discover Top"
                 highlightedWord="Colleges"
-                highlightColor="blue-400"
-                underlineColor="blue-400"
+                highlightColor="yellow-400"
+                underlineColor="yellow-400"
                 description="Connect with premier educational institutions across India"
             />
 
@@ -149,7 +149,7 @@ const CollegesPage = () => {
                     filters={collegeFilters}
                     activeFilter={activeFilter}
                     onFilterChange={setActiveFilter}
-                    theme="blue"
+                    theme="yellow"
                 />
             </div>
 

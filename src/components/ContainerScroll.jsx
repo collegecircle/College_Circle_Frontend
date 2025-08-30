@@ -4,7 +4,7 @@ import ContainerScroll from "../gobalComponents/container-scroll-animation";
 
 function HeroScrollDemo() {
   return (
-    <div className="flex flex-col overflow-hidden">
+    <div className="flex flex-col overflow-hidden  dark:bg-black">
       <ContainerScroll
         titleComponent={
           <>

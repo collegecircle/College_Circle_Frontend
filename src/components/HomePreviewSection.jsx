@@ -12,7 +12,7 @@ const HomePreviewSection = ({ navigateTo }) => {
 
     // Mini Card Component for Jobs
     const JobMiniCard = ({ job }) => (
-        <div className="bg-slate-800 rounded-xl p-4 hover:bg-slate-700 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
+        <div className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
             <div className="flex items-start space-x-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
                     <img src={job.companyLogo} alt={job.company} className="w-full h-full object-cover" />
@@ -33,7 +33,7 @@ const HomePreviewSection = ({ navigateTo }) => {
 
     // // Mini Card Component for Colleges
     const CollegeMiniCard = ({ college }) => (
-        <div className="bg-slate-800 rounded-xl p-4 hover:bg-slate-700 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
+        <div className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
             <div className="flex items-start space-x-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
                     <img src={college.logo} alt={college.name} className="w-full h-full object-cover" />
@@ -54,7 +54,7 @@ const HomePreviewSection = ({ navigateTo }) => {
 
     // // Mini Card Component for Courses
     const CourseMiniCard = ({ course }) => (
-        <div className="bg-slate-800 rounded-xl p-4 hover:bg-slate-700 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
+        <div className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400">
             <div className="flex items-start space-x-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
                     <img src={course.logo} alt={course.provider} className="w-full h-full object-cover" />
@@ -92,9 +92,9 @@ const HomePreviewSection = ({ navigateTo }) => {
                     <div className="bg-slate-800/50 rounded-2xl p-6 border border-gray-700">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
-                                <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                                {/* <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                                     <Briefcase className="w-6 h-6 text-yellow-400" />
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
                                     <p className="text-gray-400 text-sm">Find your perfect role</p>
@@ -127,9 +127,9 @@ const HomePreviewSection = ({ navigateTo }) => {
                     <div className="bg-slate-800/50 rounded-2xl p-6 border border-gray-700">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
-                                <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                                {/* <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                                     <GraduationCap className="w-6 h-6 text-yellow-400" />
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Top Colleges</h3>
                                     <p className="text-gray-400 text-sm">Premier institutions</p>
@@ -162,9 +162,9 @@ const HomePreviewSection = ({ navigateTo }) => {
                     <div className="bg-slate-800/50 rounded-2xl p-6 border border-gray-700">
                         <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
-                                <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                                {/* <div className="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
                                     <BookOpen className="w-6 h-6 text-yellow-400" />
-                                </div>
+                                </div> */}
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Popular Courses</h3>
                                     <p className="text-gray-400 text-sm">Skill development</p>

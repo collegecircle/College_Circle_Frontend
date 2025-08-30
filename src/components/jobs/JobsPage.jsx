@@ -35,6 +35,7 @@ import JobCard from './JobCard';
 import PageHeader from '../../gobalComponents/PageHeader';
 import FilterButtons from '../../gobalComponents/FilterButtons';
 import { jobsData, jobFilters } from './jobsData';
+import { Briefcase } from 'lucide-react';
 
 const JobsPage = () => {
   const [activeFilter, setActiveFilter] = useState('All Jobs');
@@ -48,8 +49,8 @@ const JobsPage = () => {
       <PageHeader
         title="Find Your Dream"
         highlightedWord="Job"
-        highlightColor="green-400"
-        underlineColor="green-400"
+        highlightColor="yellow-400"
+        underlineColor="yellow-400"
         description="Discover amazing career opportunities with top companies across India"
       />
 
@@ -58,17 +59,17 @@ const JobsPage = () => {
           filters={jobFilters}
           activeFilter={activeFilter}
           onFilterChange={setActiveFilter}
-          theme="green"
+          theme="yellow"
         />
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
         {/* Stats Bar */}
-        <div className="bg-gray-800/50 rounded-xl p-4 mb-8 border border-gray-700">
+        {/* <div className="bg-gray-800/50 rounded-xl p-4 mb-8 border border-gray-700">
           <div className="flex flex-wrap items-center justify-between gap-4">
             <div className="flex items-center space-x-6">
               <div className="text-center">
-                <p className="text-2xl font-bold text-green-400">{filteredJobs.length}</p>
+                <p className="text-2xl font-bold text-yellow-400">{filteredJobs.length}</p>
                 <p className="text-xs text-gray-400">Available Jobs</p>
               </div>
               <div className="text-center">
@@ -86,11 +87,11 @@ const JobsPage = () => {
             </div>
             <div className="text-right">
               <p className="text-sm text-gray-300">
-                Updated: <span className="text-green-400 font-semibold">Today</span>
+                Updated: <span className="text-yellow-400 font-semibold">Today</span>
               </p>
             </div>
           </div>
-        </div>
+        </div> */}
 
         {/* Jobs Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">

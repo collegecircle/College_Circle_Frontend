@@ -59,7 +59,7 @@
 //       {/* Stats Grid */}
 //       <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 mb-6">
 //         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-//           <Clock className="w-4 h-4 mx-auto text-blue-400 mb-1" />
+//           <Clock className="w-4 h-4 mx-auto text-yellow-400 mb-1" />
 //           <p className="text-xs text-gray-400">Duration</p>
 //           <p className="font-semibold text-white text-sm">{course.duration}</p>
 //         </div>
@@ -74,7 +74,7 @@
 //           <p className="font-semibold text-white text-sm">{course.rating}</p>
 //         </div>
 //         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-//           <BookOpen className="w-4 h-4 mx-auto text-purple-400 mb-1" />
+//           <BookOpen className="w-4 h-4 mx-auto text-yellow-400 mb-1" />
 //           <p className="text-xs text-gray-400">Modules</p>
 //           <p className="font-semibold text-white text-sm">{course.modules}</p>
 //         </div>
@@ -181,21 +181,21 @@ import { ArrowRight, Download, Users, FileText, Tag } from 'lucide-react';
 
 const CourseCard = ({ course }) => {
   return (
-    <div className="bg-slate-900 rounded-2xl p-6 relative group hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] cursor-pointer border border-gray-700 hover:border-blue-400 overflow-hidden">
+    <div className="bg-slate-1000 rounded-2xl p-6 relative group hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] cursor-pointer border border-gray-700 hover:border-yellow-400 overflow-hidden">
       {/* Background Pattern */}
-      <div className="absolute inset-0 bg-gradient-to-br from-blue-500/5 to-purple-500/5 opacity-0 group-hover:opacity-100 transition-all duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-yellow-500/5 opacity-0  transition-all duration-500"></div>
 
       {/* Category Badge */}
-      <div className="absolute top-4 left-4">
-        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400 border border-blue-500/30">
+      {/* <div className="absolute top--10 left--3">
+        <span className="px-3 py-1 rounded-full text-xs font-semibold bg-yellow-500/20 text-yellow-400 border border-yellow-500/30">
           {course.category}
         </span>
-      </div>
+      </div> */}
 
       {/* Course Header */}
       <div className="mt-12 mb-6">
         <div className="flex items-start space-x-4">
-          <div className="w-16 h-16 rounded-xl overflow-hidden shadow-lg flex-shrink-0 border-2 border-blue-400/30 bg-gray-800">
+          <div className="w-16 h-16 rounded-xl overflow-hidden shadow-lg flex-shrink-0 border-2 border-yellow-400/30 bg-black-800">
             <img
               src={course.thumbnail}
               alt={course.name}
@@ -203,7 +203,7 @@ const CourseCard = ({ course }) => {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-blue-400 transition-colors duration-300">
+            <h3 className="text-xl font-bold text-white mb-2 leading-tight group-hover:text-yellow-400 transition-colors duration-300">
               {course.name}
             </h3>
             <div className="flex items-center space-x-1 mb-3">
@@ -212,14 +212,14 @@ const CourseCard = ({ course }) => {
 
             {/* Price Section */}
             <div className="flex items-center space-x-3">
-              <span className="text-2xl font-bold text-blue-400">{course.price}</span>
+              <span className="text-2xl font-bold text-yellow-400">{course.price}</span>
               {course.price !== "Free" && (
                 <span className="bg-green-500/20 text-green-400 px-2 py-1 rounded-md text-xs font-semibold">
                   Paid
                 </span>
               )}
               {course.price === "Free" && (
-                <span className="bg-blue-500/20 text-blue-400 px-2 py-1 rounded-md text-xs font-semibold">
+                <span className="bg-yellow-500/20 text-yellow-400 px-2 py-1 rounded-md text-xs font-semibold">
                   Free
                 </span>
               )}
@@ -231,35 +231,35 @@ const CourseCard = ({ course }) => {
       {/* Stats Grid */}
       <div className="grid grid-cols-2 gap-3 mb-6">
         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-          <Users className="w-4 h-4 mx-auto text-green-400 mb-1" />
+          {/* <Users className="w-4 h-4 mx-auto text-green-400 mb-1" /> */}
           <p className="text-xs text-gray-400">Downloads</p>
           <p className="font-semibold text-white text-sm">{course.downloads}</p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-          <FileText className="w-4 h-4 mx-auto text-purple-400 mb-1" />
+          {/* <FileText className="w-4 h-4 mx-auto text-yellow-400 mb-1" /> */}
           <p className="text-xs text-gray-400">File Type</p>
           <p className="font-semibold text-white text-sm">{course.fileType}</p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-          <Tag className="w-4 h-4 mx-auto text-yellow-400 mb-1" />
+          {/* <Tag className="w-4 h-4 mx-auto text-yellow-400 mb-1" /> */}
           <p className="text-xs text-gray-400">Skill Level</p>
           <p className="font-semibold text-white text-sm">{course.skillLevel}</p>
         </div>
         <div className="bg-gray-800/50 rounded-lg p-3 text-center">
-          <Download className="w-4 h-4 mx-auto text-red-400 mb-1" />
+          {/* <Download className="w-4 h-4 mx-auto text-red-400 mb-1" /> */}
           <p className="text-xs text-gray-400">File Size</p>
           <p className="font-semibold text-white text-sm">{course.fileSize}</p>
         </div>
       </div>
 
       {/* Action Button */}
-      <button className="w-full bg-gradient-to-r from-blue-500 to-purple-600 text-white py-3 rounded-xl font-bold hover:from-blue-400 hover:to-purple-500 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg group-hover:shadow-blue-400/25">
+      <button className="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 text-white py-3 rounded-xl font-bold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 flex items-center justify-center space-x-2 group-hover:shadow-lg group-hover:shadow-yellow-400/25">
         <span>Download Now</span>
         <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
       </button>
 
       {/* Hover Effect */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/0 to-purple-500/0 group-hover:from-blue-500/5 group-hover:to-purple-500/5 rounded-2xl transition-all duration-500 pointer-events-none"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-yellow-500/0 to-yellow-500/0 group-hover:from-yellow-500/5 group-hover:to-yellow-500/5 rounded-2xl transition-all duration-500 pointer-events-none"></div>
     </div>
   );
 };

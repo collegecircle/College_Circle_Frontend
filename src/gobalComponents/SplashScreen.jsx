@@ -138,10 +138,10 @@ const Splash = () => {
                         className={`text-4xl sm:text-5xl md:text-7xl lg:text-8xl xl:text-9xl font-black transition-all duration-800 ease-out ${phase === "settled" ? "blur-none scale-100" : "blur-xl scale-90"
                             }`}
                         style={{
-                            textShadow:
-                                phase === "settled"
-                                    ? "0 0 20px rgba(41, 185, 84, 0.3), 0 0 40px rgba(52, 143, 79, 0.1)"
-                                    : "0 0 60px #bace27",
+                            // textShadow:
+                            //     phase === "settled"
+                            //         ? "0 0 20px rgba(41, 185, 84, 0.3), 0 0 40px rgba(52, 143, 79, 0.1)"
+                            //         : "0 0 60px #bace27",
                             color: phase === "settled" ? "#ffffff" : "transparent",
                             filter:
                                 phase === "settled"
