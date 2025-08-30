@@ -540,14 +540,19 @@ const TextReveal = () => {
             className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-6xl font-bold text-white text-center leading-tight sm:leading-snug max-w-4xl"
           >
             <span className="block text-black bg-amber-400 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded mb-2 sm:mb-3 lg:mb-4 shadow-xl border-2 border-amber-300 transform hover:scale-105 transition-transform duration-300">
-              Creative text reveal
+              Connect. Collaborate.
             </span>
-            <span className="block mb-2 sm:mb-3 lg:mb-4 drop-shadow-lg">from both sides</span>
+            <span className="block mb-2 sm:mb-3 lg:mb-4 drop-shadow-lg">
+              Grow Together
+            </span>
             <span className="block text-black bg-amber-400 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded mb-2 sm:mb-3 lg:mb-4 shadow-xl border-2 border-amber-300 transform hover:scale-105 transition-transform duration-300">
-              using dual animation
+              Inside College Circle
             </span>
-            <span className="block drop-shadow-lg">with GSAP magic</span>
+            <span className="block drop-shadow-lg">
+              Your Network, Your Future
+            </span>
           </h1>
+
 
           {/* Decorative elements at bottom */}
           {/* <div className="absolute bottom-4 left-1/2 transform -translate-x-1/2">

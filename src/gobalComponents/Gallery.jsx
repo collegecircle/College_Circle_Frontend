@@ -269,44 +269,33 @@ const RollingGallery = ({
   };
 
   return (
-    <div className="relative h-[500px] w-full overflow-hidden bg-gradient-to-br from-black via-gray-900 to-gray-800">
-      {/* Heading */}
-      <h1 className="absolute top-4 left-0 right-0 text-center text-3xl md:text-4xl font-bold text-white z-20">
-        Our Stunning Gallery
-      </h1>
+    <div className="relative h-[500px] w-full overflow-hidden bg-black">
+      <div className="absolute top-6 left-0 right-0 w-fit h-fit m-auto text-center z-20">
+        <h1 className="text-3xl md:text-4xl font-bold text-white">
+          The Art of{" "}
+          <span
+            className="bg-[#ffd6] rounded border border-[#000000aa] px-3 inline-block relative"
+          >
+            Moments
+            {/* <img
+              src="/line-crown.png"
+              alt="crown"
+              className="absolute -top-4 left-1/2 -translate-x-1/2 h-6 w-auto"
+            /> */}
+          </span>
+        </h1>
+        {/* <h3 className="mt-3 py-4 text-base md:text-lg leading-[22px] text-gray-400 font-medium">
+          A dedicated group shaping excellence with precision and creativity
+        </h3> */}
+      </div>
 
-      <div
-        className="absolute top-0 left-0 h-full w-[64px] z-10"
-        style={{
-          background:
-            "linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(31,41,55,0.8) 100%)",
-        }}
-      />
-      <div
-        className="absolute top-0 right-0 h-full w-[64px] z-10"
-        style={{
-          background:
-            "linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(31,41,55,0.8) 100%)",
-        }}
-      />
-      {/* Left Gradient Overlay with Heading */}
-      {/* <div
-                className="absolute top-0 left-0 h-full w-[200px] sm:w-[250px] z-10 flex items-center justify-center"
-                style={{
-                    background:
-                        "linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(31,41,55,0.8) 100%)",
-                }}
-            >
-                <h1 className="text-2xl sm:text-3xl font-bold text-white transform -rotate-90 whitespace-nowrap">
-                    Our Stunning Gallery
-                </h1>
-            </div> */}
 
+      {/* Left Gradient Overlay with Rotating Text */}
       <div
         className="absolute top-0 left-0 h-full w-[200px] sm:w-[250px] z-10 flex items-center justify-center"
         style={{
           background:
-            "linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(31,41,55,0.8) 100%)",
+            "linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)",
         }}
       >
         <div className="transform -rotate-90">
@@ -319,21 +308,21 @@ const RollingGallery = ({
             ]}
             interval={4000}
             className="text-2xl sm:text-3xl font-bold text-white 
-               bg-gradient-to-tr from-yellow-400 via-amber-500 to-orange-600
-               dark:from-yellow-500 dark:via-amber-600 dark:to-orange-700
-               px-4 py-2 rounded-2xl shadow-lg"
+          bg-gradient-to-tr from-yellow-300 via-amber-400 to-orange-500
+          dark:from-yellow-400 dark:via-amber-500 dark:to-orange-600
+          px-4 py-2 shadow-lg"
             textClassName="text-white whitespace-nowrap"
             animationDuration={800}
           />
         </div>
       </div>
 
-      {/* Right Gradient Overlay with Paragraph */} 
+      {/* Right Gradient Overlay with Paragraph */}
       <div
         className="absolute top-0 right-0 h-full w-[200px] sm:w-[250px] z-10 flex items-center justify-center"
         style={{
           background:
-            "linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(31,41,55,0.8) 100%)",
+            "linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)",
         }}
       >
         <p className="text-base sm:text-lg text-gray-300 transform rotate-90 whitespace-nowrap">
@@ -341,6 +330,7 @@ const RollingGallery = ({
         </p>
       </div>
 
+      {/* 3D Gallery */}
       <div className="flex h-full items-center justify-center [perspective:1200px] [transform-style:preserve-3d]">
         <motion.div
           drag="x"
@@ -365,9 +355,7 @@ const RollingGallery = ({
               className="group absolute flex h-fit items-center justify-center p-[4%] [backface-visibility:hidden] md:p-[3%]"
               style={{
                 width: `${faceWidth}px`,
-                transform: `rotateY(${
-                  (360 / faceCount) * i
-                }deg) translateZ(${radius}px)`,
+                transform: `rotateY(${(360 / faceCount) * i}deg) translateZ(${radius}px)`,
               }}
             >
               <div className="relative w-full h-[180px] sm:h-[150px] md:h-[220px] bg-white rounded-lg shadow-xl border-[2px] border-white-500 overflow-hidden transition-transform duration-300 ease-out group-hover:scale-105">
@@ -382,12 +370,13 @@ const RollingGallery = ({
         </motion.div>
       </div>
 
-      {/* Paragraph */}
+      {/* Bottom Paragraph */}
       <p className="absolute bottom-4 left-0 right-0 text-center text-lg md:text-xl text-gray-300 z-20 max-w-2xl mx-auto">
-        Explore our curated collection of breathtaking images, showcasing the
-        beauty and diversity of our world.
+        Explore our curated collection of breathtaking images, showcasing the beauty
+        and diversity of our world.
       </p>
     </div>
+
   );
 };
 

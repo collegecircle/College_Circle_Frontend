@@ -189,7 +189,7 @@ const FAQSection = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-gray-900 to-gray-800 py-16 px-4">
+    <div className="min-h-screen  bg-gradient-to-br from-black via-black to-black py-16 px-4">
       <div className="max-w-4xl mx-auto">
         <h2 className="text-4xl font-bold text-center text-white mb-12">
           Frequently Asked Questions
@@ -206,14 +206,25 @@ const FAQSection = () => {
                 className="w-full p-6 text-left flex justify-between items-center focus:outline-none group"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={activeFAQ === index}
+                aria-controls={`faq-content-${index}`}
               >
                 <span className="text-lg font-semibold text-white group-hover:text-yellow-400 transition-colors duration-200">
                   {faq.question}
                 </span>
-                <Plus
-                  className={`w-6 h-6 text-white transition-transform duration-300 ${activeFAQ === index ? "rotate-45" : ""
-                    }`}
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="currentColor"
+                  className="text-white group-hover:text-yellow-400 transition-colors duration-300 transform transition-transform duration-300 data-[active=true]:rotate-180"
+                  viewBox="0 0 16 16"
+                  data-active={activeFAQ === index}
+                >
+                  <path
+                    fill-rule="evenodd"
+                    d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
+                  />
+                </svg>
               </button>
 
               <div
