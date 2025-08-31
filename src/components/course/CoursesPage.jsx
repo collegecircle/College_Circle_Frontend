@@ -45,7 +45,7 @@ const CoursesPage = () => {
     : coursesData.filter(course => course.category === activeFilter);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-black">
+    <div className="min-h-screen bg-gradient-to-br from-black via-black to-black">
       <PageHeader
         title="Master New"
         highlightedWord="Skills"

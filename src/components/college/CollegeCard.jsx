@@ -9,7 +9,7 @@ const CollegeCard = ({ college }) => {
 
 
     return (
-        <div className="bg-slate-1000 rounded-2xl p-6 relative group hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] cursor-pointer border border-yellow-700 hover:border-yellow-400 overflow-hidden">
+        <div className="bg-slate-1000 rounded-2xl p-6 relative group hover:shadow-2xl transition-all duration-500 transform hover:scale-[1.02] cursor-pointer border border-yellow-400 hover:border-yellow-400 overflow-hidden">
             {/* Background Pattern */}
             <div className="absolute inset-0 bg-gradient-to-br from-yellow-500/5 to-yellow-500/5 opacity-0  transition-all duration-500"></div>
 

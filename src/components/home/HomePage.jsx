@@ -462,8 +462,7 @@ const HomePage = ({ navigateTo }) => {
             </h1>
 
             <p className="hero-description text-lg text-gray-600">
-              At <strong>CollegeCircle</strong>, we don't just teach courses—we build careers.
-              Our programs empower you with the skills and confidence to thrive in the real world.
+              At <strong>CollegeCircle</strong>, Connecting college communities and creating meaningful educational experiences that empower students to achieve their goals
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
@@ -471,7 +470,7 @@ const HomePage = ({ navigateTo }) => {
                 onClick={() => navigateTo('jobs')}
                 className="bg-black text-white px-6 py-2 rounded-full font-medium border-2 border-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer flex items-center space-x-2"
               >
-                <span>Find Jobs</span>
+                <span>Finding Jobs</span>
                 <ArrowRight className="w-4 h-4" />
               </button>
 

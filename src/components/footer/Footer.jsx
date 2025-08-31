@@ -252,17 +252,17 @@ const Footer = () => {
             &copy; {new Date().getFullYear()} CollegeCircle All Rights
             Reserved.
           </p>
-          {/* <p className="mt-2 md:mt-0 text-white">
-            Crafted by{" "}
+          <p className="mt-2 md:mt-0 text-white">
+            Dev Team{" "}
             <a
               href="https://veereshnaik.vercel.app/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
             >
-              Veeresh Naik
+              Veeresh/Abhiram
             </a>
-          </p> */}
+          </p>
         </div>
       </div>
 

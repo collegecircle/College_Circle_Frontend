@@ -199,7 +199,7 @@ const FAQSection = () => {
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`bg-gray-900 border border-gray-700 rounded-lg transition-all duration-300 hover:border-yellow-400 ${activeFAQ === index ? "border-t-4 border-white bg-gray-800" : ""
+              className={`bg-gray-1900 border border-gray-700 rounded-lg transition-all duration-300 hover:border-yellow-400 ${activeFAQ === index ? "border-t-4 border-white bg-gray-1900" : ""
                 }`}
             >
               <button
