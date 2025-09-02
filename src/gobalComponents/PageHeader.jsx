@@ -1,10 +1,10 @@
 import React from 'react';
 
-const PageHeader = ({ 
-    title, 
-    highlightedWord, 
-    highlightColor = 'blue-400', 
-    underlineColor = 'blue-400',
+const PageHeader = ({
+    title,
+    highlightedWord,
+    highlightColor = 'yellow-400',
+    underlineColor = 'yellow-400',
     description,
     textColor = 'gray-300'
 }) => {
@@ -14,7 +14,7 @@ const PageHeader = ({
                 <h1 className="text-3xl sm:text-4xl md:text-5xl font-bold text-white mb-4">
                     {title} <span className={`text-${highlightColor}`}>{highlightedWord}</span>
                 </h1>
-                <div className={`w-24 h-1 mx-auto bg-${underlineColor} rounded-full mb-6`}></div>
+                <div className={`w-30 h-1 mx-auto bg-${underlineColor} rounded-full mb-6`}></div>
                 <p className={`text-lg sm:text-xl text-${textColor} max-w-2xl mx-auto mb-8`}>
                     {description}
                 </p>
