@@ -123,39 +123,48 @@
 
 
 
-
-
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { JobCard, JobDetailsModal } from "./JobCard";
 import PageHeader from "../../gobalComponents/PageHeader";
 import FilterButtons from "../../gobalComponents/FilterButtons";
-import { AlertCircle, Briefcase } from "lucide-react";
+import { AlertCircle, Briefcase, ChevronLeft, ChevronRight } from "lucide-react";
 import { fetchJobs, fetchJobById } from "./jobsSlice";
 
 const JobsPage = () => {
   const dispatch = useDispatch();
-  const { list: jobs, status, error, selectedJob, loadingJob } = useSelector(
+  const { list, status, error, selectedJob, loadingJob } = useSelector(
     (state) => state.jobs
   );
 
-  const [filteredJobs, setFilteredJobs] = useState([]);
   const [activeFilter, setActiveFilter] = useState("All Jobs");
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 6;
 
-  // Fetch jobs on mount
-  useEffect(() => {
-    dispatch(fetchJobs());
-  }, [dispatch]);
+  // Jobs list + total count from API
+  const jobsList = useMemo(() => {
+    return Array.isArray(list?.data?.jobs) ? list.data.jobs : [];
+  }, [list?.data?.jobs]);
 
-  // Update filtered jobs when jobs or filter changes
+  const totalCount = list?.data?.count || 0;
+  const totalPages = Math.ceil(totalCount / itemsPerPage);
+
+  // Fetch jobs with pagination + filter
+  const fetchJobsWithPagination = (page = 1) => {
+    dispatch({ type: "jobs/loading" }); // trigger loader
+    dispatch(fetchJobs({ page, limit: itemsPerPage, filter: activeFilter }));
+  };
+
   useEffect(() => {
-    setFilteredJobs(
-      activeFilter === "All Jobs"
-        ? jobs
-        : jobs.filter((job) => job.employmentType === activeFilter)
-    );
-  }, [jobs, activeFilter]);
+    fetchJobsWithPagination(currentPage);
+  }, [dispatch, currentPage, activeFilter]);
+
+  // Filters (unique employment types)
+  const jobFilters = useMemo(() => {
+    if (!jobsList.length) return ["All Jobs"];
+    return ["All Jobs", ...new Set(jobsList.map((job) => job.employmentType))];
+  }, [jobsList]);
 
   // Fetch job details
   const handleViewDetails = async (job) => {
@@ -165,19 +174,40 @@ const JobsPage = () => {
 
   const handleCloseModal = () => setIsModalOpen(false);
 
-  // Filters (unique employment types)
-  const jobFilters = ["All Jobs", ...new Set(jobs.map((job) => job.employmentType))];
+  const handlePageChange = (newPage) => {
 
+    if (newPage >= 1 && newPage <= totalPages) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      setCurrentPage(newPage);
+    }
+  };
+
+
+  // Loading state
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-yellow-400 mb-4"></div>
+      <div style={{ minHeight: '100vh', backgroundColor: 'black', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+        <div style={{ textAlign: 'center' }}>
+          <div style={{ position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div style={{ animation: 'spin 1s linear infinite', borderRadius: '50%', height: '8rem', width: '8rem', borderBottom: '2px solid #facc15', marginBottom: '1rem' }}></div>
+            <img
+              src="/assets/cclogo.PNG"
+              alt="Logo"
+              style={{
+                position: 'absolute',
+                height: '5rem',
+                width: '5rem',
+                borderRadius: '50%',
+                objectFit: 'cover',
+              }}
+            />
+          </div>
         </div>
       </div>
     );
   }
 
+  // Error state
   if (status === "failed") {
     return (
       <div className="min-h-screen bg-black flex items-center justify-center">
@@ -188,7 +218,7 @@ const JobsPage = () => {
           </h3>
           <p className="text-gray-400 mb-4">{error}</p>
           <button
-            onClick={() => dispatch(fetchJobs())}
+            onClick={() => fetchCollegesWithPagination(currentPage)}
             className="bg-yellow-500 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors"
           >
             Try Again
@@ -197,7 +227,6 @@ const JobsPage = () => {
       </div>
     );
   }
-
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-black to-black">
       <PageHeader
@@ -211,25 +240,16 @@ const JobsPage = () => {
         <FilterButtons
           filters={jobFilters}
           activeFilter={activeFilter}
-          onFilterChange={setActiveFilter}
+          onFilterChange={(filter) => {
+            setActiveFilter(filter);
+            setCurrentPage(1);
+          }}
         />
       </div>
 
       {/* Job Grid */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
-        <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
-          {filteredJobs.map((job, index) => (
-            <JobCard
-              key={job.id}
-              index={index}
-              job={job}
-              onViewDetails={handleViewDetails}
-            />
-          ))}
-        </div>
-
-        {/* No jobs */}
-        {filteredJobs.length === 0 && status === "succeeded" && (
+        {jobsList.length === 0 ? (
           <div className="text-center py-16">
             <div className="w-24 h-24 mx-auto mb-6 bg-gray-800 rounded-full flex items-center justify-center">
               <Briefcase className="w-12 h-12 text-gray-400" />
@@ -239,6 +259,68 @@ const JobsPage = () => {
               Try adjusting your filters to see more opportunities.
             </p>
           </div>
+        ) : (
+          <>
+            <div className="text-center mb-8">
+              <p className="text-gray-400">
+                Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount}{" "}
+                {totalCount === 1 ? "job" : "jobs"}
+                {activeFilter !== "All Jobs" && ` in ${activeFilter}`}
+              </p>
+            </div>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
+              {jobsList.map((job, index) => (
+                <JobCard
+                  key={job.id}
+                  index={index}
+                  job={job}
+                  onViewDetails={handleViewDetails}
+                />
+              ))}
+            </div>
+
+            {/* Pagination */}
+            {totalPages > 1 && (
+              <div className="px-4 sm:px-6 py-3  bg-gray-1500  border-gray-700 flex flex-col sm:flex-row justify-between items-center gap-3 mt-6">
+                <div className="text-sm text-gray-400 text-center sm:text-left">
+                  Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                  {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount} results
+                </div>
+                <div className="flex items-center space-x-2">
+                  <button
+                    disabled={currentPage === 1}
+                    onClick={() => handlePageChange(currentPage - 1)}
+                    className="px-3 py-2 border border-gray-600 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+                  >
+                    <ChevronLeft className="w-4 h-4 mr-1" />
+                    Previous
+                  </button>
+                  {Array.from({ length: totalPages }, (_, i) => i + 1).map((page) => (
+                    <button
+                      key={page}
+                      onClick={() => handlePageChange(page)}
+                      className={`px-3 py-1 border border-gray-600 rounded-lg text-sm font-medium ${currentPage === page
+                        ? "bg-yellow-500 text-black"
+                        : "text-gray-300 hover:bg-gray-800"
+                        }`}
+                    >
+                      {page}
+                    </button>
+                  ))}
+                  <button
+                    disabled={currentPage === totalPages}
+                    onClick={() => handlePageChange(currentPage + 1)}
+                    className="px-3 py-2 border border-gray-600 rounded-lg text-sm font-medium text-gray-300 hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed transition-colors flex items-center"
+                  >
+                    Next
+                    <ChevronRight className="w-4 h-4 ml-1" />
+                  </button>
+                </div>
+              </div>
+            )}
+          </>
         )}
       </div>
 

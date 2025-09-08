@@ -119,7 +119,7 @@ const Navigation = ({ currentPage, navigateTo }) => {
                         className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-300"
                     >
                         <img src={Logo} alt="Logo" className="w-8 h-8" />
-                        <span className="font-bold text-xl text-white">CollegeCircle</span>
+                        <span className="font-bold text-xl text-white">CollegeCircle.CC</span>
                     </button>
 
                     {/* Desktop Navigation */}

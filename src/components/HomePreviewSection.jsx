@@ -240,9 +240,9 @@ import { coursesData } from './course/courseData';
 
 const HomePreviewSection = ({ navigateTo }) => {
     // Get featured items (first 3 of each)
-    const featuredJobs = jobsData.slice(0, 3);
-    const featuredColleges = collegesData.slice(0, 3);
-    const featuredCourses = coursesData.slice(0, 3);
+    const featuredJobs = jobsData.slice(0, 2);
+    const featuredColleges = collegesData.slice(0, 2);
+    const featuredCourses = coursesData.slice(0, 2);
 
     // Mini Card Component for Jobs
     const JobMiniCard = ({ job }) => (

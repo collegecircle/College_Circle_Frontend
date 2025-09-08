@@ -361,7 +361,7 @@ import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
 // import PillNav from "../../ReactBits/PillNav";
 import Particles from "../../ReactBits/Particles";
-import logo from "/assets/icon.jpg";
+import logo from "/assets/cclogo.PNG";
 import InstagramFollowButton from "../../gobalComponents/InstagramFollowButton";
 import Carousel from "../../gobalComponents/Carousel";
 import FAQSection from "../faqs/FAQSection";
@@ -462,7 +462,7 @@ const HomePage = ({ navigateTo }) => {
             </h1>
 
             <p className="hero-description text-lg text-gray-600">
-              At <strong>CollegeCircle</strong>, Connecting college communities and creating meaningful educational experiences that empower students to achieve their goals
+              At <strong>CollegeCircle.CC</strong>, Connecting college communities and creating meaningful educational experiences that empower students to achieve their goals
             </p>
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">

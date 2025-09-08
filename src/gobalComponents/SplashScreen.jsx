@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import icon from "/assets/icon.jpg";
+import icon from "/assets/cclogo.PNG";
 
 const Splash = () => {
     const [phase, setPhase] = useState("initial");

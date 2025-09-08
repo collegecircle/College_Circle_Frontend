@@ -48,7 +48,7 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-4 mb-6">
             {/* <FaPaintBrush className="text-yellow-400 text-2xl" /> */}
             <h2 className="text-4xl md:text-5xl font-light tracking-wide text-white">
-              CollegeCircle CC
+              CollegeCircle.CC
             </h2>
             {/* <FaHome className="text-yellow-400 text-2xl" /> */}
           </div>
