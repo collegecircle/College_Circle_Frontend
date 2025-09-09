@@ -357,9 +357,187 @@
 
 
 
+// import React, { useEffect, useRef } from "react";
+// import { ArrowRight } from "lucide-react";
+// // import PillNav from "../../ReactBits/PillNav";
+// import Particles from "../../ReactBits/Particles";
+// import logo from "/assets/cclogo.PNG";
+// import InstagramFollowButton from "../../gobalComponents/InstagramFollowButton";
+// import Carousel from "../../gobalComponents/Carousel";
+// import FAQSection from "../faqs/FAQSection";
+// import "./HomePage.css";
+// import TextReveal from "../../gobalComponents/TextReveal";
+// import RollingGallery from "../../gobalComponents/Gallery";
+// import TextHoverEffect from "../../gobalComponents/TextHoverEffect";
+// import { FloatingDockDemo } from "../FloatingDockDemo";
+// import HeroScrollDemo from "../ContainerScroll";
+// // import JobCardsComponent from "../jobs/JobsPage";
+// // import AllPagesCards from "../AllPagesCards";
+// import HomePreviewSection from "../HomePreviewSection";
+
+// const HomePage = ({ navigateTo }) => {
+//   const heroRef = useRef(null);
+
+//   useEffect(() => {
+//     if (heroRef.current) {
+//       heroRef.current.classList.add("animate-fade-in");
+//     }
+//   }, []);
+
+//   return (
+//     <>
+//       {/* Hero Section */}
+//       <section id="home" className="hero-section max-h-screen py-4">
+//         <div className="particles-container">
+//           <Particles
+//             particleColors={["#ffffff", "#f8d00d", "#000000"]}
+//             particleCount={200}
+//             particleSpread={10}
+//             speed={0.1}
+//             particleBaseSize={100}
+//             moveParticlesOnHover={true}
+//             alphaParticles={false}
+//             disableRotation={false}
+//           />
+//         </div>
+
+//         {/* <div className="navigation-container">
+//           <PillNav
+//             logo={logo}
+//             logoAlt="Company Logo"
+//             items={[
+//               { label: "Home", href: "#home" },
+//               { label: "About", href: "#about" },
+//               { label: "Services", href: "#services" },
+//               { label: "Event", href: "#announcements" },
+//               { label: "Instagram", href: "#instagram" },
+//               { label: "Faqs", href: "#faqs" },
+//               {
+//                 label: "Jobs",
+//                 href: "#jobs",
+//                 onClick: (e) => {
+//                   e.preventDefault();
+//                   navigateTo('jobs');
+//                 }
+//               },
+//               {
+//                 label: "Colleges",
+//                 href: "#colleges",
+//                 onClick: (e) => {
+//                   e.preventDefault();
+//                   navigateTo('colleges');
+//                 }
+//               },
+//               {
+//                 label: "Courses",
+//                 href: "#courses",
+//                 onClick: (e) => {
+//                   e.preventDefault();
+//                   navigateTo('courses');
+//                 }
+//               },
+//             ]}
+//             activeHref="/"
+//             className="custom-nav"
+//             ease="power2.easeOut"
+//             baseColor="#ffffff"
+//             pillColor="#000000"
+//             hoveredPillTextColor="#000000"
+//             pillTextColor="#ffffff"
+//           />
+//         </div> */}
+
+//         <div
+//           ref={heroRef}
+//           className="hero-content flex justify-center items-center text-center px-1 py-10"
+//         >
+//           <div className="hero-inner max-w-3xl">
+//             <h1 className="hero-title text-4xl md:text-6xl font-bold">
+//               <div className="title-line-1 block text-gray-800 h-20">
+//                 <TextHoverEffect text="Grow Bold," duration={0.3} />
+//               </div>
+//               <span className="title-line-2 block text-[#f8d00d] relative">
+//                 <TextHoverEffect text="Stronger." duration={1.3} />
+//               </span>
+//             </h1>
+
+//             <p className="hero-description text-lg text-gray-600">
+//               At <strong>CollegeCircle.CC</strong>, Connecting college communities and creating meaningful educational experiences that empower students to achieve their goals
+//             </p>
+
+//             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
+//               <button
+//                 onClick={() => navigateTo('jobs')}
+//                 className="bg-black text-white px-6 py-2 rounded-full font-medium border-2 border-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer flex items-center space-x-2"
+//               >
+//                 <span>Finding Jobs</span>
+//                 <ArrowRight className="w-4 h-4" />
+//               </button>
+
+//               <button
+//                 onClick={() => navigateTo('colleges')}
+//                 className="bg-white text-black px-6 py-2 rounded-full font-medium border-2 border-black transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer flex items-center space-x-2"
+//               >
+//                 <span>College Connect</span>
+//                 <ArrowRight className="w-4 h-4" />
+//               </button>
+
+//               <button
+//                 onClick={() => navigateTo('courses')}
+//                 className="bg-[#f8d00d] text-black px-6 py-2 rounded-full font-medium border-2 border-[#f8d00d] transition-all duration-300 hover:bg-black hover:text-[#f8d00d] hover:shadow-lg cursor-pointer flex items-center space-x-2"
+//               >
+//                 <span>Explore Courses</span>
+//                 <ArrowRight className="w-4 h-4" />
+//               </button>
+//             </div>
+//           </div>
+//         </div>
+
+//         <div className="floating-element floating-1"></div>
+//         <div className="floating-element floating-2"></div>
+//         <div className="floating-element floating-3"></div>
+//       </section>
+
+//       {/* Services Preview Section */}
+//       <HomePreviewSection navigateTo={navigateTo} />
+
+//       <section
+//         id="instagram"
+//         className="max-h-screen bg-gradient-to-br from-black via-black to-black
+//              px-4 sm:px-6 md:px-8 lg:px-12 xl:px-16 
+//              py-4 sm:py-12 md:py-16 lg:py-20 
+//              flex flex-col items-center justify-center"
+//       >
+//         <div className="mb-4 sm:mb-5 md:mb-6 lg:mb-8">
+//           <InstagramFollowButton />
+//         </div>
+
+//         <div className="w-full max-w-7xl mx-auto">
+//           <Carousel />
+//         </div>
+//       </section>
+//       <section className="">
+//         <RollingGallery autoplay={true} pauseOnHover={true} />
+//       </section>
+//       <section>
+//         <TextReveal />
+//       </section>
+//       <section id="faqs" className="faq-section">
+//         <FAQSection />
+//       </section>
+//       <section>
+//         <HeroScrollDemo />
+//       </section>
+//     </>
+//   );
+// };
+
+// export default HomePage;
+
+
+
 import React, { useEffect, useRef } from "react";
 import { ArrowRight } from "lucide-react";
-// import PillNav from "../../ReactBits/PillNav";
 import Particles from "../../ReactBits/Particles";
 import logo from "/assets/cclogo.PNG";
 import InstagramFollowButton from "../../gobalComponents/InstagramFollowButton";
@@ -371,18 +549,27 @@ import RollingGallery from "../../gobalComponents/Gallery";
 import TextHoverEffect from "../../gobalComponents/TextHoverEffect";
 import { FloatingDockDemo } from "../FloatingDockDemo";
 import HeroScrollDemo from "../ContainerScroll";
-// import JobCardsComponent from "../jobs/JobsPage";
-// import AllPagesCards from "../AllPagesCards";
 import HomePreviewSection from "../HomePreviewSection";
+import { useNavigate } from "react-router-dom";
 
-const HomePage = ({ navigateTo }) => {
+const HomePage = ({ user }) => {
   const heroRef = useRef(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (heroRef.current) {
       heroRef.current.classList.add("animate-fade-in");
     }
   }, []);
+
+  const handleNavigation = (path) => {
+    // If user is not authenticated, redirect to /userlogin for protected routes
+    if (!user && ['jobs', 'colleges', 'courses'].includes(path)) {
+      navigate('/userlogin');
+    } else {
+      navigate(`/${path}`);
+    }
+  };
 
   return (
     <>
@@ -400,52 +587,6 @@ const HomePage = ({ navigateTo }) => {
             disableRotation={false}
           />
         </div>
-
-        {/* <div className="navigation-container">
-          <PillNav
-            logo={logo}
-            logoAlt="Company Logo"
-            items={[
-              { label: "Home", href: "#home" },
-              { label: "About", href: "#about" },
-              { label: "Services", href: "#services" },
-              { label: "Event", href: "#announcements" },
-              { label: "Instagram", href: "#instagram" },
-              { label: "Faqs", href: "#faqs" },
-              {
-                label: "Jobs",
-                href: "#jobs",
-                onClick: (e) => {
-                  e.preventDefault();
-                  navigateTo('jobs');
-                }
-              },
-              {
-                label: "Colleges",
-                href: "#colleges",
-                onClick: (e) => {
-                  e.preventDefault();
-                  navigateTo('colleges');
-                }
-              },
-              {
-                label: "Courses",
-                href: "#courses",
-                onClick: (e) => {
-                  e.preventDefault();
-                  navigateTo('courses');
-                }
-              },
-            ]}
-            activeHref="/"
-            className="custom-nav"
-            ease="power2.easeOut"
-            baseColor="#ffffff"
-            pillColor="#000000"
-            hoveredPillTextColor="#000000"
-            pillTextColor="#ffffff"
-          />
-        </div> */}
 
         <div
           ref={heroRef}
@@ -467,7 +608,7 @@ const HomePage = ({ navigateTo }) => {
 
             <div className="flex flex-col sm:flex-row items-center justify-center gap-3 mt-8">
               <button
-                onClick={() => navigateTo('jobs')}
+                onClick={() => handleNavigation('jobs')}
                 className="bg-black text-white px-6 py-2 rounded-full font-medium border-2 border-white transition-all duration-300 hover:bg-white hover:text-black cursor-pointer flex items-center space-x-2"
               >
                 <span>Finding Jobs</span>
@@ -475,7 +616,7 @@ const HomePage = ({ navigateTo }) => {
               </button>
 
               <button
-                onClick={() => navigateTo('colleges')}
+                onClick={() => handleNavigation('colleges')}
                 className="bg-white text-black px-6 py-2 rounded-full font-medium border-2 border-black transition-all duration-300 hover:bg-black hover:text-white hover:shadow-lg cursor-pointer flex items-center space-x-2"
               >
                 <span>College Connect</span>
@@ -483,7 +624,7 @@ const HomePage = ({ navigateTo }) => {
               </button>
 
               <button
-                onClick={() => navigateTo('courses')}
+                onClick={() => handleNavigation('courses')}
                 className="bg-[#f8d00d] text-black px-6 py-2 rounded-full font-medium border-2 border-[#f8d00d] transition-all duration-300 hover:bg-black hover:text-[#f8d00d] hover:shadow-lg cursor-pointer flex items-center space-x-2"
               >
                 <span>Explore Courses</span>
@@ -499,7 +640,7 @@ const HomePage = ({ navigateTo }) => {
       </section>
 
       {/* Services Preview Section */}
-      <HomePreviewSection navigateTo={navigateTo} />
+      <HomePreviewSection user={user} navigateTo={handleNavigation} />
 
       <section
         id="instagram"
