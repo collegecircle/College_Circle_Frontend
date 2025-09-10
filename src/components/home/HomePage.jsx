@@ -635,7 +635,7 @@ const HomePage = ({ user }) => {
           </div>
         </div> */}
 
-        <div className="relative z-10">
+        <div className="relative z-50">
           <CircularBeamDemo />
         </div>
         <div className="floating-element floating-1"></div>

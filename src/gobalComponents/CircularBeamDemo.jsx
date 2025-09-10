@@ -760,6 +760,7 @@ const CircularBeamDemo = () => {
                         <motion.button
                             type="button"
                             onClick={() => navigate("/userlogin")}
+                            onTap={() => navigate("/userlogin")}
                             className="bg-gradient-to-r from-yellow-100 to-yellow-200 text-black px-3 xs:px-4 sm:px-6 md:px-8 lg:px-10 py-2 xs:py-2.5 sm:py-3 md:py-3.5 lg:py-3 rounded-full font-bold text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-400/20 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-opacity-50 active:scale-95 cursor-pointer"
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.98 }}
@@ -775,8 +776,8 @@ const CircularBeamDemo = () => {
 
                 {/* Responsive decorative center rings */}
                 {/* <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${ringSizes.inner} rounded-full border-2 border-yellow-400/30 opacity-70`}></div> */}
-                <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${ringSizes.middle} rounded-full border border-gray-500/20 opacity-60`}></div>
-                <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${ringSizes.outer} rounded-full border border-gray-600/10 opacity-50`}></div>
+                {/* <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${ringSizes.middle} rounded-full border border-gray-500/20 opacity-60`}></div> */}
+                {/* <div className={`absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 ${ringSizes.outer} rounded-full border border-gray-600/10 opacity-50`}></div> */}
 
                 {/* Outer Points with fully responsive styling */}
                 {points.map((point, index) => (
