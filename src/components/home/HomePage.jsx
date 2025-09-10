@@ -551,6 +551,7 @@ import { FloatingDockDemo } from "../FloatingDockDemo";
 import HeroScrollDemo from "../ContainerScroll";
 import HomePreviewSection from "../HomePreviewSection";
 import { useNavigate } from "react-router-dom";
+import CircularBeamDemo from "../../gobalComponents/CircularBeamDemo";
 
 const HomePage = ({ user }) => {
   const heroRef = useRef(null);
@@ -588,7 +589,7 @@ const HomePage = ({ user }) => {
           />
         </div>
 
-        <div
+        {/* <div
           ref={heroRef}
           className="hero-content flex justify-center items-center text-center px-1 py-10"
         >
@@ -632,8 +633,11 @@ const HomePage = ({ user }) => {
               </button>
             </div>
           </div>
-        </div>
+        </div> */}
 
+        <div className="relative z-10">
+          <CircularBeamDemo />
+        </div>
         <div className="floating-element floating-1"></div>
         <div className="floating-element floating-2"></div>
         <div className="floating-element floating-3"></div>
