@@ -195,13 +195,14 @@ const Navigation = ({ user, onLogout }) => {
         { id: '/jobs', label: 'Jobs', color: 'yellow-400' },
         { id: '/colleges', label: 'Colleges', color: 'yellow-400' },
         { id: '/courses', label: 'Courses', color: 'yellow-400' },
+        { id: '/colab', label: 'collaborate', color: 'yellow-400' },
         ...(user
             ? [
                 { id: user.role === 'admin' ? '/admin' : '/', label: user.role === 'admin' ? 'Admin' : 'User Dashboard', color: 'yellow-400' },
                 { id: '/logout', label: 'Logout', color: 'yellow-400' },
             ]
             : [
-                { id: '/userlogin', label: 'User Login', color: 'yellow-400' },
+                { id: '/userlogin', label: 'Login', color: 'yellow-400' },
                 //   { id: '/adminlogin', label: 'Admin Login', color: 'yellow-400' },
             ]),
     ];

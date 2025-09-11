@@ -552,6 +552,10 @@ import HeroScrollDemo from "../ContainerScroll";
 import HomePreviewSection from "../HomePreviewSection";
 import { useNavigate } from "react-router-dom";
 import CircularBeamDemo from "../../gobalComponents/CircularBeamDemo";
+import { motion } from "framer-motion";
+import ContactForm from "../faqs/Contact";
+import InfiniteLogoScroll from "../../gobalComponents/InfiniteLogoScroll";
+
 
 const HomePage = ({ user }) => {
   const heroRef = useRef(null);
@@ -572,11 +576,21 @@ const HomePage = ({ user }) => {
     }
   };
 
+  const handleRedirect = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    console.log("Button clicked!"); // Debug log
+    window.open(
+      "https://www.instagram.com/collegecircle.cc?igsh=MTgxdWJpbDE5NXRhZQ==",
+      "_blank" // Opens in new tab
+    );
+  };
+
   return (
     <>
       {/* Hero Section */}
-      <section id="home" className="hero-section max-h-screen py-4">
-        <div className="particles-container">
+      {/* <section id="home" className="hero-section max-h-screen py-4"> */}
+      {/* <div className="particles-container">
           <Particles
             particleColors={["#ffffff", "#f8d00d", "#000000"]}
             particleCount={200}
@@ -587,9 +601,9 @@ const HomePage = ({ user }) => {
             alphaParticles={false}
             disableRotation={false}
           />
-        </div>
+        </div> */}
 
-        {/* <div
+      {/* <div
           ref={heroRef}
           className="hero-content flex justify-center items-center text-center px-1 py-10"
         >
@@ -635,12 +649,37 @@ const HomePage = ({ user }) => {
           </div>
         </div> */}
 
-        <div className="relative z-50">
+      {/* <div className="relative">
           <CircularBeamDemo />
         </div>
         <div className="floating-element floating-1"></div>
         <div className="floating-element floating-2"></div>
-        <div className="floating-element floating-3"></div>
+        <div className="floating-element floating-3"></div> */}
+      {/* </section> */}
+
+      <section id="home" className="hero-section max-h-screen py-4" style={{ position: 'relative', zIndex: 1 }}>
+        <div className="particles-container" style={{ zIndex: 1 }}>
+          <Particles
+            particleColors={["#ffffff", "#f8d00d", "#000000"]}
+            particleCount={200}
+            particleSpread={10}
+            speed={0.1}
+            particleBaseSize={100}
+            moveParticlesOnHover={true}
+            alphaParticles={false}
+            disableRotation={false}
+          />
+        </div>
+
+        {/* Navbar should have zIndex: 50 or higher */}
+
+        <div className="relative" style={{ zIndex: 2 }}>
+          <CircularBeamDemo />
+        </div>
+
+        <div className="floating-element floating-1" style={{ zIndex: 1 }}></div>
+        <div className="floating-element floating-2" style={{ zIndex: 1 }}></div>
+        <div className="floating-element floating-3" style={{ zIndex: 1 }}></div>
       </section>
 
       {/* Services Preview Section */}
@@ -653,8 +692,13 @@ const HomePage = ({ user }) => {
              py-4 sm:py-12 md:py-16 lg:py-20 
              flex flex-col items-center justify-center"
       >
-        <div className="mb-4 sm:mb-5 md:mb-6 lg:mb-8">
-          <InstagramFollowButton />
+        <div>
+          {/* <InstagramFollowButton /> */}
+          <div className="text-center mb-16">
+            <h2 className="text-3xl sm:text-4xl font-bold text-white">
+              Pure <span className="text-yellow-400">Guidence</span>
+            </h2>
+          </div>
         </div>
 
         <div className="w-full max-w-7xl mx-auto">
@@ -665,13 +709,82 @@ const HomePage = ({ user }) => {
         <RollingGallery autoplay={true} pauseOnHover={true} />
       </section>
       <section>
+        <InfiniteLogoScroll />
+      </section>
+      <section>
         <TextReveal />
       </section>
       <section id="faqs" className="faq-section">
         <FAQSection />
       </section>
-      <section>
+      {/* <section>
         <HeroScrollDemo />
+      </section> */}
+
+      <section className="px-3 sm:px-4 md:px-6 lg:px-8">
+        <motion.div
+          initial={{ opacity: 0, y: 40 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.7 }}
+          className="mb-12 sm:mb-16 md:mb-20 lg:mb-24 pt-6 sm:pt-8 md:pt-10 flex items-center justify-center"
+        >
+          <div className="relative overflow-hidden rounded-xl sm:rounded-2xl bg-white shadow-lg sm:shadow-xl p-4 xs:p-6 sm:p-8 md:p-10 lg:p-12 border border-gray-100 w-full max-w-xs xs:max-w-sm sm:max-w-lg md:max-w-2xl lg:max-w-4xl xl:max-w-5xl mx-auto">
+
+            {/* Grid pattern background */}
+            <div className="absolute inset-0 opacity-5">
+              <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+                <defs>
+                  <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <path d="M 40 0 L 0 0 0 40" fill="white" stroke="BLACK" strokeWidth="1" />
+                  </pattern>
+                </defs>
+                <rect width="100%" height="100%" fill="url(#grid)" />
+              </svg>
+            </div>
+
+            {/* Responsive decorative circles */}
+            <div className="absolute bottom-0 right-0 w-32 h-32 xs:w-40 xs:h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 lg:w-64 lg:h-64 bg-yellow-50 rounded-full -mr-8 -mb-8 xs:-mr-10 xs:-mb-10 sm:-mr-12 sm:-mb-12 md:-mr-16 md:-mb-16 lg:-mr-20 lg:-mb-20"></div>
+            <div className="absolute top-0 left-0 w-20 h-20 xs:w-24 xs:h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-40 lg:h-40 bg-yellow-50 rounded-full -ml-4 -mt-4 xs:-ml-5 xs:-mt-5 sm:-ml-6 sm:-mt-6 md:-ml-8 md:-mt-8 lg:-ml-10 lg:-mt-10"></div>
+
+            <div className="relative z-10 flex flex-col items-center justify-center text-center">
+
+              {/* Responsive heading */}
+              <h3 className="text-lg xs:text-xl sm:text-2xl md:text-3xl lg:text-4xl xl:text-4xl font-bold mb-3 xs:mb-4 sm:mb-5 md:mb-6 leading-tight text-black max-w-full xs:max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl px-2 xs:px-0">
+                College Circle - Your Gateway to Opportunities
+              </h3>
+
+              {/* Responsive paragraph */}
+              <p className="text-sm xs:text-base sm:text-lg md:text-lg lg:text-xl text-gray-700 mb-6 xs:mb-7 sm:mb-8 md:mb-9 lg:mb-10 max-w-full xs:max-w-sm sm:max-w-lg md:max-w-xl lg:max-w-2xl px-2 xs:px-0 leading-relaxed">
+                A Single Platform where student can connect with each other, find jobs, explore courses, gain skill, explore oppertunities, get expert guidence and achive growth.
+              </p>
+
+              {/* Responsive button */}
+              <motion.button
+                // onClick={openContactPopup}
+                onClick={handleRedirect}
+                onTap={handleRedirect}
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-black text-white font-medium py-2.5 px-6 xs:py-3 xs:px-7 sm:py-3.5 sm:px-8 md:py-4 md:px-9 lg:py-4 lg:px-10 rounded-full text-sm xs:text-base sm:text-lg md:text-lg lg:text-xl shadow-lg hover:shadow-xl transition-all duration-300 inline-flex items-center justify-center min-w-fit"
+              >
+                <span className="mr-1.5 xs:mr-2">JOIN CIRCLE</span>
+                <svg
+                  className="w-4 h-4 xs:w-4 xs:h-4 sm:w-5 sm:h-5 flex-shrink-0"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M14 5l7 7m0 0l-7 7m7-7H3"
+                  />
+                </svg>
+              </motion.button>
+            </div>
+          </div>
+        </motion.div>
       </section>
     </>
   );

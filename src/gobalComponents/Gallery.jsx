@@ -384,11 +384,11 @@ const RollingGallery = ({
 
   return (
     <div className="relative h-[500px] w-full overflow-hidden bg-black">
-      <div className="absolute top-6 left-0 right-0 w-fit h-fit m-auto text-center z-20">
-        <h1 className="text-3xl md:text-4xl font-bold text-white">
-          The Art of{" "}
-          <span className="bg-gray-200 text-black rounded border border-black border-opacity-60 px-3 inline-block relative">
-            Moments
+      <div className="absolute top-6 left-0 right-0 w-fit h-fit m-auto text-center z-20 ">
+        <h1 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          Circle
+          <span className=" text-yellow-400 rounded border border-black border-opacity-60 px-3 inline-block relative">
+            Visits
           </span>
         </h1>
       </div>
@@ -401,7 +401,7 @@ const RollingGallery = ({
             "linear-gradient(to left, rgba(0,0,0,0) 0%, rgba(0,0,0,1) 100%)",
         }}
       >
-        <div className="transform -rotate-90 ">
+        {/* <div className="transform -rotate-90 ">
           <ContainerTextFlip
             words={[
               "Starlit Dreams",
@@ -416,11 +416,11 @@ const RollingGallery = ({
             textClassName="text-white whitespace-nowrap"
             animationDuration={800}
           />
-        </div>
+        </div> */}
       </div>
 
       {/* Right Gradient Overlay with Paragraph */}
-      <div
+      {/* <div
         className="absolute top-0 right-0 h-full w-[200px] sm:w-[250px] z-10 flex items-center justify-center"
         style={{
           background:
@@ -430,7 +430,7 @@ const RollingGallery = ({
         <p className="text-base sm:text-lg text-gray-300 transform rotate-90 whitespace-nowrap">
           Curated breathtaking images
         </p>
-      </div>
+      </div> */}
 
       {/* 3D Gallery */}
       <div className="flex h-full items-center justify-center" style={{ perspective: "1200px" }}>

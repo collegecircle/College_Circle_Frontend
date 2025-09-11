@@ -189,85 +189,92 @@ const FAQSection = () => {
   ];
 
   return (
-    <div className="min-h-screen  bg-gradient-to-br from-black via-black to-black py-16 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-black via-black to-black py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
       <div className="max-w-4xl mx-auto">
-        <h2 className="text-4xl font-bold text-center text-white mb-12">
-          Frequently Asked Questions
+        {/* Responsive heading */}
+        <h2 className="text-2xl sm:text-3xl md:text-4xl font-bold text-center text-white mb-8 sm:mb-10 md:mb-12 leading-tight">
+          Frequently <span className="text-yellow-400">Asked Questions</span>
         </h2>
 
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {faqs.map((faq, index) => (
             <div
               key={index}
-              className={`bg-gray-1900 border border-gray-700 rounded-lg transition-all duration-300 hover:border-yellow-400 ${activeFAQ === index ? "border-t-4 border-white bg-gray-1900" : ""
+              className={`bg-black-900 border border-black-700 rounded-lg transition-all duration-300 hover:border-yellow-400 ${activeFAQ === index ? "border-t-4 border-white bg-black-900" : ""
                 }`}
             >
+              {/* Responsive button */}
               <button
-                className="w-full p-6 text-left flex justify-between items-center focus:outline-none group"
+                className="w-full p-4 sm:p-5 md:p-6 text-left flex justify-between items-center focus:outline-none group"
                 onClick={() => toggleFAQ(index)}
                 aria-expanded={activeFAQ === index}
                 aria-controls={`faq-content-${index}`}
               >
-                <span className="text-lg font-semibold text-white group-hover:text-yellow-400 transition-colors duration-200">
+                <span className="text-sm sm:text-base md:text-lg font-semibold text-white group-hover:text-yellow-400 transition-colors duration-200 pr-4 leading-relaxed">
                   {faq.question}
                 </span>
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
+                  width="18"
+                  height="18"
+                  className="sm:w-5 sm:h-5 md:w-6 md:h-6 text-white group-hover:text-yellow-400 transition-all duration-300 transform flex-shrink-0"
+                  style={{
+                    transform: activeFAQ === index ? 'rotate(180deg)' : 'rotate(0deg)'
+                  }}
                   fill="currentColor"
-                  className="text-white group-hover:text-yellow-400 transition-colors duration-300 transform transition-transform duration-300 data-[active=true]:rotate-180"
                   viewBox="0 0 16 16"
-                  data-active={activeFAQ === index}
                 >
                   <path
-                    fill-rule="evenodd"
+                    fillRule="evenodd"
                     d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708"
                   />
                 </svg>
               </button>
 
+              {/* Responsive content */}
               <div
                 className={`overflow-hidden transition-all duration-300 ${activeFAQ === index
                   ? "max-h-96 opacity-100"
                   : "max-h-0 opacity-0"
                   }`}
               >
-                <div className="px-6 pb-6">
-                  <div className="border-t border-gray-700 pt-4">
-                    <p className="text-gray-300 mb-3 leading-relaxed">
+                <div className="px-4 sm:px-5 md:px-6 pb-4 sm:pb-5 md:pb-6">
+                  <div className="border-t border-gray-700 pt-3 sm:pt-4">
+                    <p className="text-gray-300 mb-3 leading-relaxed text-sm sm:text-base">
                       {faq.answer}
                     </p>
 
                     {faq.li1 && (
-                      <div className="space-y-2 ml-4">
-                        <div className="flex items-start gap-3">
-                          <span className="text-yellow-400 mt-1">→</span>
-                          <span className="text-gray-300">{faq.li1}</span>
+                      <div className="space-y-2 ml-2 sm:ml-4">
+                        <div className="flex items-start gap-2 sm:gap-3">
+                          <span className="text-yellow-400 mt-1 text-sm sm:text-base flex-shrink-0">→</span>
+                          <span className="text-gray-300 text-sm sm:text-base leading-relaxed">{faq.li1}</span>
                         </div>
                         {faq.li2 && (
-                          <div className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">→</span>
-                            <span className="text-gray-300">{faq.li2}</span>
+                          <div className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-yellow-400 mt-1 text-sm sm:text-base flex-shrink-0">→</span>
+                            <span className="text-gray-300 text-sm sm:text-base leading-relaxed">{faq.li2}</span>
                           </div>
                         )}
                         {faq.li3 && (
-                          <div className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">→</span>
-                            <span className="text-gray-300">{faq.li3}</span>
+                          <div className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-yellow-400 mt-1 text-sm sm:text-base flex-shrink-0">→</span>
+                            <span className="text-gray-300 text-sm sm:text-base leading-relaxed">{faq.li3}</span>
                           </div>
                         )}
                         {faq.li4 && (
-                          <div className="flex items-start gap-3">
-                            <span className="text-yellow-400 mt-1">→</span>
-                            <span className="text-gray-300">{faq.li4}</span>
+                          <div className="flex items-start gap-2 sm:gap-3">
+                            <span className="text-yellow-400 mt-1 text-sm sm:text-base flex-shrink-0">→</span>
+                            <span className="text-gray-300 text-sm sm:text-base leading-relaxed">{faq.li4}</span>
                           </div>
                         )}
                       </div>
                     )}
 
                     {faq.end && (
-                      <p className="text-gray-300 mt-4 italic">{faq.end}</p>
+                      <p className="text-gray-300 mt-3 sm:mt-4 italic text-sm sm:text-base leading-relaxed">
+                        {faq.end}
+                      </p>
                     )}
                   </div>
                 </div>
@@ -276,11 +283,12 @@ const FAQSection = () => {
           ))}
         </div>
 
-        <div className="text-center mt-12">
-          <p className="text-gray-400 mb-4 py-4">
+        {/* Responsive contact section */}
+        <div className="text-center mt-8 sm:mt-10 md:mt-12">
+          <p className="text-gray-400 mb-4 py-2 sm:py-4 text-sm sm:text-base">
             Still have questions? We're here to help!
           </p>
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 px-8 rounded-full transition-colors duration-200">
+          <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-colors duration-200 text-sm sm:text-base">
             Contact Us
           </button>
         </div>

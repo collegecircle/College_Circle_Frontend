@@ -325,7 +325,7 @@ const AllPagesCards = () => {
                     className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white transition-all duration-300"
                 >
                     <Bookmark
-                        className={`w-4 h-4 transition-all duration-300 ${isSaved ? 'text-yellow-500 fill-yellow-500' : 'text-gray-600 hover:text-yellow-500'
+                        className={`w-4 h-4 transition-all duration-300 ${isSaved ? '-500 fill-yellow-500' : 'text-gray-600 hover:text-yellow-500'
                             }`}
                     />
                 </button>

@@ -474,7 +474,7 @@ const TextReveal = () => {
 
   return (
     <>
-      <section className="relative flex items-center justify-center h-[500px] sm:h-[500px] md:h-screen w-full bg-gradient-to-br from-black via-black to-black  overflow-hidden">
+      <section className="relative flex items-center justify-center h-[400px] sm:h-[400px] md:h-screen w-full bg-gradient-to-br from-black via-black to-black  overflow-hidden">
 
         {/* Animated background shapes with slate/amber theme */}
         <div className="absolute inset-0 overflow-hidden">
@@ -537,7 +537,7 @@ const TextReveal = () => {
 
           <h1
             ref={textRef}
-            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-6xl font-bold text-white text-center leading-tight sm:leading-snug max-w-4xl"
+            className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-5xl 2xl:text-5xl font-bold text-white text-center leading-tight sm:leading-snug max-w-4xl"
           >
             <span className="block text-black bg-amber-400 px-2 sm:px-3 lg:px-4 py-1 sm:py-2 rounded mb-2 sm:mb-3 lg:mb-4 shadow-xl border-2 border-amber-300 transform hover:scale-105 transition-transform duration-300">
               Connect. Collaborate.

@@ -846,7 +846,7 @@ const HomePreviewSection = ({ user }) => {
         >
             <div className="flex items-start space-x-3">
                 <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
-                    <img src="/assets/cclogo.PNG" alt={college.name} className="w-full h-full object-cover" />
+                    <img src="/assets/cclogo-black-white.png" alt={college.name} className="w-full h-full object-cover" />
                 </div>
                 <div className="flex-1 min-w-0">
                     <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
@@ -892,7 +892,7 @@ const HomePreviewSection = ({ user }) => {
                 {/* Section Header */}
                 <div className="text-center mb-16">
                     <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4">
-                        Explore Our <span className="text-yellow-400">Services</span>
+                        One Circle <span className="text-yellow-400">, Infinite Oppertunities</span>
                     </h2>
                     <p className="text-lg text-gray-300 max-w-2xl mx-auto">
                         Everything you need to advance your career and education

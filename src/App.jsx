@@ -980,6 +980,7 @@ import AuthContainer from "./components/auth/Login"; // User login
 import { useDispatch } from "react-redux";
 import { logout } from "./components/adminDashboard/authSlice";
 import ForgotPassword from "./components/auth/ForgotPassword";
+import ContactForm from "./components/faqs/Contact";
 
 /* ---------------- SPLASH SCREEN HELPERS ---------------- */
 const getLastSplashTime = () => {
@@ -1199,12 +1200,19 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
               </PublicRoute>
             }
           />
+          <Route path="/colab"
+            element={
+              <PublicRoute>
+                <ContactForm />
+              </PublicRoute>
+            }
+          />
           <Route
             path="/colleges"
             element={
-              <PrivateRoute>
-                <CollegesPage user={user} />
-              </PrivateRoute>
+              // <PrivateRoute>
+              <CollegesPage user={user} />
+              // </PrivateRoute>
             }
           />
           <Route

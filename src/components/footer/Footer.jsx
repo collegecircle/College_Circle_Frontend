@@ -71,16 +71,7 @@ const Footer = () => {
               connects students, educators, and institutions to create a
               thriving academic community focused on growth and achievement.
             </p>
-            <div className="flex gap-4 pt-4">
-              <div className="flex items-center gap-2 text-yellow-400">
-                {/* <FaLeaf className="text-sm" /> */}
-                <span className="text-sm">Sustainable</span>
-              </div>
-              <div className="flex items-center gap-2 text-yellow-400">
-                {/* <FaLightbulb className="text-sm" /> */}
-                <span className="text-sm">Innovative</span>
-              </div>
-            </div>
+
           </div>
 
           {/* Services */}
