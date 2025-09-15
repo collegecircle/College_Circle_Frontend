@@ -181,7 +181,7 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
                             placeholder="Enter your email"
-                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.email ? "border-red-500 bg-red-50" : "border-gray-300"
+                            className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email ? "border-red-500 bg-red-50" : "border-gray-300"
                                 }`}
                         />
                     </div>
@@ -206,7 +206,7 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
                             onChange={handleChange}
                             onKeyDown={handleKeyDown}
                             placeholder="Enter your password"
-                            className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.password ? "border-red-500 bg-red-50" : "border-gray-300"
+                            className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password ? "border-red-500 bg-red-50" : "border-gray-300"
                                 }`}
                         />
                         <button
@@ -262,7 +262,7 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
                 <button
                     type="submit"
                     disabled={loading}
-                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-3 px-4 rounded-full font-semibold hover:from-yellow-500 hover:to-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-6 uppercase"
+                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-3 px-4 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed mt-6 uppercase"
                 >
                     {loading ? "Signing In..." : "Login"}
                 </button>
@@ -578,7 +578,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                             onKeyDown={handleKeyDown}
                             onBlur={handleBlur}
                             placeholder="Full Name"
-                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.name && touched.name
+                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.name && touched.name
                                 ? "border-red-500 bg-red-50"
                                 : "border-gray-300"
                                 }`}
@@ -604,7 +604,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                             onBlur={handleBlur}
                             placeholder="Phone Number"
                             maxLength="10"
-                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.phone && touched.phone
+                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.phone && touched.phone
                                 ? "border-red-500 bg-red-50"
                                 : "border-gray-300"
                                 }`}
@@ -629,7 +629,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                             onKeyDown={handleKeyDown}
                             onBlur={handleBlur}
                             placeholder="Email"
-                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.email && touched.email
+                            className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email && touched.email
                                 ? "border-red-500 bg-red-50"
                                 : "border-gray-300"
                                 }`}
@@ -654,7 +654,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                             onKeyDown={handleKeyDown}
                             onBlur={handleBlur}
                             placeholder="Password"
-                            className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.password && touched.password
+                            className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password && touched.password
                                 ? "border-red-500 bg-red-50"
                                 : "border-gray-300"
                                 }`}
@@ -690,7 +690,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                             onKeyDown={handleKeyDown}
                             onBlur={handleBlur}
                             placeholder="Confirm Password"
-                            className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.confirmPassword && touched.confirmPassword
+                            className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.confirmPassword && touched.confirmPassword
                                 ? "border-red-500 bg-red-50"
                                 : "border-gray-300"
                                 }`}
@@ -728,7 +728,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                                 onBlur={handleBlur}
                                 placeholder="Enter 6-digit OTP"
                                 maxLength="6"
-                                className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-500 focus:border-yellow-500 outline-none transition-all duration-200 ${errors.otp && touched.otp
+                                className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.otp && touched.otp
                                     ? "border-red-500 bg-red-50"
                                     : "border-gray-300"
                                     }`}
@@ -751,7 +751,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                                         (key) => !["otp"].includes(key)
                                     ).length > 0
                                         ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                                        : "bg-yellow-500 text-black hover:bg-yellow-600 transform hover:scale-105"
+                                        : "bg-yellow-400 text-black hover:bg-yellow-600 transform hover:scale-105"
                                 }`}
                         >
                             {isOtpSending
@@ -777,7 +777,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                         !formData.otp.trim() ||
                         Object.keys(validateAll()).length > 0
                     }
-                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-2.5 px-4 rounded-full font-semibold hover:from-yellow-500 hover:to-yellow-500 focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm uppercase"
+                    className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-2.5 px-4 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm uppercase"
                 >
                     {loading ? "Verifying..." : "Register"}
                 </button>

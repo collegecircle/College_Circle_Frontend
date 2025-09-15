@@ -34,7 +34,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="relative bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white overflow-hidden">
+    <footer className="relative bg-gradient-to-br from-black via-black to-black text-white overflow-hidden">
       {/* Decorative Background Elements - Yellow accents (10%) */}
       <div className="absolute inset-0 opacity-15">
         <div className="absolute top-10 left-10 w-32 h-32 bg-yellow-400 rounded-full blur-3xl"></div>
@@ -257,7 +257,7 @@ const Footer = () => {
         </div>
       </div>
 
-      <style jsx>{`
+      <style>{`
         [data-animate] {
           opacity: 0;
           transform: translateY(20px);

@@ -41,9 +41,9 @@ export default function ForgotPassword() {
     const [confirmPwd, setConfirmPwd] = useState("");
     const [notification, setNotification] = useState(null);
 
-    const [forgot, { isLoading: loadingEmail }] = useForgotMutation();
-    const [verify, { isLoading: loadingOtp }] = useVerifyMutation();
-    const [verifyOtp, { isLoading: loadingReset }] = useVerifyOtpMutation();
+    // const [forgot, { isLoading: loadingEmail }] = useForgotMutation();
+    // const [verify, { isLoading: loadingOtp }] = useVerifyMutation();
+    // const [verifyOtp, { isLoading: loadingReset }] = useVerifyOtpMutation();
 
     const showNotification = (type, message) =>
         setNotification({ type, message });

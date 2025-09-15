@@ -1210,9 +1210,9 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
           <Route
             path="/colleges"
             element={
-              // <PrivateRoute>
-              <CollegesPage user={user} />
-              // </PrivateRoute>
+              <PrivateRoute>
+                <CollegesPage user={user} />
+              </PrivateRoute>
             }
           />
           <Route

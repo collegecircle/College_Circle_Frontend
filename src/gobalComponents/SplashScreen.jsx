@@ -192,7 +192,7 @@ const Splash = () => {
             )}
 
             {/* Custom CSS for floating animation */}
-            <style jsx>{`
+            <style>{`
         @keyframes float {
           0%,
           100% {

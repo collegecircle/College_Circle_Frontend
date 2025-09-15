@@ -521,7 +521,7 @@ const TextReveal = () => {
         </div>
 
         {/* Glass morphism container */}
-        <div className="relative z-10 backdrop-blur-sm bg-white/5 rounded-3xl border border-white/10 p-8 sm:p-12 lg:p-16 shadow-2xl">
+        <div className="relative z-10 backdrop-blur-sm bg-white/5 rounded-3xl border border-white/10 p-5 sm:p-10 lg:p-16 shadow-2xl">
           {/* Decorative corner elements */}
           <div className="absolute -top-6 -left-6 w-12 h-12 bg-amber-400 rounded-full flex items-center justify-center shadow-lg">
             <svg className="w-6 h-6 text-black" fill="currentColor" viewBox="0 0 20 20">

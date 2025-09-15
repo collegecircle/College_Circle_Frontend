@@ -657,7 +657,7 @@ const HomePage = ({ user }) => {
         <div className="floating-element floating-3"></div> */}
       {/* </section> */}
 
-      <section id="home" className="hero-section max-h-screen py-4" style={{ position: 'relative', zIndex: 1 }}>
+      <section id="home" className="hero-section max-h-screen " style={{ position: 'relative', zIndex: 1 }}>
         <div className="particles-container" style={{ zIndex: 1 }}>
           <Particles
             particleColors={["#ffffff", "#f8d00d", "#000000"]}
