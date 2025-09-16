@@ -794,12 +794,12 @@ const HomePreviewSection = ({ user }) => {
     // Fetch data only once
     useEffect(() => {
         if (!hasFetchedJobs && jobsStatus === 'idle' && (!jobsList?.jobs?.length || jobsList.jobs.length < 2)) {
-            console.log('Fetching jobs for HomePreviewSection');
+            // console.log('Fetching jobs for HomePreviewSection');
             dispatch(fetchJobs({ page: 1, limit: 2 }));
             setHasFetchedJobs(true);
         }
         if (!hasFetchedColleges && collegesStatus === 'idle' && (!collegesList?.colleges?.length || collegesList.colleges.length < 2)) {
-            console.log('Fetching colleges for HomePreviewSection');
+            // console.log('Fetching colleges for HomePreviewSection');
             dispatch(fetchColleges({ page: 1, limit: 2 }));
             setHasFetchedColleges(true);
         }

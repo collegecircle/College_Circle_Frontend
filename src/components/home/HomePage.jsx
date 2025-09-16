@@ -579,7 +579,7 @@ const HomePage = ({ user }) => {
   const handleRedirect = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    console.log("Button clicked!"); // Debug log
+    // console.log("Button clicked!"); // Debug log
     window.open(
       "https://www.instagram.com/collegecircle.cc?igsh=MTgxdWJpbDE5NXRhZQ==",
       "_blank" // Opens in new tab

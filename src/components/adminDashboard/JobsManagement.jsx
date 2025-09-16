@@ -668,10 +668,10 @@ const JobsManagement = () => {
     const totalPages = Math.ceil(totalCount / 5);
     const itemsPerPage = 5;
 
-    console.log("Total Count:", totalCount);
-    console.log("Total Pages:", totalPages);
-    console.log("Jobs:", jobs);
-    console.log("Full Redux State:", list);
+    // console.log("Total Count:", totalCount);
+    // console.log("Total Pages:", totalPages);
+    // console.log("Jobs:", jobs);
+    // console.log("Full Redux State:", list);
 
     const [search, setSearch] = useState("");
     const [currentJob, setCurrentJob] = useState(null);
@@ -703,7 +703,7 @@ const JobsManagement = () => {
         if (searchTerm.trim()) {
             params.search = searchTerm;
         }
-        console.log("Fetching jobs with params:", params);
+        // console.log("Fetching jobs with params:", params);
         dispatch(fetchJobs(params));
     };
 
@@ -829,7 +829,7 @@ const JobsManagement = () => {
     };
 
     const handlePageChange = (newPage) => {
-        console.log("Changing to page:", newPage, "Total Pages:", totalPages, "Current Page:", currentPage, "Total Count:", totalCount);
+        // console.log("Changing to page:", newPage, "Total Pages:", totalPages, "Current Page:", currentPage, "Total Count:", totalCount);
         if (newPage >= 1 && newPage <= totalPages) {
             setCurrentPage(newPage);
         }

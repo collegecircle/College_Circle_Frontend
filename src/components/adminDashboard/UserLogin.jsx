@@ -408,10 +408,10 @@ const UserLogin = ({ setUserWithStorage }) => {
         if (!otp || otp.length !== 6) return;
 
         dispatch(verifyOtp(otp)).then((action) => {
-            console.log("verifyOtp action:", action); // Debug action
+            // console.log("verifyOtp action:", action); // Debug action
             if (action.type.endsWith("fulfilled")) {
                 const response = action.payload;
-                console.log("API Response:", response); // Debug response
+                // console.log("API Response:", response); // Debug response
 
                 // Extract user data from nested response
                 const verifiedUser = {
@@ -419,18 +419,18 @@ const UserLogin = ({ setUserWithStorage }) => {
                     token: response?.token || "mock-token-" + Date.now(), // Mock token if not provided
                     email: response?.email || "admin@example.com" // Fallback email
                 };
-                console.log("Verified User:", verifiedUser); // Debug user object
+                // console.log("Verified User:", verifiedUser); // Debug user object
 
                 // Verify setUserWithStorage is a function
                 if (typeof setUserWithStorage === "function") {
                     setUserWithStorage(verifiedUser);
                 } else {
-                    console.error("setUserWithStorage is not a function:", setUserWithStorage);
+                    // console.error("setUserWithStorage is not a function:", setUserWithStorage);
                     return;
                 }
 
                 // Navigate based on role
-                console.log("Navigating to:", verifiedUser.role === "admin" ? "/admin" : "/"); // Debug navigation
+                // console.log("Navigating to:", verifiedUser.role === "admin" ? "/admin" : "/"); // Debug navigation
                 if (verifiedUser.role === "admin") {
                     navigate("/admin", { replace: true });
                 } else {
@@ -448,7 +448,7 @@ const UserLogin = ({ setUserWithStorage }) => {
         if (typeof setUserWithStorage === "function") {
             setUserWithStorage(null); // Clear user in state and localStorage
         } else {
-            console.error("setUserWithStorage is not a function during logout:", setUserWithStorage);
+            // console.error("setUserWithStorage is not a function during logout:", setUserWithStorage);
         }
         navigate("/", { replace: true }); // Navigate to homepage
     };
