@@ -1,5 +1,7 @@
 const CACHE_NAME = "collegecircle-v1";
-const ASSETS = ["/", "index.html", "manifest.json", "cclogo.PNG"];
+const ASSETS = ["/", "index.html", "manifest.json", "cclogo.PNG","favicon.ico","favicon.png","cclogo-black-white.png",
+  "cclogo-white-black.png"
+];
 
 self.addEventListener("install", (event) => {
   event.waitUntil(

@@ -1,6 +1,6 @@
 {
   "name": "College Circle",
-  "short_name": "CollegeCircle",
+  "short_name": "College Circle",
   "description": "College Circle — student social hub",
   "start_url": "/?source=pwa",
   "scope": "/",
@@ -27,13 +27,13 @@
       "name": "Jobs",
       "short_name": "Jobs",
       "url": "/jobs",
-      "icons": [{ "src": "cclogo.PNG", "sizes": "192x192" }]
+      "icons": [{ "src": "assets/cclogo-black-white.png", "sizes": "192x192" }]
     },
     {
-      "name": "Create Post",
+      "name": "College",
       "short_name": "Post",
-      "url": "/create-post",
-      "icons": [{ "src": "cclogo.PNG", "sizes": "192x192" }]
+      "url": "/colleges",
+      "icons": [{ "src": "assets/cclogo-white-black.png", "sizes": "192x192" }]
     }
   ]
 }

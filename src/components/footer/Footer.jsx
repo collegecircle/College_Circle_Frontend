@@ -251,7 +251,7 @@ const Footer = () => {
               rel="noopener noreferrer"
               className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
             >
-              Veeresh/Abhiram
+              Veeresh/AbhiramKaleru
             </a>
           </p>
         </div>
