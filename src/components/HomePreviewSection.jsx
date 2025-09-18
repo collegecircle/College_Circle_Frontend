@@ -814,77 +814,77 @@ const HomePreviewSection = ({ user }) => {
         }
     };
 
-    // Mini Card Component for Jobs
-    const JobMiniCard = ({ job }) => (
-        <div
-            onClick={() => handleNavigation('jobs')}
-            className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
-        >
-            <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
-                    <img src="/assets/cclogo.PNG" alt={job.company} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
-                        {job.title}
-                    </h4>
-                    <p className="text-gray-400 text-xs mb-2">{job.company}</p>
-                    <div className="flex items-center justify-between">
-                        <span className="text-yellow-400 font-semibold text-sm">{job.salary}</span>
-                        <span className="text-xs text-gray-500">{job.location}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    // // Mini Card Component for Jobs
+    // const JobMiniCard = ({ job }) => (
+    //     <div
+    //         onClick={() => handleNavigation('jobs')}
+    //         className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
+    //     >
+    //         <div className="flex items-start space-x-3">
+    //             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
+    //                 <img src="/assets/cclogo.PNG" alt={job.company} className="w-full h-full object-cover" />
+    //             </div>
+    //             <div className="flex-1 min-w-0">
+    //                 <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
+    //                     {job.title}
+    //                 </h4>
+    //                 <p className="text-gray-400 text-xs mb-2">{job.company}</p>
+    //                 <div className="flex items-center justify-between">
+    //                     <span className="text-yellow-400 font-semibold text-sm">{job.salary}</span>
+    //                     <span className="text-xs text-gray-500">{job.location}</span>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
-    // Mini Card Component for Colleges
-    const CollegeMiniCard = ({ college }) => (
-        <div
-            onClick={() => handleNavigation('colleges')}
-            className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
-        >
-            <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
-                    <img src="/assets/cclogo-black-white.png" alt={college.name} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
-                        {college.name}
-                    </h4>
-                    <p className="text-gray-400 text-xs mb-2">{college.ranking}</p>
-                    <div className="flex items-center justify-between">
-                        <span className="text-yellow-400 font-semibold text-sm">{college.fees}</span>
-                        <span className="text-xs text-gray-500">{college.location}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    // // Mini Card Component for Colleges
+    // const CollegeMiniCard = ({ college }) => (
+    //     <div
+    //         onClick={() => handleNavigation('colleges')}
+    //         className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
+    //     >
+    //         <div className="flex items-start space-x-3">
+    //             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
+    //                 <img src="/assets/cclogo-black-white.png" alt={college.name} className="w-full h-full object-cover" />
+    //             </div>
+    //             <div className="flex-1 min-w-0">
+    //                 <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
+    //                     {college.name}
+    //                 </h4>
+    //                 <p className="text-gray-400 text-xs mb-2">{college.ranking}</p>
+    //                 <div className="flex items-center justify-between">
+    //                     <span className="text-yellow-400 font-semibold text-sm">{college.fees}</span>
+    //                     <span className="text-xs text-gray-500">{college.location}</span>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
-    // Mini Card Component for Courses
-    const CourseMiniCard = ({ course }) => (
-        <div
-            onClick={() => handleNavigation('courses')}
-            className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
-        >
-            <div className="flex items-start space-x-3">
-                <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
-                    <img src={course.logo} alt={course.provider} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1 min-w-0">
-                    <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
-                        {course.name}
-                    </h4>
-                    <p className="text-gray-400 text-xs mb-2">by {course.provider}</p>
-                    <div className="flex items-center justify-between">
-                        <span className="text-yellow-400 font-semibold text-sm">{course.price}</span>
-                        <span className="text-xs text-gray-500">{course.downloads}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    );
+    // // Mini Card Component for Courses
+    // const CourseMiniCard = ({ course }) => (
+    //     <div
+    //         onClick={() => handleNavigation('courses')}
+    //         className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
+    //     >
+    //         <div className="flex items-start space-x-3">
+    //             <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
+    //                 <img src={course.logo} alt={course.provider} className="w-full h-full object-cover" />
+    //             </div>
+    //             <div className="flex-1 min-w-0">
+    //                 <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
+    //                     {course.name}
+    //                 </h4>
+    //                 <p className="text-gray-400 text-xs mb-2">by {course.provider}</p>
+    //                 <div className="flex items-center justify-between">
+    //                     <span className="text-yellow-400 font-semibold text-sm">{course.price}</span>
+    //                     <span className="text-xs text-gray-500">{course.downloads}</span>
+    //                 </div>
+    //             </div>
+    //         </div>
+    //     </div>
+    // );
 
     return (
         <section id="services" className="py-16 bg-gradient-to-br from-black via-black to-black">
@@ -901,9 +901,9 @@ const HomePreviewSection = ({ user }) => {
 
                 {/* Services Grid */}
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-                    {/* Jobs Section */}
-                    <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-                        <div className="flex items-center justify-between mb-6">
+
+                    {/* <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700"> */}
+                    {/* <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
@@ -916,8 +916,8 @@ const HomePreviewSection = ({ user }) => {
                             >
                                 <ArrowRight className="w-5 h-5" />
                             </button>
-                        </div>
-
+                        </div> */}
+                    {/* 
                         <div className="space-y-4 mb-6">
                             {jobsStatus === 'loading' ? (
                                 <div className="text-gray-400 text-center">Loading jobs...</div>
@@ -928,20 +928,20 @@ const HomePreviewSection = ({ user }) => {
                                     <JobMiniCard key={job.id} job={job} />
                                 ))
                             )}
-                        </div>
-
+                        </div> */}
+                    {/* 
                         <button
                             onClick={() => handleNavigation('jobs')}
                             className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
                         >
                             <span>View All Jobs</span>
                             <ArrowRight className="w-4 h-4" />
-                        </button>
-                    </div>
+                        </button> */}
+                </div>
 
-                    {/* Colleges Section */}
-                    <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-                        <div className="flex items-center justify-between mb-6">
+                {/* Colleges Section */}
+                {/* <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700"> */}
+                {/* <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Top Colleges</h3>
@@ -954,9 +954,9 @@ const HomePreviewSection = ({ user }) => {
                             >
                                 <ArrowRight className="w-5 h-5" />
                             </button>
-                        </div>
+                        </div> */}
 
-                        <div className="space-y-4 mb-6">
+                {/* <div className="space-y-4 mb-6">
                             {collegesStatus === 'loading' ? (
                                 <div className="text-gray-400 text-center">Loading colleges...</div>
                             ) : featuredColleges.length === 0 ? (
@@ -966,20 +966,20 @@ const HomePreviewSection = ({ user }) => {
                                     <CollegeMiniCard key={college.id} college={college} />
                                 ))
                             )}
-                        </div>
-
+                        </div> */}
+                {/* 
                         <button
                             onClick={() => handleNavigation('colleges')}
                             className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
                         >
                             <span>View All Colleges</span>
                             <ArrowRight className="w-4 h-4" />
-                        </button>
-                    </div>
+                        </button> */}
+            {/* </div> */}
 
-                    {/* Courses Section */}
-                    <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-                        <div className="flex items-center justify-between mb-6">
+            {/* Courses Section */}
+            {/* <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700"> */}
+            {/* <div className="flex items-center justify-between mb-6">
                             <div className="flex items-center space-x-3">
                                 <div>
                                     <h3 className="text-xl font-bold text-white">Popular Courses</h3>
@@ -992,9 +992,9 @@ const HomePreviewSection = ({ user }) => {
                             >
                                 <ArrowRight className="w-5 h-5" />
                             </button>
-                        </div>
+                        </div> */}
 
-                        <div className="space-y-4 mb-6">
+            {/* <div className="space-y-4 mb-6">
                             {isCoursesLocked ? (
                                 <div className="text-center text-gray-400">
                                     <Lock className="w-10 h-10 mx-auto mb-2 text-yellow-400" />
@@ -1010,41 +1010,41 @@ const HomePreviewSection = ({ user }) => {
                                     <CourseMiniCard key={course.id} course={course} />
                                 ))
                             )}
-                        </div>
-                    </div>
-                </div>
+                        </div> */}
+            {/* </div> */}
+        {/* </div> */}
 
-                {/* Quick Actions */}
-                <div className="mt-16 text-center py-4">
-                    <h3 className="text-2xl font-bold text-white mb-8">
+                {/* Quick Actions */ }
+    <div className="mt-16 text-center py-4">
+        {/* <h3 className="text-2xl font-bold text-white mb-8">
                         Ready to <span className="text-yellow-400">Get Started?</span>
-                    </h3>
-                    <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                        <button
-                            onClick={() => handleNavigation('jobs')}
-                            className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
-                        >
-                            <Briefcase className="w-5 h-5" />
-                            <span>Browse Jobs</span>
-                        </button>
-                        <button
-                            onClick={() => handleNavigation('colleges')}
-                            className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
-                        >
-                            <GraduationCap className="w-5 h-5" />
-                            <span>Find Colleges</span>
-                        </button>
-                        <button
-                            onClick={() => handleNavigation('courses')}
-                            className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
-                        >
-                            <BookOpen className="w-5 h-5" />
-                            <span>Take Courses</span>
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </section>
+                    </h3> */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <button
+                onClick={() => handleNavigation('jobs')}
+                className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
+            >
+                <Briefcase className="w-5 h-5" />
+                <span>Browse Jobs</span>
+            </button>
+            <button
+                onClick={() => handleNavigation('colleges')}
+                className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-500 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
+            >
+                <GraduationCap className="w-5 h-5" />
+                <span>Find Colleges</span>
+            </button>
+            <button
+                onClick={() => handleNavigation('courses')}
+                className="bg-gradient-to-r from-yellow-500 to-yellow-500 text-white px-8 py-3 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 transition-all duration-300 flex items-center space-x-2 shadow-lg hover:shadow-yellow-400/25"
+            >
+                <BookOpen className="w-5 h-5" />
+                <span>Take Courses</span>
+            </button>
+        </div>
+    </div>
+            </div >
+        </section >
     );
 };
 

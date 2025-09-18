@@ -446,12 +446,12 @@ const OverviewModal = ({ college, isOpen, onClose }) => {
 
     return (
         <div
-            className="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center z-50 p-2 sm:p-4 lg:p-8"
+            className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-2 sm:p-4 lg:p-8"
             onClick={handleBackdropClick}
         >
-            <div className="bg-gray-900 rounded-lg sm:rounded-xl lg:rounded-2xl w-[90vw] h-[90vw] sm:w-[85vw] sm:h-[85vw] md:w-[75vw] md:h-[75vw] lg:w-[65vw] lg:h-[65vw] xl:w-[55vw] xl:h-[55vw] 2xl:w-[45vw] 2xl:h-[45vw] max-w-[600px] max-h-[600px] overflow-hidden relative shadow-2xl flex flex-col">
+            <div className="bg-gray-900 rounded-xs w-[90vw] h-[90vw] sm:w-[85vw] sm:h-[85vw] md:w-[75vw] md:h-[75vw] lg:w-[65vw] lg:h-[65vw] xl:w-[55vw] xl:h-[55vw] 2xl:w-[45vw] 2xl:h-[45vw] max-w-[600px] max-h-[600px] overflow-hidden relative shadow-2xl flex flex-col">
                 {/* Modal Header */}
-                <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 border-b border-gray-700 bg-gray-800 flex-shrink-0">
+                <div className="flex items-center justify-between p-3 sm:p-4 lg:p-6 border border-yellow-400 bg-gradient-to-br from-black via-black to-black flex-shrink-0">
                     <div className="flex items-center space-x-2 sm:space-x-3 min-w-0 flex-1">
                         <div className="w-8 h-8 sm:w-10 sm:h-10 rounded-md lg:rounded-lg overflow-hidden flex-shrink-0 bg-gray-700">
                             <img
@@ -578,7 +578,7 @@ const OverviewModal = ({ college, isOpen, onClose }) => {
                 </div>
 
                 {/* Modal Footer */}
-                <div className="p-3 sm:p-4 lg:p-6 border-t border-gray-700 bg-gray-800 flex-shrink-0">
+                <div className="p-3 sm:p-4 lg:p-6 border border-yellow-400 bg-gradient-to-br from-black via-black to-black flex-shrink-0">
                     <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-3 sm:space-y-0">
                         <div className="min-w-0 flex-1">
                             <h3 className="text-sm sm:text-lg font-semibold text-white mb-1 truncate">

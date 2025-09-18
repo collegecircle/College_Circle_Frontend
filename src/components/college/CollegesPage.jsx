@@ -524,7 +524,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchColleges } from "../college/collegeSlice";
 import CollegeCard from "./CollegeCard";
 import PageHeader from "../../gobalComponents/PageHeader";
-import FilterButtons from "../../gobalComponents/FilterButtons";
+import FilterDropdown from "../../gobalComponents/FilterButtons";
 import InquiryModal from "./InquiryModal";
 import OverviewModal from "./OverviewModal"; // Import the new OverviewModal
 import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
@@ -697,26 +697,21 @@ const CollegesPage = () => {
                 underlineColor="yellow-400"
                 description="Connect with premier educational institutions across India"
             />
-
-            {/* City Filter */}
-            {/* City Filters */}
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <FilterButtons
-                    filters={availableCities}
-                    activeFilter={activeCityFilter}
-                    onFilterChange={handleCityFilterChange}
-                    theme="yellow"
-                />
-            </div>
-
-            {/* Stream Filters */}
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
-                <FilterButtons
-                    filters={availableStreams}
-                    activeFilter={activeStreamFilter}
-                    onFilterChange={handleStreamFilterChange}
-                    theme="blue"
-                />
+                <div className="flex flex-col sm:flex-row lg:gap-3 justify-end items-start sm:items-center">
+                    <FilterDropdown
+                        filters={availableCities}
+                        activeFilter={activeCityFilter}
+                        onFilterChange={handleCityFilterChange}
+                        theme="white"
+                    />
+                    <FilterDropdown
+                        filters={availableStreams}
+                        activeFilter={activeStreamFilter}
+                        onFilterChange={handleStreamFilterChange}
+                        theme="white"
+                    />
+                </div>
             </div>
 
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-16">
