@@ -48,7 +48,7 @@ const Footer = () => {
           <div className="flex items-center justify-center gap-4 mb-6">
             {/* <FaPaintBrush className="text-yellow-400 text-2xl" /> */}
             <h2 className="text-4xl md:text-5xl font-light tracking-wide text-white">
-              CollegeCircle.CC
+              College Circle
             </h2>
             {/* <FaHome className="text-yellow-400 text-2xl" /> */}
           </div>
@@ -71,7 +71,6 @@ const Footer = () => {
               connects students, educators, and institutions to create a
               thriving academic community focused on growth and achievement.
             </p>
-
           </div>
 
           {/* Services */}
@@ -240,8 +239,7 @@ const Footer = () => {
         {/* Bottom Section */}
         <div className="border-t border-gray-700/50 pt-8 flex flex-col md:flex-row justify-between items-center text-sm text-gray-400">
           <p className="text-white">
-            &copy; {new Date().getFullYear()} CollegeCircle All Rights
-            Reserved.
+            &copy; {new Date().getFullYear()} CollegeCircle All Rights Reserved.
           </p>
           <p className="mt-2 md:mt-0 text-white">
             Dev Team{" "}

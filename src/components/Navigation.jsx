@@ -87,9 +87,6 @@
 
 // export default Navigation;
 
-
-
-
 // import React, { useState } from 'react';
 // import { Menu, X } from 'lucide-react';
 // import Logo from "/assets/cclogo.PNG";
@@ -179,116 +176,121 @@
 
 // export default Navigation;
 
-
-
-import React, { useState } from 'react';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { Menu, X } from 'lucide-react';
+import React, { useState } from "react";
+import { NavLink, useNavigate } from "react-router-dom";
+import { Menu, X } from "lucide-react";
 import Logo from "/assets/cclogo.PNG";
 
 const Navigation = ({ user, onLogout }) => {
-    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-    const navigate = useNavigate();
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-    const navItems = [
-        { id: '/', label: 'Home', color: 'yellow-400' },
-        { id: '/jobs', label: 'Jobs', color: 'yellow-400' },
-        { id: '/colleges', label: 'Colleges', color: 'yellow-400' },
-        { id: '/courses', label: 'Courses', color: 'yellow-400' },
-        { id: '/colab', label: 'collaborate', color: 'yellow-400' },
-        ...(user
-            ? [
-                { id: user.role === 'admin' ? '/admin' : '/', label: user.role === 'admin' ? 'Admin' : 'User Dashboard', color: 'yellow-400' },
-                { id: '/logout', label: 'Logout', color: 'yellow-400' },
-            ]
-            : [
-                { id: '/userlogin', label: 'Login', color: 'yellow-400' },
-                //   { id: '/adminlogin', label: 'Admin Login', color: 'yellow-400' },
-            ]),
-    ];
+  const navItems = [
+    { id: "/", label: "Home", color: "yellow-400" },
+    { id: "/jobs", label: "Jobs", color: "yellow-400" },
+    { id: "/colleges", label: "Colleges", color: "yellow-400" },
+    { id: "/study-materials", label: "Study-Materials", color: "yellow-400" },
+    { id: "/courses", label: "Courses", color: "yellow-400" },
+    { id: "/colab", label: "collaborate", color: "yellow-400" },
+    ...(user
+      ? [
+          {
+            id: user.role === "admin" ? "/admin" : "/dashboard",
+            label: user.role === "admin" ? "Admin" : "User Dashboard",
+            color: "yellow-400",
+          },
+          { id: "/logout", label: "Logout", color: "yellow-400" },
+        ]
+      : [
+          { id: "/userlogin", label: "Login", color: "yellow-400" },
+          //   { id: '/adminlogin', label: 'Admin Login', color: 'yellow-400' },
+        ]),
+  ];
 
-    const handleNavigation = (id) => {
-        if (id === '/logout') {
-            onLogout();
-            navigate('/');
-        } else {
-            navigate(id);
-            setIsMobileMenuOpen(false);
-        }
-    };
+  const handleNavigation = (id) => {
+    if (id === "/logout") {
+      onLogout();
+      navigate("/");
+    } else {
+      navigate(id);
+      setIsMobileMenuOpen(false);
+    }
+  };
 
-    return (
-        <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-black via-black to-black border-b border-gray-700">
-            <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                <div className="flex items-center justify-between h-16">
-                    {/* Logo */}
-                    <button
-                        onClick={() => handleNavigation('/')}
-                        className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-300"
-                    >
-                        <img src={Logo} alt="Logo" className="w-8 h-8" />
-                        <span className="font-bold text-xl text-white">CollegeCircle</span>
-                    </button>
+  return (
+    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-br from-black via-black to-black border-b border-gray-700">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-16">
+          {/* Logo */}
+          <button
+            onClick={() => handleNavigation("/")}
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity duration-300"
+          >
+            <img src={Logo} alt="Logo" className="w-8 h-8" />
+            <span className="font-bold text-xl text-white">CollegeCircle</span>
+          </button>
 
-                    {/* Desktop Navigation */}
-                    <div className="hidden md:flex items-center space-x-6">
-                        {navItems.map((item) => (
-                            <NavLink
-                                key={item.id}
-                                to={item.id}
-                                onClick={() => handleNavigation(item.id)}
-                                className={({ isActive }) =>
-                                    `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${isActive && item.id !== '/logout'
-                                        ? `bg-${item.color} text-black shadow-lg`
-                                        : `text-gray-300 hover:text-${item.color} hover:bg-gray-800`
-                                    }`
-                                }
-                            >
-                                {item.label}
-                            </NavLink>
-                        ))}
-                    </div>
+          {/* Desktop Navigation */}
+          <div className="hidden md:flex items-center space-x-6">
+            {navItems.map((item) => (
+              <NavLink
+                key={item.id}
+                to={item.id}
+                onClick={() => handleNavigation(item.id)}
+                className={({ isActive }) =>
+                  `px-4 py-2 rounded-full text-sm font-medium transition-all duration-300 ${
+                    isActive && item.id !== "/logout"
+                      ? `bg-${item.color} text-black shadow-lg`
+                      : `text-gray-300 hover:text-${item.color} hover:bg-gray-800`
+                  }`
+                }
+              >
+                {item.label}
+              </NavLink>
+            ))}
+          </div>
 
-                    {/* Mobile Menu Button */}
-                    <div className="md:hidden">
-                        <button
-                            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                            className="text-gray-300 hover:text-white p-2 transition-colors duration-300"
-                        >
-                            {isMobileMenuOpen ? (
-                                <X className="w-6 h-6" />
-                            ) : (
-                                <Menu className="w-6 h-6" />
-                            )}
-                        </button>
-                    </div>
-                </div>
+          {/* Mobile Menu Button */}
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+              className="text-gray-300 hover:text-white p-2 transition-colors duration-300"
+            >
+              {isMobileMenuOpen ? (
+                <X className="w-6 h-6" />
+              ) : (
+                <Menu className="w-6 h-6" />
+              )}
+            </button>
+          </div>
+        </div>
 
-                {/* Mobile Menu */}
-                {isMobileMenuOpen && (
-                    <div className="md:hidden py-4 border-t border-gray-700">
-                        <div className="flex flex-col space-y-2">
-                            {navItems.map((item) => (
-                                <NavLink
-                                    key={item.id}
-                                    to={item.id}
-                                    onClick={() => handleNavigation(item.id)}
-                                    className={({ isActive }) =>
-                                        `px-4 py-3 rounded-lg text-left font-medium transition-all duration-300 ${isActive && item.id !== '#logout'
-                                            ? `bg-${item.color} text-black`
-                                            : `text-gray-300 hover:text-${item.color} hover:bg-gray-800`
-                                        }`
-                                    }
-                                >
-                                    {item.label}
-                                </NavLink>
-                            ))}
-                        </div>
-                    </div>
-                )}
+        {/* Mobile Menu */}
+        {isMobileMenuOpen && (
+          <div className="md:hidden py-4 border-t border-gray-700">
+            <div className="flex flex-col space-y-2">
+              {navItems.map((item) => (
+                <NavLink
+                  key={item.id}
+                  to={item.id}
+                  onClick={() => handleNavigation(item.id)}
+                  className={({ isActive }) =>
+                    `px-4 py-3 rounded-lg text-left font-medium transition-all duration-300 ${
+                      isActive && item.id !== "#logout"
+                        ? `bg-${item.color} text-black`
+                        : `text-gray-300 hover:text-${item.color} hover:bg-gray-800`
+                    }`
+                  }
+                >
+                  {item.label}
+                </NavLink>
+              ))}
             </div>
-        </nav>
-    );
+          </div>
+        )}
+      </div>
+    </nav>
+  );
 };
 
 export default Navigation;

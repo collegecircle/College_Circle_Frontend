@@ -15,23 +15,16 @@ export const fetchColleges = createAsyncThunk(
       });
 
       if (search && search.trim()) {
-        queryParams.append("search", search.trim()); // Adjust to 'status' if needed
+        queryParams.append("search", search.trim());
       }
 
-      // Update this endpoint to match your backend route
-      // const url = `${API_BASE_URL}/colleges?${queryParams.toString()}`; // Try this first
-      // Alternatives:
       const url = `${API_BASE_URL}/colleges/all-colleges-list?${queryParams.toString()}`;
-      // const url = `${API_BASE_URL}/getAllColleges?${queryParams.toString()}`;
-
-      console.log("Fetching colleges from:", url); // Debug log to verify URL
 
       const res = await fetch(url, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          // Add Authorization if required, e.g.:
-          // 'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
+          Authorization: `Bearer ${localStorage.getItem("token") || ""}`,
         },
       });
 
