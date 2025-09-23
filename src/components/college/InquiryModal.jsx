@@ -87,12 +87,12 @@ const InquiryModal = ({ college, onClose }) => {
 
     return (
         <div className="fixed inset-0 bg-black/70 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-900 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-yellow-400/30">
+            <div className="bg-gradient-to-br from-black via-black to-black rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto border border-yellow-400/30">
                 {/* Header */}
                 <div className="p-6 border-b border-gray-700">
                     <div className="flex items-center justify-between">
                         <div className="flex items-center space-x-4">
-                            <div className="w-12 h-12 rounded-xl overflow-hidden border border-yellow-400/30 flex items-center justify-center bg-gray-800">
+                            <div className="w-12 h-12 rounded-xl overflow-hidden border border-yellow-400/30 flex items-center justify-center ">
                                 {college?.gallery?.logoUrl ? (
                                     <img
                                         src={college.gallery.logoUrl}
@@ -181,7 +181,7 @@ const InquiryModal = ({ college, onClose }) => {
                                     value={formData.fullName}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
+                                    className="w-full  border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
                                     placeholder="Enter your full name"
                                 />
                             </div>
@@ -196,7 +196,7 @@ const InquiryModal = ({ college, onClose }) => {
                                     value={formData.email}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
+                                    className="w-full  border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
                                     placeholder="Enter your email"
                                 />
                             </div>
@@ -214,7 +214,7 @@ const InquiryModal = ({ college, onClose }) => {
                                     value={formData.phone}
                                     onChange={handleChange}
                                     required
-                                    className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
+                                    className="w-full  border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
                                     placeholder="Enter your phone number"
                                 />
                             </div>
@@ -227,11 +227,11 @@ const InquiryModal = ({ college, onClose }) => {
                                     name="course"
                                     value={formData.course}
                                     onChange={handleChange}
-                                    className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
+                                    className="w-full  border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none bg-grey-900"
                                 >
-                                    <option value="">Select a course</option>
+                                    <option value="" className="bg-gray-800 text-gray-400">Select a course</option>
                                     {getAvailableCourses().map((course, index) => (
-                                        <option key={index} value={course}>{course}</option>
+                                        <option className="bg-gray-800 text-gray-400" key={index} value={course}>{course}</option>
                                     ))}
                                 </select>
                             </div>
@@ -247,7 +247,7 @@ const InquiryModal = ({ college, onClose }) => {
                                 value={formData.message}
                                 onChange={handleChange}
                                 rows={4}
-                                className="w-full bg-gray-800 border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
+                                className="w-full  border border-gray-600 rounded-lg px-4 py-2 text-white focus:border-yellow-400 focus:outline-none"
                                 placeholder="Any specific questions or requirements?"
                             />
                         </div>

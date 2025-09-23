@@ -29,10 +29,10 @@ const JobsManagement = () => {
   const totalPages = Math.ceil(totalCount / 5);
   const itemsPerPage = 5;
 
-  console.log("Total Count:", totalCount);
-  console.log("Total Pages:", totalPages);
-  console.log("Jobs:", jobs);
-  console.log("Full Redux State:", list);
+  // console.log("Total Count:", totalCount);
+  // console.log("Total Pages:", totalPages);
+  // console.log("Jobs:", jobs);
+  // console.log("Full Redux State:", list);
 
   const [search, setSearch] = useState("");
   const [currentJob, setCurrentJob] = useState(null);
@@ -132,94 +132,245 @@ const JobsManagement = () => {
           fetchJobsWithPagination(currentPage, search);
         }
       });
-    }
-  };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-
-    if (
-      !formData.title ||
-      !formData.companyName ||
-      !formData.location ||
-      !formData.status
-    ) {
-      setError(
-        "Please fill in all required fields (Job Title, Company Name, Location, Status)."
-      );
-      return;
+      dispatch(
+        currentJob
+          ? updateJob({ id: currentJob.id, jobData: jobPayload })
+          : createJob(jobPayload)
+      ).then((result) => {
+        if (result.type.endsWith("/fulfilled")) {
+          handleAdd();
+          fetchJobsWithPagination(currentPage, search);
+        } else {
+          setError(result.payload || "Failed to save job");
+        }
+      });
     }
 
-    const ctcMin = Number(formData.ctcMin);
-    const ctcMax = Number(formData.ctcMax);
-    const experienceMin = Number(formData.experienceMin);
-    const experienceMax = Number(formData.experienceMax);
+    // Debounced search effect
+    useEffect(() => {
+      const delayedSearch = setTimeout(() => {
+        setCurrentPage(1);
+        fetchJobsWithPagination(1, search);
+      }, 500);
+      return () => clearTimeout(delayedSearch);
+    }, [search]);
 
-    if (formData.ctcMin && formData.ctcMax && ctcMax < ctcMin) {
-      setError("Maximum CTC must be greater than or equal to Minimum CTC.");
-      return;
-    }
-
-    if (
-      formData.experienceMin &&
-      formData.experienceMax &&
-      experienceMax < experienceMin
-    ) {
-      setError(
-        "Maximum Experience must be greater than or equal to Minimum Experience."
-      );
-      return;
-    }
-
-    const jobPayload = {
-      title: formData.title,
-      description: formData.description,
-      companyName: formData.companyName,
-      location: formData.location,
-      employmentType: formData.employmentType,
-      ctcMin: formData.ctcMin,
-      ctcMax: formData.ctcMax,
-      experienceMin: formData.experienceMin,
-      experienceMax: formData.experienceMax,
-      ctc: { min: ctcMin || 0, max: ctcMax || 0 },
-      experience: { min: experienceMin || 0, max: experienceMax || 0 },
-      noticePeriod: formData.noticePeriod,
-      skillsRequired: formData.skillsRequired
-        ? formData.skillsRequired
-            .split(",")
-            .map((s) => s.trim())
-            .filter((s) => s)
-        : [],
-      deadline: formData.deadline,
-      status: formData.status,
-      companyUrl: formData.companyUrl,
-      companyLogoUrl: formData.companyLogoUrl,
+    const handleAdd = () => {
+      setCurrentJob(null);
+      setFormData({
+        title: "",
+        description: "",
+        companyName: "",
+        location: "",
+        employmentType: "Full-time",
+        ctcMin: "",
+        ctcMax: "",
+        experienceMin: "",
+        experienceMax: "",
+        noticePeriod: "",
+        skillsRequired: "",
+        deadline: "",
+        status: "Open",
+        companyUrl: "",
+        companyLogoUrl: "",
+      });
+      setError("");
     };
 
-    dispatch(
-      currentJob
-        ? updateJob({ id: currentJob.id, jobData: jobPayload })
-        : createJob(jobPayload)
-    ).then((result) => {
-      if (result.type.endsWith("/fulfilled")) {
-        handleAdd();
-        fetchJobsWithPagination(currentPage, search);
-      } else {
-        setError(result.payload || "Failed to save job");
-      }
-    });
-  };
+    const handleEdit = (job) => {
+      setCurrentJob(job);
+      setFormData({
+        title: job.title || "",
+        description: job.description || "",
+        companyName: job.companyName || "",
+        location: job.location || "",
+        employmentType: job.employmentType || "Full-time",
+        ctcMin: job.ctcMin || job.ctc?.min || "",
+        ctcMax: job.ctcMax || job.ctc?.max || "",
+        experienceMin: job.experienceMin || job.experience?.min || "",
+        experienceMax: job.experienceMax || job.experience?.max || "",
+        noticePeriod: job.noticePeriod || "",
+        skillsRequired: job.skillsRequired?.join(", ") || "",
+        deadline: job.deadline || "",
+        status: job.status || "Open",
+        companyUrl: job.companyUrl || "",
+        companyLogoUrl: job.companyLogoUrl || "",
+      });
+      setError("");
+    };
 
-  const handlePageChange = (newPage) => {
-    console.log(
-      "Changing to page:",
-      newPage,
-      "Total Pages:",
-      totalPages,
-      "Current Page:",
-      currentPage,
-      "Total Count:",
-      totalCount
+    const handleDelete = (id) => {
+      if (window.confirm("Are you sure you want to delete this job?")) {
+        dispatch(deleteJob(id)).then((result) => {
+          if (result.type.endsWith("/fulfilled")) {
+            fetchJobsWithPagination(currentPage, search);
+          }
+        });
+      }
+    };
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+
+      if (
+        !formData.title ||
+        !formData.companyName ||
+        !formData.location ||
+        !formData.status
+      ) {
+        setError(
+          "Please fill in all required fields (Job Title, Company Name, Location, Status)."
+        );
+        return;
+      }
+
+      const ctcMin = Number(formData.ctcMin);
+      const ctcMax = Number(formData.ctcMax);
+      const experienceMin = Number(formData.experienceMin);
+      const experienceMax = Number(formData.experienceMax);
+
+      if (formData.ctcMin && formData.ctcMax && ctcMax < ctcMin) {
+        setError("Maximum CTC must be greater than or equal to Minimum CTC.");
+        return;
+      }
+
+      if (
+        formData.experienceMin &&
+        formData.experienceMax &&
+        experienceMax < experienceMin
+      ) {
+        setError(
+          "Maximum Experience must be greater than or equal to Minimum Experience."
+        );
+        return;
+      }
+
+      const jobPayload = {
+        title: formData.title,
+        description: formData.description,
+        companyName: formData.companyName,
+        location: formData.location,
+        employmentType: formData.employmentType,
+        ctcMin: formData.ctcMin,
+        ctcMax: formData.ctcMax,
+        experienceMin: formData.experienceMin,
+        experienceMax: formData.experienceMax,
+        ctc: { min: ctcMin || 0, max: ctcMax || 0 },
+        experience: { min: experienceMin || 0, max: experienceMax || 0 },
+        noticePeriod: formData.noticePeriod,
+        skillsRequired: formData.skillsRequired
+          ? formData.skillsRequired
+              .split(",")
+              .map((s) => s.trim())
+              .filter((s) => s)
+          : [],
+        deadline: formData.deadline,
+        status: formData.status,
+        companyUrl: formData.companyUrl,
+        companyLogoUrl: formData.companyLogoUrl,
+      };
+
+      dispatch(
+        currentJob
+          ? updateJob({ id: currentJob.id, jobData: jobPayload })
+          : createJob(jobPayload)
+      ).then((result) => {
+        if (result.type.endsWith("/fulfilled")) {
+          handleAdd();
+          fetchJobsWithPagination(currentPage, search);
+        } else {
+          setError(result.payload || "Failed to save job");
+        }
+      });
+    };
+
+    const handlePageChange = (newPage) => {
+      // console.log("Changing to page:", newPage, "Total Pages:", totalPages, "Current Page:", currentPage, "Total Count:", totalCount);
+      if (newPage >= 1 && newPage <= totalPages) {
+        setCurrentPage(newPage);
+      }
+    };
+
+    const JobCard = ({ job }) => (
+      <div className="bg-white border border-gray-200 rounded-lg p-4 mb-4 shadow-sm hover:shadow-md transition-shadow duration-200">
+        <div className="flex items-start justify-between mb-3">
+          <div className="flex items-center space-x-3 min-w-0 flex-1">
+            {job.companyLogoUrl && (
+              <img
+                src={job.companyLogoUrl}
+                alt="Company logo"
+                className="w-8 h-8 sm:w-10 sm:h-10 rounded-md object-cover flex-shrink-0"
+                onError={(e) => (e.target.src = "/assets/cclogo.PNG")}
+              />
+            )}
+            <div className="min-w-0 flex-1">
+              <h3 className="text-sm sm:text-base font-semibold text-gray-900 truncate">
+                {job.title || "Untitled Job"}
+              </h3>
+              <a
+                href={job.companyUrl || "#"}
+                target="_blank"
+                rel="noreferrer"
+                className="text-xs sm:text-sm text-blue-600 hover:text-blue-800 truncate block"
+              >
+                {job.companyName || "Unknown Company"}
+              </a>
+            </div>
+          </div>
+          <span
+            className={`px-2 py-1 rounded-full text-xs font-medium flex-shrink-0 ${
+              job.status === "Open"
+                ? "bg-green-100 text-green-800"
+                : "bg-red-100 text-red-800"
+            }`}
+          >
+            {job.status || "Unknown"}
+          </span>
+        </div>
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mb-3 text-xs sm:text-sm text-gray-600">
+          <div className="flex items-center">
+            <MapPin className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+            <span className="truncate">{job.location || "N/A"}</span>
+          </div>
+          <div className="flex items-center">
+            <DollarSign className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+            <span className="truncate">
+              {job.ctc?.min && job.ctc?.max
+                ? `${job.ctc.min} - ${job.ctc.max} LPA`
+                : "N/A"}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <Clock className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+            <span className="truncate">
+              {job.experience?.min && job.experience?.max
+                ? `${job.experience.min} - ${job.experience.max} yrs`
+                : "N/A"}
+            </span>
+          </div>
+          <div className="flex items-center">
+            <Calendar className="w-3 h-3 sm:w-4 sm:h-4 mr-1 flex-shrink-0" />
+            <span className="truncate">{job.deadline || "N/A"}</span>
+          </div>
+        </div>
+        <div className="flex items-center justify-end space-x-2">
+          <button
+            className="flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-blue-500 hover:bg-blue-600 text-white text-xs sm:text-sm rounded-md transition-colors duration-200"
+            onClick={() => handleEdit(job)}
+          >
+            <Edit className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+            Edit
+          </button>
+          <button
+            className="flex items-center px-2 py-1 sm:px-3 sm:py-1.5 bg-red-500 hover:bg-red-600 text-white text-xs sm:text-sm rounded-md transition-colors duration-200"
+            onClick={() => handleDelete(job.id)}
+          >
+            <Trash2 className="w-3 h-3 sm:w-4 sm:h-4 mr-1" />
+            Delete
+          </button>
+        </div>
+      </div>
     );
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);

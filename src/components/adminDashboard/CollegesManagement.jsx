@@ -30,11 +30,7 @@ const CollegesManagement = () => {
     : [];
   const totalCount = list?.data?.count || 0;
   const totalPages = Math.ceil(totalCount / 10);
-  const itemsPerPage = 12;
-  console.log("Full Redux State:", list);
-  console.log("Colleges:", colleges);
-  console.log("Total Count:", totalCount);
-  console.log("Total Pages:", totalPages);
+  const itemsPerPage = 10;
 
   const [search, setSearch] = useState("");
   const [currentCollege, setCurrentCollege] = useState(null);
@@ -53,11 +49,10 @@ const CollegesManagement = () => {
     type: "Public",
     description: "",
     facilities: "",
-    gallery: { logoUrl: "", slideImages: [] },
+    gallery: { logoUrl: "", slideImages: [], videoUrl: "" },
     streams: [],
   });
 
-  // States for dynamic fields
   const [slideImages, setSlideImages] = useState([""]);
   const [streams, setStreams] = useState([]);
   const [newStream, setNewStream] = useState({ name: "", subStreams: [] });
@@ -69,19 +64,20 @@ const CollegesManagement = () => {
     if (searchTerm.trim()) {
       params.search = searchTerm;
     }
-    console.log("Fetching with params:", params);
     dispatch(fetchColleges(params));
   };
 
   useEffect(() => {
     fetchCollegesWithPagination(currentPage, search);
-  }, [dispatch, currentPage]);
+  }, [dispatch, currentPage, search]);
 
   // Debounced search effect
   useEffect(() => {
     const delayedSearch = setTimeout(() => {
-      setCurrentPage(1);
-      fetchCollegesWithPagination(1, search);
+      if (search !== "") {
+        setCurrentPage(1);
+        fetchCollegesWithPagination(1, search);
+      }
     }, 500);
     return () => clearTimeout(delayedSearch);
   }, [search]);
@@ -97,7 +93,7 @@ const CollegesManagement = () => {
       type: "Public",
       description: "",
       facilities: "",
-      gallery: { logoUrl: "", slideImages: [] },
+      gallery: { logoUrl: "", slideImages: [], videoUrl: "" },
       streams: [],
     });
     setSlideImages([""]);
@@ -117,7 +113,7 @@ const CollegesManagement = () => {
   const handleEdit = (college) => {
     setModalType("edit");
     setCurrentCollege(college);
-    const processedStreams = college.streams
+    const processedStreams = Array.isArray(college.streams)
       ? college.streams.map((stream) => ({
           name: stream.name || "",
           subStreams: Array.isArray(stream.subStreams)
@@ -138,6 +134,7 @@ const CollegesManagement = () => {
       gallery: {
         logoUrl: college.gallery?.logoUrl || "",
         slideImages: college.gallery?.slideImages || [],
+        videoUrl: college.gallery?.videoUrl || "",
       },
     });
     setSlideImages(
@@ -146,14 +143,13 @@ const CollegesManagement = () => {
         : [""]
     );
     setStreams(processedStreams);
-    console.log("Edit - Processed streams:", processedStreams);
     setShowModal(true);
   };
 
   const handleView = (college) => {
     setModalType("view");
     setCurrentCollege(college);
-    const processedStreams = college.streams
+    const processedStreams = Array.isArray(college.streams)
       ? college.streams.map((stream) => ({
           name: stream.name || "",
           subStreams: Array.isArray(stream.subStreams)
@@ -187,7 +183,6 @@ const CollegesManagement = () => {
     }
   };
 
-  // Handle slide images
   const addSlideImage = () => {
     setSlideImages([...slideImages, ""]);
   };
@@ -203,13 +198,11 @@ const CollegesManagement = () => {
     setSlideImages(updated);
   };
 
-  // Handle streams
   const addStream = () => {
     if (newStream.name.trim()) {
       const streamToAdd = { name: newStream.name.trim(), subStreams: [] };
       setStreams((prevStreams) => [...prevStreams, streamToAdd]);
       setNewStream({ name: "", subStreams: [] });
-      console.log("Added stream:", streamToAdd);
     }
   };
 
@@ -287,6 +280,7 @@ const CollegesManagement = () => {
       gallery: {
         logoUrl: formData.gallery.logoUrl || "",
         slideImages: slideImages.filter((img) => img && img.trim() !== ""),
+        videoUrl: formData.gallery.videoUrl || "",
       },
       streams: processedStreams,
     };
@@ -321,9 +315,9 @@ const CollegesManagement = () => {
   };
 
   return (
-    <div className="w-full p-3 sm:p-4 lg:p-6 bg-gray-50 min-h-screen">
+    <div className="w-full p-4 lg:p-6 bg-gray-50 min-h-screen">
       {/* Header */}
-      <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6 mb-4 sm:mb-6">
+      <div className="bg-white rounded-lg shadow-sm border p-6 mb-6">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
@@ -343,9 +337,9 @@ const CollegesManagement = () => {
         </div>
       </div>
 
-      {/* Search and Filters */}
-      <div className="bg-white rounded-lg shadow-sm border p-4 mb-4 sm:mb-6">
-        <div className="relative max-w-full sm:max-w-md">
+      {/* Search */}
+      <div className="bg-white rounded-lg shadow-sm border p-4 mb-6">
+        <div className="relative max-w-md">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 w-5 h-5" />
           <input
             type="text"
@@ -359,12 +353,12 @@ const CollegesManagement = () => {
 
       {/* Status Messages */}
       {status === "loading" && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg mb-6">
           Loading colleges...
         </div>
       )}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-6">
           Error: {error}
         </div>
       )}
@@ -554,7 +548,7 @@ const CollegesManagement = () => {
 
         {/* Pagination */}
         {totalPages > 0 && (
-          <div className="px-4 sm:px-6 py-3 bg-gray-50 border-t flex flex-col sm:flex-row justify-between items-center gap-3">
+          <div className="px-6 py-3 bg-gray-50 border-t flex flex-col sm:flex-row justify-between items-center gap-3">
             <div className="text-sm text-gray-700 text-center sm:text-left">
               Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
               {Math.min(currentPage * itemsPerPage, totalCount)} of {totalCount}{" "}
@@ -587,7 +581,7 @@ const CollegesManagement = () => {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg shadow-xl max-w-4xl w-full max-h-[95vh] overflow-hidden flex flex-col">
-            <div className="p-4 sm:p-6 border-b flex-shrink-0">
+            <div className="p-6 border-b flex-shrink-0">
               <div className="flex justify-between items-center">
                 <h3 className="text-lg sm:text-xl font-semibold text-gray-900">
                   {modalType === "add"
@@ -604,7 +598,7 @@ const CollegesManagement = () => {
                 </button>
               </div>
             </div>
-            <div className="p-4 sm:p-6 overflow-y-auto flex-1">
+            <div className="p-6 overflow-y-auto flex-1">
               {formError && (
                 <div className="mb-4 p-3 bg-red-50 border border-red-200 text-red-800 rounded-lg text-sm">
                   {formError}
@@ -844,6 +838,11 @@ const CollegesManagement = () => {
                       >
                         <option value="Public">Public</option>
                         <option value="Private">Private</option>
+                        <option value="Autonomous">Autonomous</option>
+                        <option value="Deemed">Deemed</option>
+                        <option value="Central">Central</option>
+                        <option value="State">State</option>
+                        <option value="Other">Other</option>
                       </select>
                     </div>
                     <div>

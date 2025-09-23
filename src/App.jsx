@@ -124,14 +124,14 @@ function App() {
     const storedUser = getUserFromStorage();
     if (storedUser) {
       setUser(storedUser);
-      console.log("User loaded from localStorage:", storedUser);
+      // console.log("User loaded from localStorage:", storedUser);
     }
     setIsAuthLoaded(true);
   }, []);
 
   // Sync user with localStorage
   const setUserWithStorage = (userData) => {
-    console.log("setUserWithStorage called:", userData);
+    // console.log("setUserWithStorage called:", userData);
     if (userData) {
       try {
         const role = userData.role || "user";
@@ -141,15 +141,15 @@ function App() {
           localStorage.setItem("token", userData.token);
         }
         setUser({ ...userData, role });
-        console.log("User saved to localStorage:", userData);
+        // console.log("User saved to localStorage:", userData);
       } catch (error) {
-        console.error("Error saving user to localStorage:", error);
+        // console.error("Error saving user to localStorage:", error);
         setUser(userData);
       }
     } else {
       clearUserFromStorage();
       setUser(null);
-      console.log("User cleared from localStorage");
+      // console.log("User cleared from localStorage");
     }
   };
 
@@ -261,9 +261,9 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
           <Route
             path="/colleges"
             element={
-              <PrivateRoute>
+              // <PrivateRoute>
                 <CollegesPage user={user} />
-              </PrivateRoute>
+              // </PrivateRoute>
             }
           />
           <Route

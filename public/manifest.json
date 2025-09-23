@@ -1,0 +1,39 @@
+{
+  "name": "College Circle",
+  "short_name": "College Circle",
+  "description": "College Circle — student social hub",
+  "start_url": "/?source=pwa",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "portrait-primary",
+  "background_color": "#ffffff",
+  "theme_color": "#f8d00d",
+  "icons": [
+    {
+      "src": "cclogo.PNG",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "cclogo.PNG",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Jobs",
+      "short_name": "Jobs",
+      "url": "/jobs",
+      "icons": [{ "src": "assets/cclogo-black-white.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "College",
+      "short_name": "Post",
+      "url": "/colleges",
+      "icons": [{ "src": "assets/cclogo-white-black.png", "sizes": "192x192" }]
+    }
+  ]
+}

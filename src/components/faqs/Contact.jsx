@@ -19,7 +19,7 @@ const ContactForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log('Form submitted:', formData);
+        // console.log('Form submitted:', formData);
         // Handle form submission logic here
         alert('Form submitted successfully!');
     };
