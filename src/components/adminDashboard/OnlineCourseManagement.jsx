@@ -1,10 +1,6 @@
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  fetchCourseMaterials,
-  deleteCourseMaterial,
-} from "../course/courseSlice";
-import CourseMaterialForm from "./coursesComponents/CourseMaterialForm";
+import React, { useState } from "react";
+
+import OnlineCourseForm from "./OnlineCourseAdmin/OnlineCourseForm";
 import {
   Search,
   Plus,
@@ -18,13 +14,23 @@ import {
   Users,
   X,
 } from "lucide-react";
-import EditCourseMaterialForm from "./coursesComponents/EditCourseMaterialForm";
+import {
+  fetchOnlineCourses,
+  deleteOnlineCourse,
+} from "../OnlineCourseUser/onlineCourseSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import OnlineEditCourseForm from "./OnlineCourseAdmin/OnlineEditCourseForm";
 
-const CoursesManagement = () => {
-  const [courseAddModalOpen, setCourseAddModalOpen] = useState(false);
+const OnlineCourseManagement = () => {
   const dispatch = useDispatch();
+  const [courseAddModalOpen, setCourseAddModalOpen] = useState(false);
+  const handleCloseCourse = () => setCourseAddModalOpen(false);
+  const handleAddCourse = () => setCourseAddModalOpen(true);
+
+  //get  list
   const { list, status, error, pagination } = useSelector(
-    (state) => state.materials
+    (state) => state.onlineCourses
   );
 
   const itemsPerPage = pagination?.limit || 5;
@@ -37,25 +43,18 @@ const CoursesManagement = () => {
     if (searchTerm.trim()) {
       params.search = searchTerm;
     }
-    dispatch(fetchCourseMaterials(params));
+    dispatch(fetchOnlineCourses(params));
   };
 
   useEffect(() => {
     fetchCourseMaterialsWithPagination(currentPage);
   }, [dispatch, currentPage]);
 
-  const handleAddCourse = () => setCourseAddModalOpen(true);
-  const handleCloseCourse = () => setCourseAddModalOpen(false);
-
-  const handlePageChange = (newPage) => {
-    if (newPage >= 1 && newPage <= totalPages) {
-      setCurrentPage(newPage);
-    }
-  };
+  //delete
 
   const handleDelete = (id) => {
-    if (window.confirm("Are you sure you want to delete this college?")) {
-      dispatch(deleteCourseMaterial(id)).then((result) => {
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      dispatch(deleteOnlineCourse(id)).then((result) => {
         if (result.type.endsWith("/fulfilled")) {
           fetchCourseMaterialsWithPagination(currentPage);
         }
@@ -63,17 +62,23 @@ const CoursesManagement = () => {
     }
   };
 
+  //edit
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [currentMaterial, setCurrentMaterial] = useState(null);
-
-  const handleEdit = (material) => {
-    setCurrentMaterial(material); // set the material to edit
-    setEditModalOpen(true); // open the edit modal
+  const handleEdit = (course) => {
+    setCurrentMaterial(course);
+    setEditModalOpen(true);
   };
 
   const handleCloseEdit = () => {
     setEditModalOpen(false);
     setCurrentMaterial(null);
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
   };
 
   return (
@@ -82,10 +87,10 @@ const CoursesManagement = () => {
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
-              Manage Study Materials
+              Manage Courses
             </h1>
             <p className="text-gray-600 mt-1 text-sm sm:text-base">
-              Handle study materials effortlessly
+              handle courses efforlessly
             </p>
           </div>
           <button
@@ -96,35 +101,33 @@ const CoursesManagement = () => {
             <span>Add Course</span>
           </button>
         </div>
+
+        {status === "loading" && (
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+            Loading...
+          </div>
+        )}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+            Error: {error}
+          </div>
+        )}
+
+        {/* Empty State */}
+        {list.length === 0 && status !== "loading" && (
+          <div className="text-center py-12">
+            <Building className="mx-auto h-12 w-12 text-gray-400" />
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              No online courses found
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Get started by adding a new course.
+            </p>
+          </div>
+        )}
       </div>
-
-      {/* Status Messages */}
-      {status === "loading" && (
-        <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
-          Loading...
-        </div>
-      )}
-      {error && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
-          Error: {error}
-        </div>
-      )}
-
-      {/* Empty State */}
-      {list.length === 0 && status !== "loading" && (
-        <div className="text-center py-12">
-          <Building className="mx-auto h-12 w-12 text-gray-400" />
-          <h3 className="mt-2 text-sm font-medium text-gray-900">
-            No materials found
-          </h3>
-          <p className="mt-1 text-sm text-gray-500">
-            Get started by adding a new materials.
-          </p>
-        </div>
-      )}
-
       {list.length > 0 && status !== "loading" && (
-        <div className="bg-white rounded-lg shadow-sm border overflow-hidden">
+        <div className="bg-white rounded-lg shadow-sm border overflow-hidden mt-5">
           {/* Mobile View - Cards */}
           <div className="block lg:hidden">
             {list.map((material) => (
@@ -135,7 +138,7 @@ const CoursesManagement = () => {
                 <div className="flex items-start space-x-3">
                   <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                     <img
-                      src={material?.thumbnileImgUrl || "/assets/cclogo.PNG"}
+                      src={material?.thumbnailImgUrl || "/assets/cclogo.PNG"}
                       alt={material.title}
                       className="w-full h-full object-cover"
                       onError={(e) => (e.target.src = "/assets/cclogo.PNG")}
@@ -143,23 +146,20 @@ const CoursesManagement = () => {
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      title :{" "}
-                      {material.title && material.title.length > 30
-                        ? material.title.substring(0, 30) + "..."
-                        : material.title}
+                      name :{" "}
+                      {material.name && material.name.length > 30
+                        ? material.name.substring(0, 30) + "..."
+                        : material.name}
                     </div>
                     <div className="text-sm text-gray-500">
-                      Url :{" "}
-                      {material.documentLink &&
-                      material.documentLink.length > 30
-                        ? material.documentLink.substring(0, 30) + "..."
-                        : material.documentLink}
+                      no of modules :{" "}
+                      {material.modules ? material.modules.length : 0}
                     </div>
                     <div className="text-sm font-medium text-gray-900 truncate">
-                      ID : {material.id}
+                      Course-ID : {material.id}
                     </div>
                     <div className="text-sm text-gray-500">
-                      Price : {material.price}
+                      Price : {material.price}₹
                     </div>
                     <div className="text-sm text-gray-500">
                       Registered Count : {material.registeredCount}
@@ -186,7 +186,6 @@ const CoursesManagement = () => {
             ))}
           </div>
 
-          {/* Desktop View - Table */}
           <div className="hidden lg:block overflow-x-auto">
             <table className="w-full">
               <thead className="bg-gray-50">
@@ -195,13 +194,13 @@ const CoursesManagement = () => {
                     thumbnile image
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    title
+                    name
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    document Link
+                    No Of Modules
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Id
+                    Course-ID
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     price
@@ -222,7 +221,7 @@ const CoursesManagement = () => {
                         <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
                           <img
                             src={
-                              material?.thumbnileImgUrl || "/assets/cclogo.PNG"
+                              material?.thumbnailImgUrl || "/assets/cclogo.PNG"
                             }
                             alt={material.title}
                             className="w-full h-full object-cover"
@@ -234,21 +233,18 @@ const CoursesManagement = () => {
                       </div>
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {material.title && material.title.length > 20
-                        ? material.title.substring(0, 20) + "..."
-                        : material.title}
+                      {material.name && material.name.length > 20
+                        ? material.name.substring(0, 20) + "..."
+                        : material.name}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {material.documentLink &&
-                      material.documentLink.length > 30
-                        ? material.documentLink.substring(0, 30) + "..."
-                        : material.documentLink}
+                      {material.modules ? material.modules.length : 0}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {material.id}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {material.price}
+                      {material.price}₹
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {material.registeredCount}
@@ -309,7 +305,6 @@ const CoursesManagement = () => {
         </div>
       )}
 
-      {/* Modal */}
       {courseAddModalOpen && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
           <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg relative">
@@ -319,12 +314,10 @@ const CoursesManagement = () => {
             >
               ✕
             </button>
-            <CourseMaterialForm />
+            <OnlineCourseForm />
           </div>
         </div>
       )}
-
-      {/* edit course */}
 
       {editModalOpen && currentMaterial && (
         <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
@@ -335,7 +328,7 @@ const CoursesManagement = () => {
             >
               ✕
             </button>
-            <EditCourseMaterialForm
+            <OnlineEditCourseForm
               material={currentMaterial}
               onClose={handleCloseEdit}
               onUpdate={() => fetchCourseMaterialsWithPagination(currentPage)}
@@ -347,4 +340,4 @@ const CoursesManagement = () => {
   );
 };
 
-export default CoursesManagement;
+export default OnlineCourseManagement;

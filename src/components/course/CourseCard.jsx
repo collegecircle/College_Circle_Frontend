@@ -3,6 +3,7 @@ import { ArrowRight, Users, Calendar, Crown } from "lucide-react";
 import PDFViewer from "./PDFViewer";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import PdfViewer from "../../gobalComponents/PdfViewer";
 const BASE_URL = import.meta.env.VITE_API_URL;
 const CourseCard = ({ material }) => {
   const [showPDF, setShowPDF] = useState(false);
@@ -39,6 +40,7 @@ const CourseCard = ({ material }) => {
         theme,
         handler: async function (response) {
           // 3️⃣ Call backend to verify payment
+
           try {
             const verifyRes = await axios.post(
               `${BASE_URL}/course-materials/veriify-payment-material-sucess`,
@@ -163,19 +165,10 @@ const CourseCard = ({ material }) => {
 
       {/* PDF Modal */}
       {showPDF && (
-        <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex items-center justify-center p-4">
-          <div className="bg-white w-full max-w-4xl h-[80vh] p-4 rounded-xl relative">
-            <button
-              className="absolute top-2 right-2 text-black font-bold text-lg"
-              onClick={() => setShowPDF(false)}
-            >
-              ✕
-            </button>
-            <PDFViewer
-              file={material.documentLink || "/path/to/your-file.pdf"}
-            />
-          </div>
-        </div>
+        <PDFViewer
+          file={material.documentLink || "/path/to/your-file.pdf"}
+          onClose={() => setShowPDF(false)}
+        />
       )}
     </div>
   );

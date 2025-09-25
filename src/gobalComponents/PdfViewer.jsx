@@ -14,7 +14,6 @@ export default function PdfViewer({ pdfUrl, onClose }) {
         className="bg-gray-800 rounded-lg w-full max-w-7xl h-[95vh] md:h-[90vh] lg:h-[85vh] 
                       flex flex-col shadow-2xl border border-[#fdc700]/30"
       >
-        {/* Header */}
         <div className="py-3 px-4 flex items-center justify-between border-b border-gray-700 bg-gradient-to-r from-gray-800 to-gray-900">
           <h3 className="text-base font-medium text-[#fdc700]">
             College Circle
@@ -36,7 +35,6 @@ export default function PdfViewer({ pdfUrl, onClose }) {
             </button>
           </div>
         </div>
-
         {/* PDF Content */}
         <div className="flex-1 bg-white overflow-hidden relative">
           {isLoading && (

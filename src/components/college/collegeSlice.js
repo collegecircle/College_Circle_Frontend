@@ -1,66 +1,6 @@
-// src/components/college/collegeSlice.js
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
-
-// Fetch all colleges
-// export const fetchColleges = createAsyncThunk(
-//   "colleges/fetchColleges",
-//   async (params, { rejectWithValue }) => {
-//     try {
-//       const { page = 1, limit = 10, search = "" } = params;
-//       const queryParams = new URLSearchParams({
-//         page: page.toString(),
-//         limit: limit.toString(),
-//       });
-
-//       if (search && search.trim()) {
-//         queryParams.append("search", search.trim()); // Adjust to 'status' if needed
-//       }
-
-//       // Update this endpoint to match your backend route
-//       // const url = `${API_BASE_URL}/colleges?${queryParams.toString()}`; // Try this first
-//       // Alternatives:
-//       const url = `${API_BASE_URL}/colleges/all-colleges-list?${queryParams.toString()}`;
-//       // const url = `${API_BASE_URL}/getAllColleges?${queryParams.toString()}`;
-
-//       console.log("Fetching colleges from:", url); // Debug log to verify URL
-
-//       const res = await fetch(url, {
-//         method: "GET",
-//         headers: {
-//           "Content-Type": "application/json",
-//           // Add Authorization if required, e.g.:
-//           // 'Authorization': `Bearer ${localStorage.getItem('token') || ''}`,
-//         },
-//       });
-
-//       if (!res.ok) {
-//         let errorMessage = "Unknown error";
-//         try {
-//           const errorData = await res.json();
-//           errorMessage =
-//             errorData.message || `HTTP ${res.status} ${res.statusText}`;
-//         } catch {
-//           errorMessage = `HTTP ${res.status} ${res.statusText}`;
-//         }
-//         throw new Error(`Failed to fetch colleges: ${errorMessage}`);
-//       }
-
-//       const response = await res.json();
-//       if (!response.data || !response.success) {
-//         throw new Error(
-//           "Invalid response structure: Missing data or success field"
-//         );
-//       }
-
-//       return response.data; // Returns { page, limit, count, colleges }
-//     } catch (error) {
-//       console.error("Error in fetchColleges:", error);
-//       return rejectWithValue(error.message || "Failed to fetch colleges");
-//     }
-//   }
-// );
 
 export const fetchColleges = createAsyncThunk(
   "colleges/fetchColleges",

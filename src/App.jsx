@@ -21,7 +21,7 @@ import { useDispatch } from "react-redux";
 import { logout } from "./components/adminDashboard/authSlice";
 import ForgotPassword from "./components/auth/ForgotPassword";
 import ContactForm from "./components/faqs/Contact";
-import NewCoursePage from "./components/courseMate/NewCoursePage";
+import NewCoursePage from "./components/OnlineCourseUser/NewCoursePage";
 import UserDashboard from "./components/userDashboard/UserDashboard";
 
 /* ---------------- SPLASH SCREEN HELPERS ---------------- */
@@ -262,7 +262,7 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             path="/colleges"
             element={
               // <PrivateRoute>
-                <CollegesPage user={user} />
+              <CollegesPage user={user} />
               // </PrivateRoute>
             }
           />

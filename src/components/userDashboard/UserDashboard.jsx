@@ -8,6 +8,7 @@ import {
   Clock,
   User,
   Eye,
+  AlertCircle,
 } from "lucide-react";
 import axios from "axios";
 import { useSelector } from "react-redux";
@@ -22,19 +23,18 @@ export default function Dashboard() {
     studentId: globalUser?.id,
   };
 
-  const buttonLabels = {
-    courses: "Add Course",
-    materials: "Add Material",
-    default: "New Course",
-  };
   const [studyMaterials, setStudyMaterials] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [selectedView, setSelectedView] = useState("materials");
   const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [selectedPdfUrl, setSelectedPdfUrl] = useState("");
 
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
   const getUserStudymaterials = async () => {
     try {
+      setLoading(true);
       const response = await axios.post(
         `${API_BASE_URL}/user/get-registerd-materials`,
         payload,
@@ -45,9 +45,17 @@ export default function Dashboard() {
         }
       );
 
-      setStudyMaterials(response.data.data.registerdStudyMaterials);
+      if (response.data.status_code === 200) {
+        setLoading(false);
+        setStudyMaterials(response.data.data.registerdStudyMaterials);
+        setError(null);
+      } else {
+        setLoading(false);
+        setError(response.data.data.messsage || "Error fetching data");
+      }
     } catch (err) {
-      console.error("Error fetching study materials:", err);
+      setLoading(false);
+      setError(err.message || "Error fetching data");
     }
   };
 
@@ -60,15 +68,26 @@ export default function Dashboard() {
   const courses = [];
 
   const openPdfViewer = (materialId) => {
+    console.log("Clicked on material ID:", materialId);
+
     const material = studyMaterials.find((m) => m.id === materialId);
+    console.log("Found material:", material);
+
     if (material) {
       if (material.documentLink) {
+        console.log("Setting PDF URL to:", material.documentLink);
         setSelectedPdfUrl(material.documentLink);
         setShowPdfViewer(true);
       } else {
+        console.log("No document link found on material:", material);
         alert("PDF not available for this material.");
       }
     } else {
+      console.log("No material found with ID:", materialId);
+      console.log(
+        "Available material IDs:",
+        studyMaterials.map((m) => m.id)
+      );
       alert("Material not found.");
     }
   };
@@ -163,24 +182,27 @@ export default function Dashboard() {
 
                 <div className="p-4 border-t border-gray-700/50 flex justify-between items-center gap-3">
                   <button
-                    className="bg-[#fdc700] hover:bg-[#ffde4d] text-gray-900 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center flex-grow shadow-md hover:shadow-[#fdc700]/30"
+                    className="bg-[#fdc700] hover:bg-[#ffde4d] text-gray-900 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-md hover:shadow-[#fdc700]/30"
                     onClick={(e) => {
                       e.stopPropagation();
                       openPdfViewer(material.id);
                     }}
                   >
-                    <Eye className="h-4 w-4 mr-2" />
-                    View Material
+                    <Eye className="h-4 w-4 mr-1" />
+                    View
                   </button>
 
                   <button
-                    className="text-gray-300 hover:text-[#fdc700] bg-gray-700/30 hover:bg-gray-700/50 p-2 rounded-lg transition-colors duration-200"
+                    className="text-[#000] hover:text-[#000] bg-[#fff]  p-2 rounded-lg transition-colors duration-200"
                     onClick={(e) => {
                       e.stopPropagation();
-                      setSelectedView(`material-${material.id}`);
+                      console.log(
+                        "Downloading material ID:",
+                        material.documentLink
+                      );
                     }}
                   >
-                    Details
+                    <Download className="h-4 w-4 inline-block ml-1" /> Download
                   </button>
                 </div>
               </div>
@@ -191,11 +213,76 @@ export default function Dashboard() {
     }
   };
 
+  if (loading) {
+    return (
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                animation: "spin 1s linear infinite",
+                borderRadius: "50%",
+                height: "8rem",
+                width: "8rem",
+                borderBottom: "2px solid #facc15",
+                marginBottom: "1rem",
+              }}
+            ></div>
+            <img
+              src="/assets/cclogo.PNG"
+              alt="Logo"
+              style={{
+                position: "absolute",
+                height: "5rem",
+                width: "5rem",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
+            />
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-black flex items-center justify-center">
+        <div className="text-center">
+          <AlertCircle className="w-16 h-16 text-red-400 mx-auto mb-4" />
+          <h3 className="text-xl font-semibold text-white mb-2">
+            Oops! Something went wrong
+          </h3>
+          <p className="text-gray-400 mb-4">{error}</p>
+          <button className="bg-yellow-500 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors">
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-screen bg-black text-white overflow-hidden">
       {/* PDF Viewer Modal */}
       {showPdfViewer && (
         <PdfViewer
+          key={selectedPdfUrl}
           pdfUrl={selectedPdfUrl}
           onClose={() => setShowPdfViewer(false)}
         />
@@ -209,9 +296,9 @@ export default function Dashboard() {
         onClick={() => setSidebarOpen(false)}
       />
 
-      <aside className="w-0  z-100 md:w-64 flex-shrink-0 border-r border-[#fdc700] bg-gray-900">
-        <div className="flexitems-center justify-between h-16 px-4 border-b border-[#fdc700]">
-          <h1 className="text-xl font-bold text-[#fdc700]">StudyDash</h1>
+      <aside className="w-0 overflow-hidden md:w-64 md:overflow-visible flex-shrink-0 border-r border-[#fdc700] bg-gray-900 h-screen">
+        <div className="flex items-center justify-between h-16 px-4 border-b border-[#fdc700]">
+          <h1 className="text-xl font-bold text-[#fff]">Student Dashboard</h1>
         </div>
 
         <div className="flex flex-col h-full p-4">
@@ -268,7 +355,7 @@ export default function Dashboard() {
                   d="M3 12l2-2m0 0l7-7 7 7m-14 0l2 2m0 0l7 7 7-7m-14 0l2-2"
                 />
               </svg>
-              <span className="text-lg">Dashboard</span>
+              <span className="text-lg">Student Dashboard</span>
             </a>
           </div>
         </div>
@@ -281,7 +368,7 @@ export default function Dashboard() {
         }`}
       >
         <div className="flex items-center justify-between h-16 px-4 border-b border-[#fdc700]">
-          <h1 className="text-xl font-bold text-[#fdc700]">StudyDash</h1>
+          <h1 className="text-xl font-bold text-[#fff]">Student Dashboard</h1>
           <button
             className="rounded-md p-2 text-gray-400 hover:text-[#fdc700] focus:outline-none"
             onClick={() => setSidebarOpen(false)}
@@ -359,6 +446,23 @@ export default function Dashboard() {
       </div>
 
       <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+        {/* Add mobile header with menu button here */}
+        <header className="bg-gray-900 border-b border-[#fdc700] md:hidden">
+          <div className="flex items-center justify-between h-16 px-4">
+            <button
+              className="rounded-md p-2 text-white hover:text-[#fdc700] focus:outline-none"
+              onClick={() => setSidebarOpen(true)}
+            >
+              <Menu className="h-6 w-6" />
+            </button>
+            <h1 className="text-xl font-bold text-[#fff]">
+              {" "}
+              Student Dashboard
+            </h1>
+            <div className="w-6"></div> {/* Empty div for balanced spacing */}
+          </div>
+        </header>
+
         <main className="flex-1 overflow-y-auto p-3 md:p-4 lg:p-6">
           {renderMainContent()}
         </main>

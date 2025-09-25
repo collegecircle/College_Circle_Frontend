@@ -9,7 +9,9 @@ import {
   GraduationCap,
   BookOpen,
   LogOut,
+  Video,
 } from "lucide-react";
+import OnlineCourseManagement from "./OnlineCourseManagement";
 
 const AdminDashboard = ({ navigateTo, handleLogout }) => {
   const [activeTab, setActiveTab] = useState("jobs");
@@ -19,6 +21,7 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
     { id: "jobs", label: "Jobs", icon: Briefcase },
     { id: "colleges", label: "Colleges", icon: GraduationCap },
     { id: "study-materials", label: "study-materials", icon: BookOpen },
+    { id: "online-courses", label: "Online Courses", icon: Video },
   ];
 
   const handleTabChange = (tabId) => {
@@ -34,6 +37,8 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
         return <CollegesManagement />;
       case "study-materials":
         return <CoursesManagement />;
+      case "online-courses":
+        return <OnlineCourseManagement />;
       default:
         return <JobsManagement />;
     }
