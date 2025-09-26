@@ -12,6 +12,7 @@ import {
   Video,
 } from "lucide-react";
 import OnlineCourseManagement from "./OnlineCourseManagement";
+import AnnouncementManagement from "./AnnouncementManagement";
 
 const AdminDashboard = ({ navigateTo, handleLogout }) => {
   const [activeTab, setActiveTab] = useState("jobs");
@@ -22,6 +23,7 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
     { id: "colleges", label: "Colleges", icon: GraduationCap },
     { id: "study-materials", label: "study-materials", icon: BookOpen },
     { id: "online-courses", label: "Online Courses", icon: Video },
+    { id: "announcements", label: "Announcements", icon: BookOpen },
   ];
 
   const handleTabChange = (tabId) => {
@@ -39,6 +41,8 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
         return <CoursesManagement />;
       case "online-courses":
         return <OnlineCourseManagement />;
+      case "announcements":
+        return <AnnouncementManagement />;
       default:
         return <JobsManagement />;
     }

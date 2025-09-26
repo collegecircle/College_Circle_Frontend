@@ -5,6 +5,7 @@ import authReducer from "../components/adminDashboard/authSlice";
 import collegesReducer from "../components/college/collegeSlice";
 import courseMaterialsReducer from "../components/course/courseSlice";
 import onlineCoursesReducer from "../components/OnlineCourseUser/onlineCourseSlice";
+import announcementsReducer from "../components/userannouncements/announcementSlice";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     colleges: collegesReducer,
     materials: courseMaterialsReducer,
     onlineCourses: onlineCoursesReducer,
+    announcements: announcementsReducer,
     auth: authReducer,
   },
 });

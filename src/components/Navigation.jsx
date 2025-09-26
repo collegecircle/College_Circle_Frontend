@@ -187,10 +187,10 @@ const Navigation = ({ user, onLogout }) => {
 
   const navItems = [
     { id: "/", label: "Home", color: "yellow-400" },
-    { id: "/jobs", label: "Jobs", color: "yellow-400" },
     { id: "/colleges", label: "Colleges", color: "yellow-400" },
-    { id: "/study-materials", label: "Study-Materials", color: "yellow-400" },
     { id: "/courses", label: "Courses", color: "yellow-400" },
+    { id: "/jobs", label: "Jobs", color: "yellow-400" },
+    { id: "/study-materials", label: "Materials", color: "yellow-400" },
     { id: "/colab", label: "collaborate", color: "yellow-400" },
     ...(user
       ? [

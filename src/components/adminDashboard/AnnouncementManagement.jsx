@@ -1,0 +1,338 @@
+import React, { useState } from "react";
+import CreateAnnouncementForm from "./announcement/CreateAnnouncementForm";
+import {
+  Search,
+  Plus,
+  Edit,
+  Trash2,
+  Building,
+  MapPin,
+  Calendar,
+  Eye,
+  Globe,
+  Users,
+  X,
+} from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { useEffect } from "react";
+import { fetchAnnouncements } from "../userannouncements/announcementSlice";
+import EditAnnouncementForm from "./announcement/EditAnnouncementForm";
+
+const AnnouncementManagement = () => {
+  const dispatch = useDispatch();
+  const [courseAddModalOpen, setCourseAddModalOpen] = useState(false);
+  const handleCloseCourse = () => setCourseAddModalOpen(false);
+  const handleAddCourse = () => setCourseAddModalOpen(true);
+
+  //get  list
+  const { list, status, error, pagination } = useSelector(
+    (state) => state.announcements
+  );
+
+  const itemsPerPage = pagination?.limit || 5;
+  const totalCount = pagination?.count || 0;
+  const totalPages = Math.max(1, Math.ceil(totalCount / itemsPerPage));
+  const [currentPage, setCurrentPage] = useState(1);
+
+  const fetchAnnouncementsWithPagination = (page = 1, searchTerm = "") => {
+    const params = { page, limit: itemsPerPage };
+    if (searchTerm.trim()) {
+      params.search = searchTerm;
+    }
+    dispatch(fetchAnnouncements(params));
+  };
+
+  useEffect(() => {
+    fetchAnnouncementsWithPagination(currentPage);
+  }, [dispatch, currentPage]);
+
+  //delete
+
+  const handleDelete = (id) => {
+    if (window.confirm("Are you sure you want to delete this course?")) {
+      dispatch(deleteOnlineCourse(id)).then((result) => {
+        if (result.type.endsWith("/fulfilled")) {
+          fetchAnnouncementsWithPagination(currentPage);
+        }
+      });
+    }
+  };
+
+  //edit
+  const [editModalOpen, setEditModalOpen] = useState(false);
+  const [currentMaterial, setCurrentMaterial] = useState(null);
+  const handleEdit = (course) => {
+    console.log("Editing course:", course);
+    setCurrentMaterial(course);
+    setEditModalOpen(true);
+  };
+
+  const handleCloseEdit = () => {
+    setEditModalOpen(false);
+    setCurrentMaterial(null);
+  };
+
+  const handlePageChange = (newPage) => {
+    if (newPage >= 1 && newPage <= totalPages) {
+      setCurrentPage(newPage);
+    }
+  };
+
+  return (
+    <div>
+      <div className="bg-white rounded-lg shadow-sm border p-4 sm:p-6 mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+          <div>
+            <h1 className="text-xl sm:text-2xl font-bold text-gray-900">
+              Manage Announcements
+            </h1>
+            <p className="text-gray-600 mt-1 text-sm sm:text-base">
+              Handle announcements effortlessly
+            </p>
+          </div>
+          <button
+            onClick={handleAddCourse}
+            className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded-lg hover:bg-blue-700 flex items-center justify-center space-x-2 transition-colors"
+          >
+            <Plus className="w-5 h-5" />
+            <span>Add Announcement</span>
+          </button>
+        </div>
+        {status === "loading" && (
+          <div className="bg-blue-50 border border-blue-200 text-blue-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+            Loading...
+          </div>
+        )}
+        {error && (
+          <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">
+            Error: {error}
+          </div>
+        )}
+        {list.length === 0 && status !== "loading" && (
+          <div className="text-center py-12">
+            <Building className="mx-auto h-12 w-12 text-gray-400" />
+            <h3 className="mt-2 text-sm font-medium text-gray-900">
+              No announcements found
+            </h3>
+            <p className="mt-1 text-sm text-gray-500">
+              Get started by adding a new announcement.
+            </p>
+          </div>
+        )}
+      </div>
+      {list.length > 0 && status !== "loading" && (
+        <div className="bg-white rounded-lg shadow-sm border overflow-hidden mt-5">
+          {/* Mobile View - Cards */}
+          <div className="block lg:hidden">
+            {list.map((material) => (
+              <div
+                key={material.id}
+                className="p-4 border-b border-gray-200 last:border-b-0"
+              >
+                <div className="flex items-start space-x-3">
+                  <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                    <img
+                      src={material?.imageUrl || "/assets/cclogo.PNG"}
+                      alt={material.title}
+                      className="w-full h-full object-cover"
+                      onError={(e) => (e.target.src = "/assets/cclogo.PNG")}
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="text-sm font-medium text-gray-900 truncate">
+                      Title :{" "}
+                      {material.title && material.title.length > 30
+                        ? material.title.substring(0, 30) + "..."
+                        : material.title}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      Announcement Date:{" "}
+                      {new Date(
+                        material.announcementDate._seconds * 1000
+                      ).toLocaleDateString()}
+                    </div>
+                    <div className="text-sm font-medium text-gray-900 truncate">
+                      Announcement-ID : {material.announcementId}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      priority : {material.priority}
+                    </div>
+                    <div className="text-sm text-gray-500">
+                      status : {material.isActive ? "Active" : "Inactive"}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex space-x-2 mt-3">
+                  <button
+                    onClick={() => handleEdit(material)}
+                    className="flex-1 text-green-600 hover:text-green-900 text-center py-2 border border-green-200 rounded-lg"
+                    title="Edit material"
+                  >
+                    <Edit className="w-4 h-4 mx-auto" />
+                  </button>
+                  <button
+                    onClick={() => handleDelete(material.id)}
+                    className="flex-1 text-red-600 hover:text-red-900 text-center py-2 border border-red-200 rounded-lg"
+                    title="Delete material"
+                  >
+                    <Trash2 className="w-4 h-4 mx-auto" />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="hidden lg:block overflow-x-auto">
+            <table className="w-full">
+              <thead className="bg-gray-50">
+                <tr>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Image
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Title
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Announcement Date
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Announcement ID
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Priority
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Status
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Action
+                  </th>
+                </tr>
+              </thead>
+              <tbody className="bg-white divide-y divide-gray-200">
+                {list.map((material) => (
+                  <tr key={material.id} className="hover:bg-gray-50">
+                    <td className="px-6 py-4 whitespace-nowrap">
+                      <div className="flex items-center">
+                        <div className="w-10 h-10 rounded-lg overflow-hidden bg-gray-100 flex-shrink-0">
+                          <img
+                            src={material?.imageUrl || "/assets/cclogo.PNG"}
+                            alt={material.title}
+                            className="w-full h-full object-cover"
+                            onError={(e) =>
+                              (e.target.src = "/assets/cclogo.PNG")
+                            }
+                          />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {material.title && material.title.length > 20
+                        ? material.title.substring(0, 20) + "..."
+                        : material.title}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {new Date(
+                        material.announcementDate._seconds * 1000
+                      ).toLocaleDateString()}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {material.announcementId || "N/A"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {material.priority}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
+                      {material.isActive ? "Active" : "Inactive"}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
+                      <div className="flex space-x-2">
+                        <button
+                          onClick={() => handleEdit(material)}
+                          className="text-green-600 hover:text-green-900"
+                          title="Edit material"
+                        >
+                          <Edit className="w-4 h-4" />
+                        </button>
+                        <button
+                          onClick={() => handleDelete(material.id)}
+                          className="text-red-600 hover:text-red-900"
+                          title="Delete College"
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Pagination */}
+          {totalPages > 0 && (
+            <div className="px-4 sm:px-6 py-3 bg-gray-50 border-t flex flex-col sm:flex-row justify-between items-center gap-3">
+              <div className="text-sm text-gray-700 text-center sm:text-left">
+                Showing {(currentPage - 1) * itemsPerPage + 1} to{" "}
+                {Math.min(currentPage * itemsPerPage, totalCount)} of{" "}
+                {totalCount} results
+              </div>
+              <div className="flex items-center space-x-2">
+                <button
+                  disabled={currentPage === 1}
+                  onClick={() => handlePageChange(currentPage - 1)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Previous
+                </button>
+                <span className="text-sm text-gray-700">
+                  Page {currentPage} of {totalPages}
+                </span>
+                <button
+                  disabled={currentPage === totalPages}
+                  onClick={() => handlePageChange(currentPage + 1)}
+                  className="px-4 py-2 border border-gray-300 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                >
+                  Next
+                </button>
+              </div>
+            </div>
+          )}
+        </div>
+      )}
+      {courseAddModalOpen && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg relative">
+            <button
+              onClick={handleCloseCourse}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+            >
+              ✕
+            </button>
+            <CreateAnnouncementForm />
+          </div>
+        </div>
+      )}
+
+      {editModalOpen && currentMaterial && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black/30 backdrop-blur-sm z-50">
+          <div className="bg-white rounded-xl shadow-lg p-6 w-full max-w-lg relative">
+            <button
+              onClick={handleCloseEdit}
+              className="absolute top-3 right-3 text-gray-500 hover:text-gray-700 text-xl"
+            >
+              ✕
+            </button>
+            <EditAnnouncementForm
+              announcementData={currentMaterial}
+              onClose={handleCloseEdit}
+              onSuccess={() => fetchCourseMaterialsWithPagination(currentPage)}
+            />
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
+
+export default AnnouncementManagement;

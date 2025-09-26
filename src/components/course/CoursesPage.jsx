@@ -4,6 +4,7 @@ import CourseCard from "./CourseCard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCourseMaterials } from "../course/courseSlice";
 import { ChevronLeft, ChevronRight, AlertCircle } from "lucide-react";
+import PDFViewer from "../../gobalComponents/PdfViewer";
 
 const CoursesPage = () => {
   const dispatch = useDispatch();
@@ -35,6 +36,11 @@ const CoursesPage = () => {
       fetchCollegesWithPagination(newPage);
     }
   };
+
+  //course free pdf page
+
+  const [showPDF, setShowPDF] = useState(false);
+  const [selectedMaterial, setSelectedMaterial] = useState(null);
 
   if (status === "loading") {
     return (
@@ -125,6 +131,10 @@ const CoursesPage = () => {
             key={material.id || material.collegeId || material._id || index}
             material={material}
             onKnowMore={() => handleKnowMore(material)}
+            onOpenPDF={() => {
+              setSelectedMaterial(material);
+              setShowPDF(true);
+            }}
           />
         ))}
       </div>
@@ -167,6 +177,16 @@ const CoursesPage = () => {
             </button>
           </div>
         </div>
+      )}
+
+      {showPDF && selectedMaterial && (
+        <PDFViewer
+          pdfUrl={selectedMaterial.documentLink}
+          onClose={() => {
+            setShowPDF(false);
+            setSelectedMaterial(null);
+          }}
+        />
       )}
     </div>
   );

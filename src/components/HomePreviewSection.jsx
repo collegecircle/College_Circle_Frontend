@@ -10,6 +10,7 @@ import {
 import { fetchJobs } from "./jobs/jobsSlice";
 import { fetchColleges } from "./college/collegeSlice";
 import { fetchCourseMaterials } from "./course/courseSlice";
+import { fetchOnlineCourses } from "./OnlineCourseUser/onlineCourseSlice";
 
 import { useNavigate } from "react-router-dom";
 
@@ -19,21 +20,24 @@ const HomePreviewSection = ({ user }) => {
   const { list: jobsList, status: jobsStatus } = useSelector(
     (state) => state.jobs
   );
-  console.log(jobsList, "job home");
+
   const { list: collegesList, status: collegesStatus } = useSelector(
     (state) => state.colleges
   );
 
-  console.log(collegesList, "cole home");
   const { list: materialList, status: materialStatus } = useSelector(
     (state) => state.materials
   );
-  console.log(materialList, "mater home");
+
+  const { list: onlineCoursesList, status: onlineCoursesStatus } = useSelector(
+    (state) => state.onlineCourses
+  );
 
   // State to prevent multiple fetches
   const [hasFetchedJobs, setHasFetchedJobs] = useState(false);
   const [hasFetchedColleges, setHasFetchedColleges] = useState(false);
   const [hasFetchedMaterials, setHasFetchedMaterials] = useState(false);
+  const [hasFetchedOnlineCourses, setHasFetchedOnlineCourses] = useState(false);
 
   // Lock condition for Courses (replace with actual logic, e.g., state.auth.isSubscribed)
   const isCoursesLocked = true; // Hardcoded for testing; replace with Redux state or prop
@@ -46,6 +50,7 @@ const HomePreviewSection = ({ user }) => {
     ? collegesList.data.colleges.slice(0, 2)
     : [];
   const featuredMaterials = materialList.slice(0, 2);
+  const featuredOnlineCourses = onlineCoursesList.slice(0, 2);
   // Fetch data only once
   useEffect(() => {
     if (
@@ -53,7 +58,6 @@ const HomePreviewSection = ({ user }) => {
       jobsStatus === "idle" &&
       (!jobsList?.jobs?.length || jobsList.jobs.length < 2)
     ) {
-      // console.log('Fetching jobs for HomePreviewSection');
       dispatch(fetchJobs({ page: 1, limit: 2 }));
       setHasFetchedJobs(true);
     }
@@ -62,7 +66,6 @@ const HomePreviewSection = ({ user }) => {
       collegesStatus === "idle" &&
       (!collegesList?.colleges?.length || collegesList.colleges.length < 2)
     ) {
-      // console.log('Fetching colleges for HomePreviewSection');
       dispatch(fetchColleges({ page: 1, limit: 2 }));
       setHasFetchedColleges(true);
     }
@@ -76,8 +79,6 @@ const HomePreviewSection = ({ user }) => {
     hasFetchedColleges,
   ]);
 
-  console.log(featuredMaterials, "hii");
-
   // Fetch data only once
   useEffect(() => {
     if (
@@ -85,7 +86,6 @@ const HomePreviewSection = ({ user }) => {
       jobsStatus === "idle" &&
       (!jobsList?.jobs?.length || jobsList.jobs.length < 2)
     ) {
-      console.log("Fetching jobs for HomePreviewSection");
       dispatch(fetchJobs({ page: 1, limit: 2 }));
       setHasFetchedJobs(true);
     }
@@ -94,7 +94,6 @@ const HomePreviewSection = ({ user }) => {
       collegesStatus === "idle" &&
       (!collegesList?.colleges?.length || collegesList.colleges.length < 2)
     ) {
-      console.log("Fetching colleges for HomePreviewSection");
       dispatch(fetchColleges({ page: 1, limit: 2 }));
       setHasFetchedColleges(true);
     }
@@ -103,9 +102,18 @@ const HomePreviewSection = ({ user }) => {
       materialStatus === "idle" &&
       (!materialList?.materials?.length || materialList.materials.length < 2)
     ) {
-      console.log("Fetching colleges for HomePreviewSection");
       dispatch(fetchCourseMaterials({ page: 1, limit: 2 }));
       setHasFetchedMaterials(true);
+    }
+
+    // online courses
+    if (
+      !hasFetchedOnlineCourses &&
+      onlineCoursesStatus === "idle" &&
+      (!onlineCoursesList?.length || onlineCoursesList.length < 2)
+    ) {
+      dispatch(fetchOnlineCourses({ page: 1, limit: 2 }));
+      setHasFetchedOnlineCourses(true);
     }
   }, [
     dispatch,
@@ -118,6 +126,7 @@ const HomePreviewSection = ({ user }) => {
     hasFetchedJobs,
     hasFetchedColleges,
     hasFetchedMaterials,
+    onlineCoursesList?.courses,
   ]);
 
   // Navigation handler to check authentication
@@ -212,9 +221,40 @@ const HomePreviewSection = ({ user }) => {
             <span className="text-yellow-400 font-semibold text-sm">
               {material.price > 0 ? `₹${material.price}` : "FREE"}
             </span>
-            <span className="text-xs text-gray-500">
+            {/* <span className="text-xs text-gray-500">
               {material.registeredCount}
+            </span> */}
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
+  const OnlineCourseMiniCard = ({ course }) => (
+    <div
+      onClick={() => handleNavigation("courses")}
+      className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
+    >
+      <div className="flex items-start space-x-3">
+        <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
+          <img
+            src={course.thumbnailImgUrl || "/assets/cclogo.PNG"}
+            alt={course.name}
+            className="w-full h-full object-cover"
+          />
+        </div>
+        <div className="flex-1 min-w-0">
+          <h4 className="font-semibold text-white text-sm mb-1 group-hover:text-yellow-400 transition-colors duration-300">
+            {course.name}
+          </h4>
+          {/* <p className="text-gray-400 text-xs mb-2">by {course.provider}</p> */}
+          <div className="flex items-center justify-between">
+            <span className="text-yellow-400 font-semibold text-sm">
+              {course.price > 0 ? `₹${course.price}` : "FREE"}
             </span>
+            {/* <span className="text-xs text-gray-500">
+              {course.registeredCount}
+            </span> */}
           </div>
         </div>
       </div>
@@ -240,47 +280,6 @@ const HomePreviewSection = ({ user }) => {
 
         {/* Services Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-4">
-          {/* Jobs Section */}
-          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-3">
-                <div>
-                  <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
-                  <p className="text-gray-400 text-sm">
-                    Find your perfect role
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleNavigation("jobs")}
-                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              {jobsStatus === "loading" ? (
-                <div className="text-gray-400 text-center">Loading jobs...</div>
-              ) : featuredJobs.length === 0 ? (
-                <div className="text-gray-400 text-center">
-                  No jobs available
-                </div>
-              ) : (
-                featuredJobs.map((job) => (
-                  <JobMiniCard key={job.id} job={job} />
-                ))
-              )}
-            </div>
-
-            <button
-              onClick={() => handleNavigation("jobs")}
-              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
-            >
-              <span>View All Jobs</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
           {/* Colleges Section */}
           <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
             <div className="flex items-center justify-between mb-6">
@@ -322,7 +321,93 @@ const HomePreviewSection = ({ user }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
+          {/* Jobs Section */}
+          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
+                  <p className="text-gray-400 text-sm">
+                    Find your perfect role
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => handleNavigation("jobs")}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
 
+            <div className="space-y-4 mb-6">
+              {jobsStatus === "loading" ? (
+                <div className="text-gray-400 text-center">Loading jobs...</div>
+              ) : featuredJobs.length === 0 ? (
+                <div className="text-gray-400 text-center">
+                  No jobs available
+                </div>
+              ) : (
+                featuredJobs.map((job) => (
+                  <JobMiniCard key={job.id} job={job} />
+                ))
+              )}
+            </div>
+
+            <button
+              onClick={() => handleNavigation("jobs")}
+              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+            >
+              <span>View All Jobs</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Courses Section */}
+          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div>
+                  <h3 className="text-xl font-bold text-white">
+                    Popular Courses
+                  </h3>
+                  <p className="text-gray-400 text-sm">
+                    Find Your Best Mentors
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => handleNavigation("study-materials")}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              {collegesStatus === "loading" ? (
+                <div className="text-gray-400 text-center">
+                  Loading courses...
+                </div>
+              ) : featuredColleges.length === 0 ? (
+                <div className="text-gray-400 text-center">
+                  No courses available
+                </div>
+              ) : (
+                featuredOnlineCourses.map((course) => (
+                  <OnlineCourseMiniCard key={course.id} course={course} />
+                ))
+              )}
+            </div>
+
+            <button
+              onClick={() => handleNavigation("courses")}
+              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+            >
+              <span>View All Courses</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
           {/* materials Section */}
           <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
             <div className="flex items-center justify-between mb-6">
@@ -363,50 +448,6 @@ const HomePreviewSection = ({ user }) => {
               className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
             >
               <span>View All materials</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-3">
-                <div>
-                  <h3 className="text-xl font-bold text-white">
-                    Popular Courses
-                  </h3>
-                  <p className="text-gray-400 text-sm">
-                    Find Your Best Mentors
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleNavigation("study-materials")}
-                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              {collegesStatus === "loading" ? (
-                <div className="text-gray-400 text-center">
-                  Loading courses...
-                </div>
-              ) : featuredColleges.length === 0 ? (
-                <div className="text-gray-400 text-center">
-                  No courses available
-                </div>
-              ) : (
-                featuredMaterials.map((material) => (
-                  <CourseMiniCard key={material.id} material={material} />
-                ))
-              )}
-            </div>
-
-            <button
-              onClick={() => handleNavigation("courses")}
-              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
-            >
-              <span>View All Courses</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>

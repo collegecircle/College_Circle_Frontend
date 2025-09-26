@@ -13,7 +13,8 @@ import {
 import axios from "axios";
 import { useSelector } from "react-redux";
 import PdfViewer from "../../gobalComponents/PdfViewer";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
+import CourseViewer from "../../gobalComponents/CourseViewer";
 
 const API_BASE_URL = import.meta.env.VITE_API_URL;
 
@@ -23,14 +24,53 @@ export default function Dashboard() {
     studentId: globalUser?.id,
   };
 
+  const currentTab = useLocation();
+
   const [studyMaterials, setStudyMaterials] = useState([]);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [selectedView, setSelectedView] = useState("materials");
+  const [selectedView, setSelectedView] = useState(
+    currentTab.state?.tab ?? "materials"
+  );
+  const [expandedCourseId, setExpandedCourseId] = useState(null);
+  const [expandedModuleIndex, setExpandedModuleIndex] = useState(null);
+
   const [showPdfViewer, setShowPdfViewer] = useState(false);
   const [selectedPdfUrl, setSelectedPdfUrl] = useState("");
 
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
+
+  const [courses, setCourses] = useState([]);
+
+  const getUserCourses = async () => {
+    try {
+      setLoading(true);
+      const response = await axios.post(
+        `${API_BASE_URL}/user/get-registerd-onlinecourses`,
+        payload,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      if (response.data.status_code === 200) {
+        // Fix: Set courses directly from the data array
+        setCourses(response.data.data || []);
+        setLoading(false);
+        setError(null);
+        console.log("Courses loaded:", response.data.data);
+      } else {
+        setLoading(false);
+        setError(response.data.data.message || "Error fetching data");
+      }
+    } catch (err) {
+      setLoading(false);
+      setError(err.message || "Error fetching data");
+      console.error("Error loading courses:", err);
+    }
+  };
 
   const getUserStudymaterials = async () => {
     try {
@@ -58,14 +98,21 @@ export default function Dashboard() {
       setError(err.message || "Error fetching data");
     }
   };
-
+  const toggleCourseExpansion = (courseId) => {
+    if (expandedCourseId === courseId) {
+      setExpandedCourseId(null);
+      setExpandedModuleIndex(null);
+    } else {
+      setExpandedCourseId(courseId);
+      setExpandedModuleIndex(null);
+    }
+  };
   useEffect(() => {
     if (globalUser?.id) {
       getUserStudymaterials();
+      getUserCourses();
     }
   }, [globalUser]);
-
-  const courses = [];
 
   const openPdfViewer = (materialId) => {
     console.log("Clicked on material ID:", materialId);
@@ -129,9 +176,223 @@ export default function Dashboard() {
         </>
       );
     } else if (selectedView === "courses") {
+      const isAnyExpanded = expandedCourseId !== null;
+
+      // Add this check to ensure courses is an array
+      const coursesArray = Array.isArray(courses) ? courses : [];
+      if (coursesArray.length === 0) {
+        return (
+          <div className=" backdrop-blur-sm rounded-xl p-8 md:p-10 text-center max-w-3xl mx-auto">
+            <div className="mb-6">
+              <div className="bg-gray-700/50 h-20 w-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-10 w-10 text-[#fdc700]"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"
+                  />
+                </svg>
+              </div>
+
+              <h2 className="text-2xl font-bold text-white mb-3">
+                Start Your Learning Journey
+              </h2>
+
+              <p className="text-gray-300 max-w-lg mx-auto mb-8">
+                You haven't enrolled in any courses yet. Discover our collection
+                of expert-led courses to enhance your skills and advance your
+                career.
+              </p>
+
+              <button
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-[#fdc700] to-[#ffb700] text-gray-900 rounded-lg text-base font-medium shadow-lg transform transition-all duration-200 hover:translate-y-[-2px]"
+                onClick={() => handleNavigation("courses")}
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-5 w-5 mr-2"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+                Browse Courses
+              </button>
+            </div>
+          </div>
+        );
+      }
+
+      // Use coursesArray instead of courses
+      const activeCourse = coursesArray.find(
+        (c) => c.courseId === expandedCourseId
+      );
       return (
-        <div className="rounded-lg p-4 md:p-6">
-          <h2 className="text-xl font-semibold mb-4">My Courses</h2>
+        <div className=" rounded-lg p-4 md:p-6">
+          {/* Header */}
+          <h2 className="text-xl font-semibold mb-6 text-white flex items-center justify-between">
+            <span>My Learning Journey </span>
+            {isAnyExpanded && (
+              <button
+                onClick={() => {
+                  setExpandedCourseId(null);
+                  setExpandedModuleIndex(null);
+                }}
+                className="text-sm font-normal bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-full transition-all duration-300 flex items-center"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-4 w-4 mr-1"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M10 19l-7-7m0 0l7-7m-7 7h18"
+                  />
+                </svg>
+                Go Back
+              </button>
+            )}
+          </h2>
+
+          {/* Expanded course view */}
+          {activeCourse && (
+            <div className="mb-8">
+              <CourseViewer
+                key={activeCourse.courseId}
+                course={activeCourse}
+                formatDate={formatDate}
+                onEnroll={() => console.log("Enroll:", activeCourse.courseId)}
+                isEnrolled={
+                  activeCourse.registeredOnlineCourses?.length > 0 || false
+                }
+                setShowPdfViewer={setShowPdfViewer}
+                setSelectedPdfUrl={setSelectedPdfUrl}
+              />
+            </div>
+          )}
+
+          {!isAnyExpanded && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {courses.map((course) => (
+                <div
+                  key={course.courseId}
+                  className="bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-700/30"
+                  onClick={() => toggleCourseExpansion(course.courseId)}
+                >
+                  {/* Thumbnail */}
+                  <div className="relative h-44 overflow-hidden">
+                    <div className="absolute inset-0 bg-gradient-to-t from-gray-900 to-transparent z-10"></div>
+                    <img
+                      src={
+                        course.thumbnailImgUrl || "/images/course-fallback.jpg"
+                      }
+                      alt={course.name}
+                      className="w-full h-full object-cover"
+                    />
+
+                    {/* Course code badge */}
+                    <div className="absolute top-3 right-3 z-20">
+                      <div className="bg-gray-700/70 backdrop-blur-sm text-white px-2 py-1 rounded-full text-xs">
+                        {course.courseId}
+                      </div>
+                    </div>
+
+                    {/* Course name */}
+                    <div className="absolute bottom-0 left-0 right-0 p-3 z-20">
+                      <h3 className="text-lg font-bold text-white">
+                        {course.name}
+                      </h3>
+                    </div>
+                  </div>
+
+                  {/* Content section */}
+                  <div className="p-4">
+                    <div className="flex justify-between items-center mb-3">
+                      <div className="bg-[#fdc700] text-gray-800 px-2 py-1 rounded-full text-sm font-medium">
+                        ₹{course.price}
+                      </div>
+                      <div className="text-xs text-gray-400">
+                        {formatDate(course.postedOn._seconds)}
+                      </div>
+                    </div>
+
+                    {/* Course stats */}
+                    <div className="flex justify-between mb-4 text-xs text-gray-300">
+                      <div className="flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-1 text-[#fdc700]"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
+                          />
+                        </svg>
+                        {course.modules?.length || 0} Modules
+                      </div>
+                      <div className="flex items-center">
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          className="h-4 w-4 mr-1 text-[#fdc700]"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"
+                          />
+                        </svg>
+                        {course.registeredMembers?.length || 0} Enrolled
+                      </div>
+                    </div>
+
+                    {/* Minimal button */}
+                    <button className="w-full bg-gray-700 hover:bg-gray-600 text-white py-2 px-3 rounded-full flex items-center justify-center text-sm">
+                      <span>View Details</span>
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4 ml-2 text-[#fdc700]"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M9 5l7 7-7 7"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       );
     } else if (selectedView === "materials") {

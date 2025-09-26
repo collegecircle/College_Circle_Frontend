@@ -29,7 +29,6 @@ const HomePage = ({ user }) => {
   }, []);
 
   const handleNavigation = (path) => {
-    // If user is not authenticated, redirect to /userlogin for protected routes
     if (
       !user &&
       ["jobs", "colleges", "courses", "study-materials"].includes(path)

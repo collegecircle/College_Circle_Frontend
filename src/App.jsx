@@ -24,6 +24,8 @@ import ContactForm from "./components/faqs/Contact";
 import NewCoursePage from "./components/OnlineCourseUser/NewCoursePage";
 import UserDashboard from "./components/userDashboard/UserDashboard";
 
+import AuthorizedCourseViewer from "./gobalComponents/AuthorizedCourseViewer";
+import Announcements from "./gobalComponents/Announcements";
 /* ---------------- SPLASH SCREEN HELPERS ---------------- */
 const getLastSplashTime = () => {
   try {
@@ -251,6 +253,14 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             }
           />
           <Route
+            path="/announcements"
+            element={
+              <PublicRoute>
+                <Announcements user={user} />
+              </PublicRoute>
+            }
+          />
+          <Route
             path="/colab"
             element={
               <PublicRoute>
@@ -279,6 +289,14 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             element={
               <PrivateRoute>
                 <UserDashboard user={user} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/course-viewer/:courseId"
+            element={
+              <PrivateRoute>
+                <AuthorizedCourseViewer />
               </PrivateRoute>
             }
           />

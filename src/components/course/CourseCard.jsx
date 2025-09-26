@@ -3,21 +3,22 @@ import { ArrowRight, Users, Calendar, Crown } from "lucide-react";
 import PDFViewer from "./PDFViewer";
 import { useSelector } from "react-redux";
 import axios from "axios";
-import PdfViewer from "../../gobalComponents/PdfViewer";
+import { useNavigate } from "react-router-dom";
 const BASE_URL = import.meta.env.VITE_API_URL;
-const CourseCard = ({ material }) => {
+const CourseCard = ({ material, onOpenPDF }) => {
   const [showPDF, setShowPDF] = useState(false);
 
+  const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
   const handleClick = async () => {
     try {
       if (material.price === 0) {
-        setShowPDF(true);
+        onOpenPDF && onOpenPDF();
         return;
       }
 
       const orderRes = await axios.post(
-        `${BASE_URL}/course-materials/get-material-access`, // your backend route
+        `${BASE_URL}/course-materials/get-material-access`,
         {
           materialId: material.id,
           studentId: user?.id,
@@ -25,6 +26,17 @@ const CourseCard = ({ material }) => {
           name: user?.name,
         }
       );
+
+      if (
+        orderRes.data?.message ==
+        "you have already registered for this course material"
+      ) {
+        alert("You have already registered for this course material.");
+        navigate("/dashboard", {
+          state: { tab: "materials" },
+        });
+        return;
+      }
 
       const { key, order_id, paymentId, amount, currency, prefill, theme } =
         orderRes.data.data;
@@ -39,8 +51,6 @@ const CourseCard = ({ material }) => {
         prefill,
         theme,
         handler: async function (response) {
-          // 3️⃣ Call backend to verify payment
-
           try {
             const verifyRes = await axios.post(
               `${BASE_URL}/course-materials/veriify-payment-material-sucess`,
@@ -52,6 +62,11 @@ const CourseCard = ({ material }) => {
             );
 
             alert(verifyRes.data.message || "Payment Successful!");
+            if (verifyRes.data.success) {
+              navigate("/dashboard", {
+                state: { tab: "materials" },
+              });
+            }
           } catch (err) {
             console.error(err);
             alert(
