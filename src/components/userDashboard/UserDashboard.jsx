@@ -31,6 +31,7 @@ export default function Dashboard() {
   const [selectedView, setSelectedView] = useState(
     currentTab.state?.tab ?? "materials"
   );
+
   const [expandedCourseId, setExpandedCourseId] = useState(null);
   const [expandedModuleIndex, setExpandedModuleIndex] = useState(null);
 
@@ -60,7 +61,6 @@ export default function Dashboard() {
         setCourses(response.data.data || []);
         setLoading(false);
         setError(null);
-        console.log("Courses loaded:", response.data.data);
       } else {
         setLoading(false);
         setError(response.data.data.message || "Error fetching data");
@@ -68,7 +68,6 @@ export default function Dashboard() {
     } catch (err) {
       setLoading(false);
       setError(err.message || "Error fetching data");
-      console.error("Error loading courses:", err);
     }
   };
 
@@ -115,26 +114,16 @@ export default function Dashboard() {
   }, [globalUser]);
 
   const openPdfViewer = (materialId) => {
-    console.log("Clicked on material ID:", materialId);
-
     const material = studyMaterials.find((m) => m.id === materialId);
-    console.log("Found material:", material);
 
     if (material) {
       if (material.documentLink) {
-        console.log("Setting PDF URL to:", material.documentLink);
         setSelectedPdfUrl(material.documentLink);
         setShowPdfViewer(true);
       } else {
-        console.log("No document link found on material:", material);
         alert("PDF not available for this material.");
       }
     } else {
-      console.log("No material found with ID:", materialId);
-      console.log(
-        "Available material IDs:",
-        studyMaterials.map((m) => m.id)
-      );
       alert("Material not found.");
     }
   };
@@ -457,10 +446,6 @@ export default function Dashboard() {
                     className="text-[#000] hover:text-[#000] bg-[#fff]  p-2 rounded-lg transition-colors duration-200"
                     onClick={(e) => {
                       e.stopPropagation();
-                      console.log(
-                        "Downloading material ID:",
-                        material.documentLink
-                      );
                     }}
                   >
                     <Download className="h-4 w-4 inline-block ml-1" /> Download

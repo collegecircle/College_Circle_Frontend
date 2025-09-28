@@ -61,6 +61,9 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
+  const location = useLocation();
+  const from = location.state?.from || "/";
+
   const validate = () => {
     const newErrors = {};
 
@@ -123,10 +126,10 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
         // Store user data
         localStorage.setItem("token", response.data.token);
         localStorage.setItem("userData", JSON.stringify(response.data));
-        window.location.reload();
 
         setTimeout(() => {
-          navigate("/");
+          navigate(from, { replace: true });
+          window.location.reload();
         }, 1000);
       } else {
         setNotification({

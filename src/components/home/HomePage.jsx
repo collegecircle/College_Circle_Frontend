@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { ArrowRight } from "lucide-react";
 import Particles from "../../ReactBits/Particles";
 import logo from "/assets/cclogo.PNG";
@@ -17,6 +17,9 @@ import CircularBeamDemo from "../../gobalComponents/CircularBeamDemo";
 import { motion } from "framer-motion";
 import ContactForm from "../faqs/Contact";
 import InfiniteLogoScroll from "../../gobalComponents/InfiniteLogoScroll";
+import Announcement from "../../gobalComponents/Announcements";
+import axios from "axios";
+const API_BASE_URL = import.meta.env.VITE_API_URL;
 
 const HomePage = ({ user }) => {
   const heroRef = useRef(null);
@@ -48,6 +51,23 @@ const HomePage = ({ user }) => {
       "_blank" // Opens in new tab
     );
   };
+
+  const [isAnnouncementOpen, setIsAnnouncementOpen] = useState(false);
+
+  const fetchAnnouncements = async () => {
+    try {
+      const res = await axios.get(
+        `${API_BASE_URL}/announcements/get-active-announcements`
+      );
+      if (res?.data.data.count > 0) {
+        setIsAnnouncementOpen(true);
+      }
+    } catch (err) {}
+  };
+
+  useEffect(() => {
+    fetchAnnouncements();
+  }, []);
 
   return (
     <>
@@ -181,6 +201,13 @@ const HomePage = ({ user }) => {
           <Carousel />
         </div>
       </section>
+      {/* Announcements Section */}
+      {isAnnouncementOpen && (
+        <section>
+          <Announcement />
+        </section>
+      )}
+
       <section className="">
         <RollingGallery autoplay={true} pauseOnHover={true} />
       </section>

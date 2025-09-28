@@ -221,7 +221,6 @@ function App() {
   );
 }
 
-/* ---------------- ROUTING CONTENT ---------------- */
 const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
   const location = useLocation();
   const shouldHideFooter = ["/admin", "/adminlogin", "/userlogin"].includes(
@@ -240,7 +239,13 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
   return (
     <>
       {!shouldHideFooter && (
-        <Navigation user={user} onLogout={() => setUserWithStorage(null)} />
+        <Navigation
+          user={user}
+          onLogout={() => {
+            setUserWithStorage(null);
+            window.location.reload();
+          }}
+        />
       )}
       <div className={shouldHideFooter ? "pt-0" : "pt-16"}>
         <Routes>
@@ -268,7 +273,7 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
               </PublicRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/colleges"
             element={
               // <PrivateRoute>
@@ -284,6 +289,31 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
               </PrivateRoute>
             }
           />
+           <Route
+            path="/courses"
+            element={
+              <PrivateRoute>
+                <NewCoursePage user={user} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/jobs"
+            element={
+              <PrivateRoute>
+                <JobsPage user={user} />
+              </PrivateRoute>
+            }
+          /> */}
+
+          <Route
+            path="/study-materials"
+            element={<MaterialPage user={user} />}
+          />
+          <Route path="/colleges" element={<CollegesPage user={user} />} />
+          <Route path="/courses" element={<NewCoursePage user={user} />} />
+          <Route path="/jobs" element={<JobsPage user={user} />} />
+
           <Route
             path="/dashboard"
             element={
@@ -297,22 +327,6 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             element={
               <PrivateRoute>
                 <AuthorizedCourseViewer />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/courses"
-            element={
-              <PrivateRoute>
-                <NewCoursePage user={user} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobs"
-            element={
-              <PrivateRoute>
-                <JobsPage user={user} />
               </PrivateRoute>
             }
           />
