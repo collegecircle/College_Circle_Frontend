@@ -126,14 +126,12 @@ function App() {
     const storedUser = getUserFromStorage();
     if (storedUser) {
       setUser(storedUser);
-      // console.log("User loaded from localStorage:", storedUser);
     }
     setIsAuthLoaded(true);
   }, []);
 
   // Sync user with localStorage
   const setUserWithStorage = (userData) => {
-    // console.log("setUserWithStorage called:", userData);
     if (userData) {
       try {
         const role = userData.role || "user";
@@ -143,7 +141,6 @@ function App() {
           localStorage.setItem("token", userData.token);
         }
         setUser({ ...userData, role });
-        // console.log("User saved to localStorage:", userData);
       } catch (error) {
         // console.error("Error saving user to localStorage:", error);
         setUser(userData);
@@ -151,7 +148,6 @@ function App() {
     } else {
       clearUserFromStorage();
       setUser(null);
-      // console.log("User cleared from localStorage");
     }
   };
 

@@ -72,7 +72,6 @@ export const createOnlineCourse = createAsyncThunk(
 export const updateOnlineCourse = createAsyncThunk(
   "onlineCourses/updateOnlineCourse",
   async ({ id, courseData }, { rejectWithValue }) => {
-    console.log("Updating course ID:", id, "with data:", courseData);
     try {
       const res = await fetch(
         `${BASE_URL}/online-courses/update-online-course/${id}`,

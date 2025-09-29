@@ -71,7 +71,6 @@ export const createAnnouncement = createAsyncThunk(
 export const updateAnnouncement = createAsyncThunk(
   "announcements/updateAnnouncement",
   async ({ id, values }, { rejectWithValue }) => {
-    console.log("Updating announcement ID:", id, "with data:", values);
     try {
       const res = await fetch(
         `${BASE_URL}/announcements/update-announcement/${id}`, // correct route

@@ -115,7 +115,6 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
       };
 
       const response = await dispatch(loginUser(payload)).unwrap();
-      console.log("Login response:", response);
 
       if (response?.success) {
         setNotification({

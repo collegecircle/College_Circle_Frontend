@@ -62,7 +62,6 @@ const AnnouncementManagement = () => {
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [currentMaterial, setCurrentMaterial] = useState(null);
   const handleEdit = (course) => {
-    console.log("Editing course:", course);
     setCurrentMaterial(course);
     setEditModalOpen(true);
   };

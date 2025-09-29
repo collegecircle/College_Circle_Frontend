@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { X, Download } from "lucide-react";
 
 export default function PdfViewer({ pdfUrl, onClose }) {
-  console.log(pdfUrl);
   const [isLoading, setIsLoading] = useState(true);
 
   return (
