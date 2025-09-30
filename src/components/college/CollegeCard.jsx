@@ -1,7 +1,16 @@
 import React from "react";
 import { ArrowRight, MapPin, Eye } from "lucide-react";
 
+import getUserFromStorage from "../helpers/helper";
+import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+
 const CollegeCard = ({ college, onKnowMore, onOverview }) => {
+  const navigate = useNavigate();
+  const user = useSelector((state) => state?.auth?.user);
+  // auth
+  const loggedInUser = user || getUserFromStorage();
+
   const formatAddress = (address) => {
     if (!address) return "Location not available";
     return `${address.city}, ${address.state}`;
@@ -22,12 +31,21 @@ const CollegeCard = ({ college, onKnowMore, onOverview }) => {
   };
 
   const handleKnowMore = (e) => {
+    if (!loggedInUser) {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+      return;
+    }
+
     e.preventDefault();
     e.stopPropagation();
     onKnowMore(college);
   };
 
   const handleOverview = (e) => {
+    if (!loggedInUser) {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+      return;
+    }
     e.preventDefault();
     e.stopPropagation();
     onOverview(college);

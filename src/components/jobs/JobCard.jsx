@@ -1,76 +1,9 @@
-// import React from "react";
-// import { ArrowRight } from "lucide-react";
-
-
-// const JobCard = ({ job }) => {
-
-//   return (
-//     <div className={`${job.bgColor} rounded-2xl p-6 relative group hover:shadow-xl transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden`}>
-//       {/* <button
-//                     onClick={(e) => {
-//                         e.stopPropagation();
-//                         toggleSaveItem(`job-${job.id}`);
-//                     }}
-//                     className="absolute top-4 right-4 z-10 p-2 rounded-full bg-white/80 hover:bg-white transition-all duration-300"
-//                 >
-//                     <Bookmark
-//                         className={`w-4 h-4 transition-all duration-300 ${isSaved ? 'text-yellow-500 fill-yellow-500' : 'text-gray-600 hover:text-yellow-500'
-//                             }`}
-//                     />
-//                 </button> */}
-
-//       <div className="mb-6">
-//         <span className="text-lg font-bold text-black">{job.salary}</span>
-//       </div>
-
-//       <h3 className="text-2xl font-bold text-black mb-8 leading-tight">
-//         {job.title}
-//       </h3>
-
-//       <div className="flex items-center justify-center mb-8">
-//         <div className="flex space-x-1">
-//           <div className="w-2 h-2 bg-black/30 rounded-full"></div>
-//           <div className="w-2 h-2 bg-black/20 rounded-full"></div>
-//           <div className="w-2 h-2 bg-black/10 rounded-full"></div>
-//           <div className="w-2 h-2 bg-black/10 rounded-full"></div>
-//         </div>
-//       </div>
-
-//       <div className="flex items-center justify-between">
-//         <div className="flex items-center space-x-3">
-//           <div className="w-12 h-12 rounded-xl overflow-hidden shadow-md">
-//             <img
-//               src={job.companyLogo}
-//               alt={job.company}
-//               className="w-full h-full object-cover"
-//             />
-//           </div>
-//           <div>
-//             <p className="font-semibold text-black text-sm">{job.title}</p>
-//             <p className="text-black/70 text-xs">{job.company}</p>
-//           </div>
-//         </div>
-
-//         <button className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-500 hover:text-black transition-all duration-300">
-//           View
-//         </button>
-//       </div>
-
-//       <div className="absolute top-1/2 right-6 transform -translate-y-1/2 opacity-0 group-hover:opacity-100 transition-all duration-500 group-hover:translate-x-2">
-//         <ArrowRight className="w-6 h-6 text-black/50" />
-//       </div>
-//     </div>
-//   );
-// };
-
-// export default JobCard;
-
-
 import React from "react";
-import {
-  Building,
-  X,
-} from "lucide-react";
+import { Building, X } from "lucide-react";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+
+import getUserFromStorage from "../helpers/helper";
 
 // COLORS for cards
 const COLORS = [
@@ -85,6 +18,22 @@ const COLORS = [
 
 // Job Card
 export const JobCard = ({ job, onViewDetails, index }) => {
+  const user = useSelector((state) => state?.auth?.user);
+  const navigate = useNavigate();
+
+  const loggedInUser = user || getUserFromStorage();
+
+  const handleViewDetails = (job) => {
+    const loggedInUser = user || getUserFromStorage();
+
+    if (loggedInUser) {
+      onViewDetails(job); // user is logged in, proceed
+    } else {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+      return;
+    }
+  };
+
   const formatSalary = (ctc) => {
     if (ctc && ctc.min && ctc.max) {
       return `₹${ctc.min}-${ctc.max}L`;
@@ -100,7 +49,9 @@ export const JobCard = ({ job, onViewDetails, index }) => {
         transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden`}
     >
       <div className="mb-6">
-        <span className="text-lg font-bold text-black">{formatSalary(job.ctc)}</span>
+        <span className="text-lg font-bold text-black">
+          {formatSalary(job.ctc)}
+        </span>
       </div>
 
       <h3 className="text-2xl font-bold text-black mb-8 leading-tight">
@@ -119,7 +70,7 @@ export const JobCard = ({ job, onViewDetails, index }) => {
         </div>
 
         <button
-          onClick={() => onViewDetails(job)}
+          onClick={() => handleViewDetails(job)}
           className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-500 hover:text-black transition-all duration-300"
         >
           View
@@ -129,7 +80,6 @@ export const JobCard = ({ job, onViewDetails, index }) => {
   );
 };
 
-// Job Details Modal
 export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
   if (!isOpen) return null;
 
@@ -209,10 +159,12 @@ export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
 
             <div className="text-sm text-gray-300 space-y-2 bg-gradient-to-br from-black via-black to-black border border-white/20 p-3 rounded-lg backdrop-blur-sm bg-opacity-80">
               <p>
-                <strong className="text-gray-200">Notice Period:</strong> {job.noticePeriod}
+                <strong className="text-gray-200">Notice Period:</strong>{" "}
+                {job.noticePeriod}
               </p>
               <p>
-                <strong className="text-gray-200">Application Deadline:</strong> {job.deadline}
+                <strong className="text-gray-200">Application Deadline:</strong>{" "}
+                {job.deadline}
               </p>
             </div>
 
@@ -232,8 +184,6 @@ export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
     </div>
   );
 };
-
-
 
 // export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
 //   if (!isOpen) return null;
@@ -450,4 +400,3 @@ export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
 //     </div>
 //   );
 // };
-

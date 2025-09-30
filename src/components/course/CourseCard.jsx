@@ -4,13 +4,23 @@ import PDFViewer from "./PDFViewer";
 import { useSelector } from "react-redux";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+
+import getUserFromStorage from "../helpers/helper";
 const BASE_URL = import.meta.env.VITE_API_URL;
 const CourseCard = ({ material, onOpenPDF }) => {
   const [showPDF, setShowPDF] = useState(false);
 
   const navigate = useNavigate();
   const user = useSelector((state) => state?.auth?.user);
+
+  // auth
+  const loggedInUser = user || getUserFromStorage();
+
   const handleClick = async () => {
+    if (!loggedInUser) {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+      return null;
+    }
     try {
       if (material.price === 0) {
         onOpenPDF && onOpenPDF();

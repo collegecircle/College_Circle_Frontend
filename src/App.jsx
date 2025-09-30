@@ -126,14 +126,12 @@ function App() {
     const storedUser = getUserFromStorage();
     if (storedUser) {
       setUser(storedUser);
-      // console.log("User loaded from localStorage:", storedUser);
     }
     setIsAuthLoaded(true);
   }, []);
 
   // Sync user with localStorage
   const setUserWithStorage = (userData) => {
-    // console.log("setUserWithStorage called:", userData);
     if (userData) {
       try {
         const role = userData.role || "user";
@@ -143,7 +141,6 @@ function App() {
           localStorage.setItem("token", userData.token);
         }
         setUser({ ...userData, role });
-        // console.log("User saved to localStorage:", userData);
       } catch (error) {
         // console.error("Error saving user to localStorage:", error);
         setUser(userData);
@@ -151,7 +148,6 @@ function App() {
     } else {
       clearUserFromStorage();
       setUser(null);
-      // console.log("User cleared from localStorage");
     }
   };
 
@@ -221,7 +217,6 @@ function App() {
   );
 }
 
-/* ---------------- ROUTING CONTENT ---------------- */
 const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
   const location = useLocation();
   const shouldHideFooter = ["/admin", "/adminlogin", "/userlogin"].includes(
@@ -240,7 +235,13 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
   return (
     <>
       {!shouldHideFooter && (
-        <Navigation user={user} onLogout={() => setUserWithStorage(null)} />
+        <Navigation
+          user={user}
+          onLogout={() => {
+            setUserWithStorage(null);
+            window.location.reload();
+          }}
+        />
       )}
       <div className={shouldHideFooter ? "pt-0" : "pt-16"}>
         <Routes>
@@ -268,7 +269,7 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
               </PublicRoute>
             }
           />
-          <Route
+          {/* <Route
             path="/colleges"
             element={
               // <PrivateRoute>
@@ -284,6 +285,31 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
               </PrivateRoute>
             }
           />
+           <Route
+            path="/courses"
+            element={
+              <PrivateRoute>
+                <NewCoursePage user={user} />
+              </PrivateRoute>
+            }
+          />
+          <Route
+            path="/jobs"
+            element={
+              <PrivateRoute>
+                <JobsPage user={user} />
+              </PrivateRoute>
+            }
+          /> */}
+
+          <Route
+            path="/study-materials"
+            element={<MaterialPage user={user} />}
+          />
+          <Route path="/colleges" element={<CollegesPage user={user} />} />
+          <Route path="/courses" element={<NewCoursePage user={user} />} />
+          <Route path="/jobs" element={<JobsPage user={user} />} />
+
           <Route
             path="/dashboard"
             element={
@@ -297,22 +323,6 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             element={
               <PrivateRoute>
                 <AuthorizedCourseViewer />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/courses"
-            element={
-              <PrivateRoute>
-                <NewCoursePage user={user} />
-              </PrivateRoute>
-            }
-          />
-          <Route
-            path="/jobs"
-            element={
-              <PrivateRoute>
-                <JobsPage user={user} />
               </PrivateRoute>
             }
           />

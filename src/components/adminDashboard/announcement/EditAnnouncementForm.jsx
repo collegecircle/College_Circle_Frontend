@@ -47,8 +47,8 @@ const EditAnnouncementForm = ({ announcementData, onSuccess }) => {
         try {
           const res = await dispatch(
             updateAnnouncement({
-              announcementId: announcementData.announcementId,
-              announcementData: values, // correct key
+              id: announcementData.announcementId,
+              values: values, // correct key
             })
           );
 

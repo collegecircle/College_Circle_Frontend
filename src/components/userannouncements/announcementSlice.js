@@ -3,7 +3,7 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 // const BASE_URL = import.meta.env.VITE_API_URL;
 
-const BASE_URL = "http://127.0.0.1:5001/collegecircle-ce36d/us-central1/api";
+const BASE_URL = import.meta.env.VITE_API_URL;
 
 // ------------------ Thunks ------------------
 
@@ -71,10 +71,9 @@ export const createAnnouncement = createAsyncThunk(
 export const updateAnnouncement = createAsyncThunk(
   "announcements/updateAnnouncement",
   async ({ id, values }, { rejectWithValue }) => {
-    console.log("Updating announcement ID:", id, "with data:", values);
     try {
       const res = await fetch(
-        `${BASE_URL}/announcements/update-announcement/${id}`,
+        `${BASE_URL}/announcements/update-announcement/${id}`, // correct route
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },

@@ -53,8 +53,6 @@ const OnlineCourseForm = () => {
     try {
       const data = await dispatch(createOnlineCourse(values)).unwrap();
 
-      console.log("Create course response:", data);
-
       if (data.status_code == 200) {
         alert("✅ Course created successfully!");
         resetForm();

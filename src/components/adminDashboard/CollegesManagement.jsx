@@ -225,12 +225,7 @@ const CollegesManagement = () => {
             : [],
         };
         updatedStreams[streamIndex].subStreams.push(subStreamToAdd);
-        console.log(
-          "Added subStream to stream",
-          streamIndex,
-          ":",
-          subStreamToAdd
-        );
+
         return updatedStreams;
       });
       setNewSubStream({ name: "", courses: [] });
@@ -284,10 +279,7 @@ const CollegesManagement = () => {
       },
       streams: processedStreams,
     };
-    console.log(
-      "Final payload streams:",
-      JSON.stringify(processedStreams, null, 2)
-    );
+
     const action = currentCollege
       ? updateCollege({ id: currentCollege.id, collegeData: payload })
       : createCollege(payload);

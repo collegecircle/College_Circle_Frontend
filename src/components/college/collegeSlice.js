@@ -32,8 +32,6 @@ export const fetchColleges = createAsyncThunk(
       }
       const url = `${API_BASE_URL}/colleges/all-colleges-list?${queryParams.toString()}`;
 
-      console.log("Fetching colleges from:", url);
-
       const res = await fetch(url, {
         method: "GET",
         headers: {

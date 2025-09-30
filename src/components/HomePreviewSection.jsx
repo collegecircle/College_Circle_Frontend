@@ -131,11 +131,7 @@ const HomePreviewSection = ({ user }) => {
 
   // Navigation handler to check authentication
   const handleNavigation = (path) => {
-    if (!user && ["jobs", "colleges", "courses"].includes(path)) {
-      navigate("/userlogin");
-    } else {
-      navigate(`/${path}`);
-    }
+    navigate(`/${path}`);
   };
 
   // Mini Card Component for Jobs
@@ -201,7 +197,7 @@ const HomePreviewSection = ({ user }) => {
   // Mini Card Component for Courses
   const CourseMiniCard = ({ material }) => (
     <div
-      onClick={() => handleNavigation("courses")}
+      onClick={() => handleNavigation("study-materials")}
       className="bg-slate-1000 rounded-xl p-4 hover:bg-slate-1000 transition-all duration-300 cursor-pointer group border border-gray-700 hover:border-yellow-400 active:scale-95 transform"
     >
       <div className="flex items-start space-x-3">
@@ -321,49 +317,6 @@ const HomePreviewSection = ({ user }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
-          {/* Jobs Section */}
-          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center space-x-3">
-                <div>
-                  <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
-                  <p className="text-gray-400 text-sm">
-                    Find your perfect role
-                  </p>
-                </div>
-              </div>
-              <button
-                onClick={() => handleNavigation("jobs")}
-                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
-              >
-                <ArrowRight className="w-5 h-5" />
-              </button>
-            </div>
-
-            <div className="space-y-4 mb-6">
-              {jobsStatus === "loading" ? (
-                <div className="text-gray-400 text-center">Loading jobs...</div>
-              ) : featuredJobs.length === 0 ? (
-                <div className="text-gray-400 text-center">
-                  No jobs available
-                </div>
-              ) : (
-                featuredJobs.map((job) => (
-                  <JobMiniCard key={job.id} job={job} />
-                ))
-              )}
-            </div>
-
-            <button
-              onClick={() => handleNavigation("jobs")}
-              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
-            >
-              <span>View All Jobs</span>
-              <ArrowRight className="w-4 h-4" />
-            </button>
-          </div>
-
-          {/* Courses Section */}
           <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
             <div className="flex items-center justify-between mb-6">
               <div className="flex items-center space-x-3">
@@ -408,6 +361,50 @@ const HomePreviewSection = ({ user }) => {
               <ArrowRight className="w-4 h-4" />
             </button>
           </div>
+          {/* Jobs Section */}
+          <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center space-x-3">
+                <div>
+                  <h3 className="text-xl font-bold text-white">Latest Jobs</h3>
+                  <p className="text-gray-400 text-sm">
+                    Find your perfect role
+                  </p>
+                </div>
+              </div>
+              <button
+                onClick={() => handleNavigation("jobs")}
+                className="text-yellow-400 hover:text-yellow-300 transition-colors duration-300"
+              >
+                <ArrowRight className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-4 mb-6">
+              {jobsStatus === "loading" ? (
+                <div className="text-gray-400 text-center">Loading jobs...</div>
+              ) : featuredJobs.length === 0 ? (
+                <div className="text-gray-400 text-center">
+                  No jobs available
+                </div>
+              ) : (
+                featuredJobs.map((job) => (
+                  <JobMiniCard key={job.id} job={job} />
+                ))
+              )}
+            </div>
+
+            <button
+              onClick={() => handleNavigation("jobs")}
+              className="w-full bg-yellow-500/20 text-yellow-400 py-3 rounded-xl font-semibold hover:bg-yellow-500/30 transition-all duration-300 flex items-center justify-center space-x-2"
+            >
+              <span>View All Jobs</span>
+              <ArrowRight className="w-4 h-4" />
+            </button>
+          </div>
+
+          {/* Courses Section */}
+
           {/* materials Section */}
           <div className="bg-slate-1800 rounded-2xl p-6 border border-gray-700">
             <div className="flex items-center justify-between mb-6">
