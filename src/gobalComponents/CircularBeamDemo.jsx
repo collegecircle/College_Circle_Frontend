@@ -893,17 +893,17 @@ const AnimatedBeam = ({
 
   const gradientCoordinates = reverse
     ? {
-        x1: ["90%", "-10%"],
-        x2: ["100%", "0%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      }
+      x1: ["90%", "-10%"],
+      x2: ["100%", "0%"],
+      y1: ["0%", "0%"],
+      y2: ["0%", "0%"],
+    }
     : {
-        x1: ["10%", "110%"],
-        x2: ["0%", "100%"],
-        y1: ["0%", "0%"],
-        y2: ["0%", "0%"],
-      };
+      x1: ["10%", "110%"],
+      x2: ["0%", "100%"],
+      y1: ["0%", "0%"],
+      y2: ["0%", "0%"],
+    };
 
   React.useEffect(() => {
     const updatePath = () => {
@@ -928,8 +928,7 @@ const AnimatedBeam = ({
 
         const controlY = startY - curvature;
         setPathD(
-          `M ${startX},${startY} Q ${
-            (startX + endX) / 2
+          `M ${startX},${startY} Q ${(startX + endX) / 2
           },${controlY} ${endX},${endY}`
         );
       }
@@ -1224,7 +1223,7 @@ const CircularBeamDemo = () => {
       >
         {/* Background ambient effects */}
         <div
-          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0, 0, 0, 0.5)_0%,rgba(15,23,42,0)_50%)]"
+          // className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0, 0, 0, 0.5)_0%,rgba(15,23,42,0)_50%)]"
           style={{ zIndex: 1 }}
         ></div>
 
@@ -1241,9 +1240,8 @@ const CircularBeamDemo = () => {
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
                 opacity: Math.random() * 0.5 + 0.2,
-                animation: `twinkle ${Math.random() * 3 + 2}s infinite ${
-                  Math.random() * 2
-                }s`,
+                animation: `twinkle ${Math.random() * 3 + 2}s infinite ${Math.random() * 2
+                  }s`,
                 zIndex: 1,
               }}
             />
