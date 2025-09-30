@@ -1223,7 +1223,7 @@ const CircularBeamDemo = () => {
       >
         {/* Background ambient effects */}
         <div
-          // className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0, 0, 0, 0.5)_0%,rgba(15,23,42,0)_50%)]"
+          className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(0, 0, 0, 0.5)_0%,rgba(15,23,42,0)_50%)]"
           style={{ zIndex: 1 }}
         ></div>
 
@@ -1248,7 +1248,7 @@ const CircularBeamDemo = () => {
           ))}
 
         {/* Animated Beams with responsive settings */}
-        {points.map((point, index) => (
+        {/* {points.map((point, index) => (
           <AnimatedBeam
             key={index}
             containerRef={containerRef}
@@ -1262,7 +1262,7 @@ const CircularBeamDemo = () => {
             reverse={index % 2 === 0}
             pathWidth={beamSettings.pathWidth}
           />
-        ))}
+        ))} */}
 
         {/* Central element - fully responsive */}
         <div
@@ -1326,7 +1326,7 @@ const CircularBeamDemo = () => {
         </div>
 
         {/* Outer Points with fully responsive styling */}
-        {points.map((point, index) => (
+        {/* {points.map((point, index) => (
           <motion.div
             key={index}
             ref={pointRefs[index]}
@@ -1357,7 +1357,7 @@ const CircularBeamDemo = () => {
               {point.name}
             </span>
           </motion.div>
-        ))}
+        ))} */}
       </div>
 
       {/* CSS for twinkling stars */}
