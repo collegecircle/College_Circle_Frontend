@@ -1,40 +1,44 @@
-// AuthorizedCourseViewer.jsx
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useParams, useNavigate, useLocation } from "react-router-dom";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import PDFViewer from "../gobalComponents/PdfViewer";
-
 const BASE_URL = import.meta.env.VITE_API_URL;
+import getUserFromStorage from "../components/helpers/helper";
+import axios from "axios";
+
 
 const AuthorizedCourseViewer = () => {
-  const { courseId } = useParams();
-  const navigate = useNavigate();
-  const location = useLocation();
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState(null)
 
-  // Use course from location state if available
-  const [course, setCourse] = useState(location.state?.course || null);
-  const [loading, setLoading] = useState(!location.state?.course);
-  const [error, setError] = useState(null);
+  const [course, setCourse] = useState(null)
+
+  const user = useSelector((state) => state?.auth?.user);
+  const navigate = useNavigate();
+
+  const loggedInUser = user || getUserFromStorage();
+  const { courseId } = useParams();
+
+  console.log(window.location.pathname, 'path name')
+
+  // Local states
   const [expandedModuleIndex, setExpandedModuleIndex] = useState(null);
   const [selectedPdfUrl, setSelectedPdfUrl] = useState(null);
   const [showPdfViewer, setShowPdfViewer] = useState(false);
 
-  // Format date function
+  // Format date
   const formatDate = (dateObj) => {
     if (!dateObj) return "—";
-
     try {
-      // Handle Firestore timestamp objects
       const date = dateObj._seconds
         ? new Date(dateObj._seconds * 1000)
         : new Date(dateObj);
-
       return date.toLocaleDateString("en-IN", {
         day: "2-digit",
         month: "short",
         year: "numeric",
       });
-    } catch (e) {
+    } catch {
       return "—";
     }
   };
@@ -49,33 +53,103 @@ const AuthorizedCourseViewer = () => {
     setShowPdfViewer(true);
   };
 
-  useEffect(() => {
-    // Skip API call if we already have the course from navigation state
-    if (location.state?.course) {
-      return;
-    }
 
-    const fetchCourseData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `${BASE_URL}/online-courses/${courseId}`
-        );
-        setCourse(response.data.data);
+  const handleEnroll = async () => {
+
+
+    try {
+      setLoading(true);
+      setError(null);
+      const orderRes = await axios.post(
+        `${BASE_URL}/online-courses/get-online-courses-access`,
+        {
+          courseId: courseId,
+          studentId: user?.id,
+          email: user?.email,
+          name: user?.name,
+        }
+      );
+
+      if (orderRes.data.message === "This course is free, no payment required") {
+        setCourse(orderRes.data.data)
         setLoading(false);
-      } catch (err) {
-        console.error("Error fetching course:", err);
-        setError(
-          `Failed to load course data: ${err.response?.status || ""} ${
-            err.response?.data?.message || err.message
-          }`
-        );
-        setLoading(false);
+        return;
       }
-    };
 
-    fetchCourseData();
-  }, [courseId, location.state]);
+      if (orderRes.data.message === "You are already registered for this course") {
+        setCourse(orderRes.data.data)
+        setLoading(false);
+        return;
+      }
+
+      const { key, order_id, paymentId, amount, currency, prefill, theme, name } =
+        orderRes.data.data;
+      setLoading(false);
+      const options = {
+        key,
+        amount,
+        currency,
+        name: name,
+        description: "Study Material Payment",
+        order_id,
+        prefill,
+        theme,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axios.post(
+              `${BASE_URL}/online-courses/verify-payment-online-courses`,
+              {
+                paymentId,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }
+            );
+
+            if (verifyRes?.data?.success === 1) {
+              alert(verifyRes?.data.message || "Payment Successful!");
+              setCourse(verifyRes?.data?.data)
+            }
+
+
+          } catch (err) {
+            console.error(err);
+            alert(
+              err.response?.data?.message ||
+              "Payment verification failed. Contact support."
+            );
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            alert("Payment cancelled. Redirecting back...");
+            navigate('/courses')
+          }
+        }
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error(err);
+      setLoading(false);
+      if (err.response?.data?.message === "You are already registered for this course") {
+        setCourse(err.response.data.data);
+      } else {
+        setError(err.response?.data?.message || "Failed to load course. Please try again.");
+      }
+    }
+  };
+  useEffect(() => {
+    if (loggedInUser === undefined) return;
+
+    // Only redirect if user is not logged in AND not already on login page
+    if (!loggedInUser && window.location.pathname !== "/userlogin") {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+    } else if (loggedInUser) {
+      handleEnroll();
+    }
+  }, [courseId, loggedInUser, navigate]);
+
 
   if (loading) {
     return (
@@ -88,9 +162,54 @@ const AuthorizedCourseViewer = () => {
   if (error) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800">
+        <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800 max-w-md">
+          <div className="bg-red-900/20 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+            <svg
+              className="w-8 h-8 text-red-500"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+              />
+            </svg>
+          </div>
           <h2 className="text-xl font-bold text-red-500 mb-2">Error</h2>
           <p className="mb-4 text-gray-300">{error}</p>
+          <div className="flex gap-3 justify-center">
+            <button
+              onClick={() => {
+                setError(null);
+                handleEnroll();
+              }}
+              className="px-4 py-2 bg-[#fdc700] text-black rounded-md hover:bg-[#fdc700]/90 transition-colors font-medium"
+            >
+              Try Again
+            </button>
+            <button
+              onClick={() => navigate("/courses")}
+              className="px-4 py-2 bg-gray-800 text-gray-300 rounded-md hover:bg-gray-700 transition-colors"
+            >
+              Back to Courses
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
+  if (!course) {
+    return
+    (
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800">
+          <h2 className="text-xl font-bold text-gray-300 mb-2">No Course Data</h2>
+          <p className="mb-4 text-gray-400">Unable to load course information.</p>
           <button
             onClick={() => navigate("/courses")}
             className="text-[#fdc700] hover:underline"
@@ -102,27 +221,6 @@ const AuthorizedCourseViewer = () => {
     );
   }
 
-  if (!course) {
-    return (
-      <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold mb-2 text-white">
-            Course Not Found
-          </h2>
-          <p className="mb-4 text-gray-300">
-            The course you're looking for doesn't exist or you don't have
-            access.
-          </p>
-          <button
-            onClick={() => navigate("/courses")}
-            className="text-[#fdc700] hover:underline"
-          >
-            Back to Courses
-          </button>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <div className="min-h-screen bg-black">
@@ -371,11 +469,10 @@ const AuthorizedCourseViewer = () => {
               course.modules.map((module, index) => (
                 <div
                   key={index}
-                  className={`bg-gradient-to-r ${
-                    expandedModuleIndex === index
-                      ? "from-gray-800 to-gray-900"
-                      : "from-gray-900 to-gray-800"
-                  } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
+                  className={`bg-gradient-to-r ${expandedModuleIndex === index
+                    ? "from-gray-800 to-gray-900"
+                    : "from-gray-900 to-gray-800"
+                    } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
                 >
                   <button
                     onClick={(e) => toggleModuleExpansion(index, e)}
@@ -383,11 +480,10 @@ const AuthorizedCourseViewer = () => {
                   >
                     <div className="flex items-center">
                       <div
-                        className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${
-                          expandedModuleIndex === index
-                            ? "bg-[#fdc700] text-black"
-                            : "bg-black text-white border border-gray-700"
-                        } transition-colors duration-300`}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${expandedModuleIndex === index
+                          ? "bg-[#fdc700] text-black"
+                          : "bg-black text-white border border-gray-700"
+                          } transition-colors duration-300`}
                       >
                         <span className="text-sm font-medium">{index + 1}</span>
                       </div>
@@ -433,18 +529,16 @@ const AuthorizedCourseViewer = () => {
                     </div>
                     <div className="flex items-center">
                       <span
-                        className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${
-                          expandedModuleIndex === index
-                            ? "bg-[#fdc700] text-black"
-                            : "bg-gray-800 text-gray-400"
-                        }`}
+                        className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${expandedModuleIndex === index
+                          ? "bg-[#fdc700] text-black"
+                          : "bg-gray-800 text-gray-400"
+                          }`}
                       >
                         {expandedModuleIndex === index ? "Viewing" : "Preview"}
                       </span>
                       <svg
-                        className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${
-                          expandedModuleIndex === index ? "rotate-180" : ""
-                        }`}
+                        className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${expandedModuleIndex === index ? "rotate-180" : ""
+                          }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

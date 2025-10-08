@@ -26,6 +26,8 @@ import UserDashboard from "./components/userDashboard/UserDashboard";
 
 import AuthorizedCourseViewer from "./gobalComponents/AuthorizedCourseViewer";
 import Announcements from "./gobalComponents/Announcements";
+import JobDetailsPage from "./components/jobs/JobDetailsPage";
+import CollegeDetailsPage from "./components/college/CollegeDetailsPage";
 /* ---------------- SPLASH SCREEN HELPERS ---------------- */
 const getLastSplashTime = () => {
   try {
@@ -307,8 +309,10 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             element={<MaterialPage user={user} />}
           />
           <Route path="/colleges" element={<CollegesPage user={user} />} />
+          <Route path="/colleges/:id" element={<CollegeDetailsPage />} />
           <Route path="/courses" element={<NewCoursePage user={user} />} />
           <Route path="/jobs" element={<JobsPage user={user} />} />
+          <Route path="/jobs/:jobId" element={<JobDetailsPage />} />
 
           <Route
             path="/dashboard"
@@ -319,11 +323,11 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
             }
           />
           <Route
-            path="/course-viewer/:courseId"
+            path="/course/:courseId"
             element={
-              <PrivateRoute>
-                <AuthorizedCourseViewer />
-              </PrivateRoute>
+
+              <AuthorizedCourseViewer />
+
             }
           />
 

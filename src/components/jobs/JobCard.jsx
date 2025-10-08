@@ -1,85 +1,229 @@
+// import React from "react";
+// import { Building, X } from "lucide-react";
+// import { useSelector } from "react-redux";
+// import { useNavigate } from "react-router-dom";
+
+// import getUserFromStorage from "../helpers/helper";
+
+// // COLORS for cards
+// const COLORS = [
+//   "bg-indigo-100",
+//   "bg-pink-100",
+//   "bg-yellow-100",
+//   "bg-green-100",
+//   "bg-pink-100",
+//   "bg-purple-100",
+//   "bg-blue-100",
+// ];
+
+// // Job Card
+// export const JobCard = ({ job, onViewDetails, index }) => {
+//   const user = useSelector((state) => state?.auth?.user);
+//   const navigate = useNavigate();
+
+//   const loggedInUser = user || getUserFromStorage();
+
+//   const handleViewDetails = (job) => {
+//     const loggedInUser = user || getUserFromStorage();
+
+
+
+//       if (loggedInUser) {
+//         onViewDetails(job); // user is logged in, proceed
+//       } else {
+//         navigate("/userlogin", { state: { from: window.location.pathname } });
+//         return;
+//       }
+//   };
+
+
+//   const formatSalary = (ctc) => {
+//     if (ctc && ctc.min && ctc.max) {
+//       return `₹${ctc.min}-${ctc.max}L`;
+//     }
+//     return "Not specified";
+//   };
+
+//   const bgColor = COLORS[index % COLORS.length];
+
+//   return (
+//     <div
+//       className={`${bgColor} rounded-2xl p-6 relative group hover:shadow-xl 
+//         transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden`}
+//     >
+//       <div className="mb-6">
+//         <span className="text-lg font-bold text-black">
+//           {formatSalary(job.ctc)}
+//         </span>
+//       </div>
+
+//       <h3 className="text-2xl font-bold text-black mb-8 leading-tight">
+//         {job.title}
+//       </h3>
+
+//       <div className="flex items-center justify-between">
+//         <div className="flex items-center space-x-3">
+//           <div className="w-12 h-12 rounded-xl overflow-hidden shadow-md bg-white flex items-center justify-center">
+//             <Building className="w-6 h-6 text-gray-600" />
+//           </div>
+//           <div>
+//             <p className="font-semibold text-black text-sm">{job.title}</p>
+//             <p className="text-black/70 text-xs">{job.companyName}</p>
+//           </div>
+//         </div>
+
+//         <button
+//           onClick={() => handleViewDetails(job)}
+//           className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-500 hover:text-black transition-all duration-300"
+//         >
+//           View
+//         </button>
+//       </div>
+//     </div>
+//   );
+// };
+
 import React from "react";
-import { Building, X } from "lucide-react";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { MapPin, Briefcase, DollarSign, Clock } from "lucide-react";
 
-import getUserFromStorage from "../helpers/helper";
-
-// COLORS for cards
-const COLORS = [
-  "bg-indigo-100",
-  "bg-pink-100",
-  "bg-yellow-100",
-  "bg-green-100",
-  "bg-pink-100",
-  "bg-purple-100",
-  "bg-blue-100",
-];
-
-// Job Card
-export const JobCard = ({ job, onViewDetails, index }) => {
-  const user = useSelector((state) => state?.auth?.user);
+export const JobCard = ({ job, index }) => {
   const navigate = useNavigate();
+  const user = useSelector((state) => state.auth?.user); // Adjust path based on your Redux structure
 
-  const loggedInUser = user || getUserFromStorage();
+  const getUserFromStorage = () => {
+    try {
+      const userData = localStorage.getItem("user");
+      return userData ? JSON.parse(userData) : null;
+    } catch (error) {
+      console.error("Error reading user from storage:", error);
+      return null;
+    }
+  };
 
-  const handleViewDetails = (job) => {
+  const formatSalary = (ctc) =>
+    ctc?.min && ctc?.max ? `₹${ctc.min} - ₹${ctc.max} LPA` : "Not specified";
+
+  const formatExperience = (experience) =>
+    experience?.min !== undefined && experience?.max !== undefined
+      ? `${experience.min} - ${experience.max} years`
+      : "Not specified";
+
+  const handleViewDetails = () => {
     const loggedInUser = user || getUserFromStorage();
 
     if (loggedInUser) {
-      onViewDetails(job); // user is logged in, proceed
+      // User is logged in, navigate to job details
+      navigate(`/jobs/${job.id}`);
     } else {
-      navigate("/userlogin", { state: { from: window.location.pathname } });
-      return;
+      // User not logged in, redirect to login with return path
+      navigate("/userlogin", {
+        state: { from: `/jobs/${job.id}` }
+      });
     }
   };
-
-  const formatSalary = (ctc) => {
-    if (ctc && ctc.min && ctc.max) {
-      return `₹${ctc.min}-${ctc.max}L`;
-    }
-    return "Not specified";
-  };
-
-  const bgColor = COLORS[index % COLORS.length];
 
   return (
     <div
-      className={`${bgColor} rounded-2xl p-6 relative group hover:shadow-xl 
-        transition-all duration-500 transform hover:scale-105 cursor-pointer overflow-hidden`}
+      className="bg-gradient-to-br from-black via-black to-black border border-white/20 rounded-xl p-6 hover:border-yellow-500/50 transition-all duration-300 transform hover:-translate-y-1 hover:shadow-xl hover:shadow-yellow-500/10 backdrop-blur-sm bg-opacity-80"
+      style={{
+        animation: `fadeInUp 0.5s ease-out ${index * 0.1}s both`,
+      }}
     >
-      <div className="mb-6">
-        <span className="text-lg font-bold text-black">
-          {formatSalary(job.ctc)}
-        </span>
-      </div>
-
-      <h3 className="text-2xl font-bold text-black mb-8 leading-tight">
+      {/* Job Title */}
+      <h3 className="text-xl font-bold text-white mb-2 line-clamp-2">
         {job.title}
       </h3>
 
-      <div className="flex items-center justify-between">
-        <div className="flex items-center space-x-3">
-          <div className="w-12 h-12 rounded-xl overflow-hidden shadow-md bg-white flex items-center justify-center">
-            <Building className="w-6 h-6 text-gray-600" />
+      {/* Location & Employment Type */}
+      <div className="flex flex-wrap gap-3 text-sm text-gray-400 mb-4">
+        {job.location && (
+          <div className="flex items-center">
+            <MapPin className="w-4 h-4 mr-1" />
+            {job.location}
           </div>
-          <div>
-            <p className="font-semibold text-black text-sm">{job.title}</p>
-            <p className="text-black/70 text-xs">{job.companyName}</p>
+        )}
+        {job.employmentType && (
+          <div className="flex items-center">
+            <Briefcase className="w-4 h-4 mr-1" />
+            {job.employmentType}
+          </div>
+        )}
+      </div>
+
+      {/* Salary & Experience */}
+      <div className="grid grid-cols-2 gap-3 mb-4">
+        <div className="bg-black/50 border border-white/10 p-3 rounded-lg">
+          <div className="flex items-center text-xs text-gray-400 mb-1">
+            <DollarSign className="w-3 h-3 mr-1" />
+            Salary
+          </div>
+          <p className="text-sm font-semibold text-yellow-400">
+            {formatSalary(job.ctc)}
+          </p>
+        </div>
+        <div className="bg-black/50 border border-white/10 p-3 rounded-lg">
+          <div className="flex items-center text-xs text-gray-400 mb-1">
+            <Clock className="w-3 h-3 mr-1" />
+            Experience
+          </div>
+          <p className="text-sm font-semibold text-blue-400">
+            {formatExperience(job.experience)}
+          </p>
+        </div>
+      </div>
+
+      {/* Description Preview */}
+      <p className="text-gray-400 text-sm mb-4 line-clamp-3">
+        {job.description}
+      </p>
+
+      {/* Skills Preview */}
+      {job.skillsRequired && job.skillsRequired.length > 0 && (
+        <div className="mb-4">
+          <div className="flex flex-wrap gap-1">
+            {job.skillsRequired.slice(0, 3).map((skill, i) => (
+              <span
+                key={i}
+                className="px-2 py-1 bg-gray-800 text-gray-300 rounded-full text-xs border border-gray-700"
+              >
+                {skill}
+              </span>
+            ))}
+            {job.skillsRequired.length > 3 && (
+              <span className="px-2 py-1 text-gray-400 text-xs">
+                +{job.skillsRequired.length - 3} more
+              </span>
+            )}
           </div>
         </div>
+      )}
 
-        <button
-          onClick={() => handleViewDetails(job)}
-          className="bg-black text-white px-4 py-2 rounded-xl text-sm font-medium hover:bg-yellow-500 hover:text-black transition-all duration-300"
-        >
-          View
-        </button>
-      </div>
+      {/* View Details Button */}
+      <button
+        onClick={handleViewDetails}
+        className="w-full bg-gradient-to-r from-yellow-600 to-yellow-500 text-white py-2.5 rounded-lg font-medium hover:from-yellow-500 hover:to-yellow-400 transition-all duration-200 shadow-lg hover:shadow-yellow-500/25 border border-yellow-500/50"
+      >
+        View Details
+      </button>
     </div>
   );
 };
 
+// CSS for animation (add to your global CSS or styled-components)
+const styles = `
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+`;
 export const JobDetailsModal = ({ job, isOpen, onClose, loading }) => {
   if (!isOpen) return null;
 

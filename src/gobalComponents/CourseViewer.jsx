@@ -1,6 +1,14 @@
 // CourseViewer.jsx
 import React, { useState } from "react";
 import PDFViewer from "../components/course/PDFViewer";
+
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+
+const BASE_URL = import.meta.env.VITE_API_URL;
+
+import getUserFromStorage from "../components/helpers/helper";
 const CourseViewer = ({
   course,
   formatDate,
@@ -10,6 +18,107 @@ const CourseViewer = ({
   setSelectedPdfUrl,
   setShowPdfViewer,
 }) => {
+
+
+  const [courseData, setCourseData] = useState(null)
+
+  const user = useSelector((state) => state?.auth?.user);
+  const navigate = useNavigate();
+
+  const loggedInUser = user || getUserFromStorage();
+
+
+  const handleEnroll = async () => {
+
+    if (!loggedInUser) {
+      navigate("/userlogin", { state: { from: window.location.pathname } });
+      return;
+    }
+
+    try {
+
+      // 🟧 Paid course flow
+      const orderRes = await axios.post(
+        `${BASE_URL}/online-courses/get-online-courses-access`,
+        {
+          courseId: course.id,
+          studentId: user?.id,
+          email: user?.email,
+          name: user?.name,
+        }
+      );
+
+      if (orderRes.data.message === "This course is free, no payment required") {
+        setCourseData(orderRes.data.course)
+        return;
+      }
+
+      if (orderRes.data.message === "You are already registered for this course") {
+        setCourseData(orderRes.data.course)
+        return;
+      }
+
+
+      if (orderRes.data.message === "You are already registered for this course") {
+        alert("You have already registered for this course");
+        // navigate(`/dashboard#`, { state: { tab: "courses" } });
+        navigate(`/course/${course.id}`);
+        return;
+      }
+
+      const { key, order_id, paymentId, amount, currency, prefill, theme } =
+        orderRes.data.data;
+
+      const options = {
+        key,
+        amount,
+        currency,
+        name: course.name,
+        description: "Study Material Payment",
+        order_id,
+        prefill,
+        theme,
+        handler: async function (response) {
+          try {
+            const verifyRes = await axios.post(
+              `${BASE_URL}/online-courses/verify-payment-online-courses`,
+              {
+                paymentId,
+                razorpay_payment_id: response.razorpay_payment_id,
+                razorpay_signature: response.razorpay_signature,
+              }
+            );
+
+            alert(verifyRes.data.message || "Payment Successful!");
+
+            // After payment success → navigate to viewer
+            navigate(`/course/${course.id}`);
+          } catch (err) {
+            console.error(err);
+            alert(
+              err.response?.data?.message ||
+              "Payment verification failed. Contact support."
+            );
+          }
+        },
+      };
+
+      const rzp = new window.Razorpay(options);
+      rzp.open();
+    } catch (err) {
+      console.error(err);
+      if (
+        err.response?.data?.message ===
+        "You are already registered for this course"
+      ) {
+        navigate(`/course/${course.id}`);
+      } else {
+        alert(err.response?.data?.message || "Something went wrong!");
+      }
+    }
+  };
+
+
   const [expandedModuleIndex, setExpandedModuleIndex] = useState(null);
 
   const toggleModuleExpansion = (index, e) => {
@@ -160,11 +269,10 @@ const CourseViewer = ({
               >
                 {/* Module Title & Toggle Button */}
                 <div
-                  className={`p-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-200 ${
-                    expandedModuleIndex === index
-                      ? "border-l-4 border-[#fdc700]"
-                      : ""
-                  }`}
+                  className={`p-4 flex justify-between items-center cursor-pointer hover:bg-gray-700 transition-colors duration-200 ${expandedModuleIndex === index
+                    ? "border-l-4 border-[#fdc700]"
+                    : ""
+                    }`}
                   onClick={(e) => toggleModuleExpansion(index, e)}
                 >
                   <div className="flex items-center">

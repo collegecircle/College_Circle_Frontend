@@ -30,25 +30,30 @@ const CollegeCard = ({ college, onKnowMore, onOverview }) => {
     return facilities.length.toString();
   };
 
-  const handleKnowMore = (e) => {
-    if (!loggedInUser) {
-      navigate("/userlogin", { state: { from: window.location.pathname } });
-      return;
-    }
+  // const handleKnowMore = (e) => {
+  //   if (!loggedInUser) {
+  //     navigate("/userlogin", { state: { from: window.location.pathname } });
+  //     return;
+  //   }
 
-    e.preventDefault();
-    e.stopPropagation();
-    onKnowMore(college);
-  };
+  //   e.preventDefault();
+  //   e.stopPropagation();
+  //   onKnowMore(college);
+  // };
 
-  const handleOverview = (e) => {
-    if (!loggedInUser) {
-      navigate("/userlogin", { state: { from: window.location.pathname } });
-      return;
+
+  const handleViewDetails = () => {
+    const loggedInUser = user || getUserFromStorage();
+
+    if (loggedInUser) {
+      // Navigate to college detail page
+      navigate(`/colleges/${college.collegeId || college.id || college._id}`);
+    } else {
+      // Redirect to login with return path
+      navigate("/userlogin", {
+        state: { from: `/colleges/${college.collegeId || college.id || college._id}` }
+      });
     }
-    e.preventDefault();
-    e.stopPropagation();
-    onOverview(college);
   };
 
   return (
@@ -147,25 +152,21 @@ const CollegeCard = ({ college, onKnowMore, onOverview }) => {
           </div>
         </div>
       )}
-
-      {/* Two Buttons - Mobile & Desktop */}
-      <div className="relative z-10 space-y-2 sm:space-y-0 sm:grid sm:grid-cols-2 sm:gap-3">
-        {/* Overview Button */}
+      {/* Single Button (Know More) */}
+      <div className="relative z-10">
         <button
-          onClick={handleOverview}
-          className="w-full bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-400 hover:to-blue-500 active:from-blue-600 active:to-blue-700 text-white font-bold py-3 sm:py-2.5 px-4 sm:px-3 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-xs"
-        >
-          <Eye className="w-4 h-4" />
-          <span>Overview</span>
-        </button>
-
-        {/* Know More Button */}
-        <button
-          onClick={handleKnowMore}
-          className="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 hover:from-yellow-400 hover:to-yellow-500 active:from-yellow-600 active:to-yellow-700 text-black font-bold py-3 sm:py-2.5 px-4 sm:px-3 rounded-xl transition-all duration-300 flex items-center justify-center space-x-2 shadow-lg hover:shadow-xl transform hover:scale-[1.02] active:scale-[0.98] text-sm sm:text-xs"
+          onClick={handleViewDetails}
+          className="w-full bg-gradient-to-r from-yellow-500 to-yellow-600 
+               hover:from-yellow-400 hover:to-yellow-500 
+               active:from-yellow-600 active:to-yellow-700 
+               text-black font-bold py-3 px-4 rounded-xl 
+               transition-all duration-300 flex items-center 
+               justify-center space-x-2 shadow-lg hover:shadow-xl 
+               transform hover:scale-[1.02] active:scale-[0.98] 
+               text-sm sm:text-base"
         >
           <span>Know More</span>
-          <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" />
+          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1" />
         </button>
       </div>
 
