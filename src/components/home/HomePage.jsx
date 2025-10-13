@@ -62,7 +62,7 @@ const HomePage = ({ user }) => {
       if (res?.data.data.count > 0) {
         setIsAnnouncementOpen(true);
       }
-    } catch (err) {}
+    } catch (err) { }
   };
 
   useEffect(() => {
