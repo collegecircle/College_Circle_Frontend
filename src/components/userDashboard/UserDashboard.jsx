@@ -284,7 +284,7 @@ export default function Dashboard() {
                 <div
                   key={course.courseId}
                   className="bg-gray-800 rounded-2xl overflow-hidden shadow-md border border-gray-700/30"
-                  onClick={() => toggleCourseExpansion(course.courseId)}
+                  onClick={() => navigate(`/course/${course.courseId}`)}
                 >
                   {/* Thumbnail */}
                   <div className="relative h-44 overflow-hidden">
@@ -430,25 +430,15 @@ export default function Dashboard() {
                   </div>
                 </div>
 
-                <div className="p-4 border-t border-gray-700/50 flex justify-between items-center gap-3">
+                <div className="p-4 border-t border-gray-700/50 flex justify-end items-center gap-3">
                   <button
                     className="bg-[#fdc700] hover:bg-[#ffde4d] text-gray-900 px-4 py-2 rounded-lg text-sm font-medium transition-all duration-200 flex items-center shadow-md hover:shadow-[#fdc700]/30"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      openPdfViewer(material.id);
+                    onClick={() => {
+                      navigate(`/study-materials/${material.materialId}`);
                     }}
                   >
                     <Eye className="h-4 w-4 mr-1" />
-                    View
-                  </button>
-
-                  <button
-                    className="text-[#000] hover:text-[#000] bg-[#fff]  p-2 rounded-lg transition-colors duration-200"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                    }}
-                  >
-                    <Download className="h-4 w-4 inline-block ml-1" /> Download
+                    pen Material
                   </button>
                 </div>
               </div>

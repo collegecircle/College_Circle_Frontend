@@ -28,6 +28,7 @@ import AuthorizedCourseViewer from "./gobalComponents/AuthorizedCourseViewer";
 import Announcements from "./gobalComponents/Announcements";
 import JobDetailsPage from "./components/jobs/JobDetailsPage";
 import CollegeDetailsPage from "./components/college/CollegeDetailsPage";
+import AuthorizedMaterialViewerViewer from "./gobalComponents/AuthorizedMaterialViewer";
 /* ---------------- SPLASH SCREEN HELPERS ---------------- */
 const getLastSplashTime = () => {
   try {
@@ -324,11 +325,11 @@ const AppContent = ({ user, setUserWithStorage, handleLogout }) => {
           />
           <Route
             path="/course/:courseId"
-            element={
-
-              <AuthorizedCourseViewer />
-
-            }
+            element={<AuthorizedCourseViewer />}
+          />
+          <Route
+            path="/study-materials/:materialId"
+            element={<AuthorizedMaterialViewerViewer />}
           />
 
           {/* 🚀 Prevent logged-in users from accessing login pages */}

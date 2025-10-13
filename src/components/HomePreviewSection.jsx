@@ -338,11 +338,11 @@ const HomePreviewSection = ({ user }) => {
             </div>
 
             <div className="space-y-4 mb-6">
-              {collegesStatus === "loading" ? (
+              {onlineCoursesStatus === "loading" ? (
                 <div className="text-gray-400 text-center">
                   Loading courses...
                 </div>
-              ) : featuredColleges.length === 0 ? (
+              ) : featuredOnlineCourses.length === 0 ? (
                 <div className="text-gray-400 text-center">
                   No courses available
                 </div>
@@ -425,11 +425,11 @@ const HomePreviewSection = ({ user }) => {
             </div>
 
             <div className="space-y-4 mb-6">
-              {collegesStatus === "loading" ? (
+              {materialStatus === "loading" ? (
                 <div className="text-gray-400 text-center">
                   Loading materials...
                 </div>
-              ) : featuredColleges.length === 0 ? (
+              ) : featuredMaterials.length === 0 ? (
                 <div className="text-gray-400 text-center">
                   No materails available
                 </div>

@@ -121,17 +121,15 @@ const OnlineCourseCard = ({ course }) => {
   //   }
   // };
   const handleEnroll = async () => {
-
     navigate(`/course/${course.id}`);
-    return
-
+    return;
   };
 
   return (
     <div className="grid grid-cols-1 gap-3 mb-4">
       <div className="relative rounded-md overflow-hidden shadow-md h-36 sm:h-44 lg:h-48">
         <img
-          src={course.thumbnailImgUrl}
+          src={course.thumbnailImgUrl || "/assets/cclogo.PNG"}
           alt={course.name}
           className="w-full h-full object-cover"
         />
@@ -153,9 +151,9 @@ const OnlineCourseCard = ({ course }) => {
             Posted on :
             {course?.postedOn
               ? new Date(course.postedOn._seconds * 1000).toLocaleDateString(
-                "en-IN",
-                { day: "2-digit", month: "short", year: "numeric" }
-              )
+                  "en-IN",
+                  { day: "2-digit", month: "short", year: "numeric" }
+                )
               : "—"}
           </p>
         </div>

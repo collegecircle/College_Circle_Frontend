@@ -6,12 +6,11 @@ const BASE_URL = import.meta.env.VITE_API_URL;
 import getUserFromStorage from "../components/helpers/helper";
 import axios from "axios";
 
-
 const AuthorizedCourseViewer = () => {
-  const [loading, setLoading] = useState(false)
-  const [error, setError] = useState(null)
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
 
-  const [course, setCourse] = useState(null)
+  const [course, setCourse] = useState(null);
 
   const user = useSelector((state) => state?.auth?.user);
   const navigate = useNavigate();
@@ -19,7 +18,7 @@ const AuthorizedCourseViewer = () => {
   const loggedInUser = user || getUserFromStorage();
   const { courseId } = useParams();
 
-  console.log(window.location.pathname, 'path name')
+  console.log(window.location.pathname, "path name");
 
   // Local states
   const [expandedModuleIndex, setExpandedModuleIndex] = useState(null);
@@ -53,10 +52,7 @@ const AuthorizedCourseViewer = () => {
     setShowPdfViewer(true);
   };
 
-
   const handleEnroll = async () => {
-
-
     try {
       setLoading(true);
       setError(null);
@@ -70,20 +66,32 @@ const AuthorizedCourseViewer = () => {
         }
       );
 
-      if (orderRes.data.message === "This course is free, no payment required") {
-        setCourse(orderRes.data.data)
+      if (
+        orderRes.data.message === "This course is free, no payment required"
+      ) {
+        setCourse(orderRes.data.data);
         setLoading(false);
         return;
       }
 
-      if (orderRes.data.message === "You are already registered for this course") {
-        setCourse(orderRes.data.data)
+      if (
+        orderRes.data.message === "You are already registered for this course"
+      ) {
+        setCourse(orderRes.data.data);
         setLoading(false);
         return;
       }
 
-      const { key, order_id, paymentId, amount, currency, prefill, theme, name } =
-        orderRes.data.data;
+      const {
+        key,
+        order_id,
+        paymentId,
+        amount,
+        currency,
+        prefill,
+        theme,
+        name,
+      } = orderRes.data.data;
       setLoading(false);
       const options = {
         key,
@@ -106,25 +114,24 @@ const AuthorizedCourseViewer = () => {
             );
 
             if (verifyRes?.data?.success === 1) {
-              alert(verifyRes?.data.message || "Payment Successful!");
-              setCourse(verifyRes?.data?.data)
+              window.location.reload();
+              // setCourse(verifyRes?.data?.data)
             }
-
-
           } catch (err) {
             console.error(err);
             alert(
               err.response?.data?.message ||
-              "Payment verification failed. Contact support."
+                "Payment verification failed. Contact support."
             );
           }
         },
         modal: {
           ondismiss: function () {
-            alert("Payment cancelled. Redirecting back...");
-            navigate('/courses')
-          }
-        }
+            setLoading(false);
+            navigate("/study-materials");
+            window.location.reload();
+          },
+        },
       };
 
       const rzp = new window.Razorpay(options);
@@ -132,10 +139,16 @@ const AuthorizedCourseViewer = () => {
     } catch (err) {
       console.error(err);
       setLoading(false);
-      if (err.response?.data?.message === "You are already registered for this course") {
+      if (
+        err.response?.data?.message ===
+        "You are already registered for this course"
+      ) {
         setCourse(err.response.data.data);
       } else {
-        setError(err.response?.data?.message || "Failed to load course. Please try again.");
+        setError(
+          err.response?.data?.message ||
+            "Failed to load course. Please try again."
+        );
       }
     }
   };
@@ -149,7 +162,6 @@ const AuthorizedCourseViewer = () => {
       handleEnroll();
     }
   }, [courseId, loggedInUser, navigate]);
-
 
   if (loading) {
     return (
@@ -202,25 +214,21 @@ const AuthorizedCourseViewer = () => {
     );
   }
 
-
   if (!course) {
-    return
-    (
-      <div className="min-h-screen flex items-center justify-center bg-black">
-        <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800">
-          <h2 className="text-xl font-bold text-gray-300 mb-2">No Course Data</h2>
-          <p className="mb-4 text-gray-400">Unable to load course information.</p>
-          <button
-            onClick={() => navigate("/courses")}
-            className="text-[#fdc700] hover:underline"
-          >
-            Back to Courses
-          </button>
-        </div>
+    return;
+    <div className="min-h-screen flex items-center justify-center bg-black">
+      <div className="text-center p-6 bg-gray-900 rounded-lg border border-gray-800">
+        <h2 className="text-xl font-bold text-gray-300 mb-2">No Course Data</h2>
+        <p className="mb-4 text-gray-400">Unable to load course information.</p>
+        <button
+          onClick={() => navigate("/courses")}
+          className="text-[#fdc700] hover:underline"
+        >
+          Back to Courses
+        </button>
       </div>
-    );
+    </div>;
   }
-
 
   return (
     <div className="min-h-screen bg-black">
@@ -259,7 +267,7 @@ const AuthorizedCourseViewer = () => {
           {/* Main Course Image */}
           <div className="lg:col-span-2 relative rounded-xl overflow-hidden shadow-xl h-64 sm:h-80 lg:h-96 border border-gray-800">
             <img
-              src={course.thumbnailImgUrl}
+              src={course.thumbnailImgUrl || "/assets/cclogo.PNG"}
               alt={course.name}
               className="w-full h-full object-cover"
             />
@@ -469,10 +477,11 @@ const AuthorizedCourseViewer = () => {
               course.modules.map((module, index) => (
                 <div
                   key={index}
-                  className={`bg-gradient-to-r ${expandedModuleIndex === index
-                    ? "from-gray-800 to-gray-900"
-                    : "from-gray-900 to-gray-800"
-                    } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
+                  className={`bg-gradient-to-r ${
+                    expandedModuleIndex === index
+                      ? "from-gray-800 to-gray-900"
+                      : "from-gray-900 to-gray-800"
+                  } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
                 >
                   <button
                     onClick={(e) => toggleModuleExpansion(index, e)}
@@ -480,10 +489,11 @@ const AuthorizedCourseViewer = () => {
                   >
                     <div className="flex items-center">
                       <div
-                        className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${expandedModuleIndex === index
-                          ? "bg-[#fdc700] text-black"
-                          : "bg-black text-white border border-gray-700"
-                          } transition-colors duration-300`}
+                        className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${
+                          expandedModuleIndex === index
+                            ? "bg-[#fdc700] text-black"
+                            : "bg-black text-white border border-gray-700"
+                        } transition-colors duration-300`}
                       >
                         <span className="text-sm font-medium">{index + 1}</span>
                       </div>
@@ -529,16 +539,18 @@ const AuthorizedCourseViewer = () => {
                     </div>
                     <div className="flex items-center">
                       <span
-                        className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${expandedModuleIndex === index
-                          ? "bg-[#fdc700] text-black"
-                          : "bg-gray-800 text-gray-400"
-                          }`}
+                        className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${
+                          expandedModuleIndex === index
+                            ? "bg-[#fdc700] text-black"
+                            : "bg-gray-800 text-gray-400"
+                        }`}
                       >
                         {expandedModuleIndex === index ? "Viewing" : "Preview"}
                       </span>
                       <svg
-                        className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${expandedModuleIndex === index ? "rotate-180" : ""
-                          }`}
+                        className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${
+                          expandedModuleIndex === index ? "rotate-180" : ""
+                        }`}
                         fill="none"
                         viewBox="0 0 24 24"
                         stroke="currentColor"

@@ -156,10 +156,10 @@ const Footer = () => {
                 <div>
                   <p className="text-gray-400 text-sm">Email</p>
                   <a
-                    href="mailto:info@collegecircle.cc"
+                    href="mailto:contact.collegecircle@gmail.com"
                     className="text-white hover:text-yellow-400 transition-colors duration-300"
                   >
-                    info@collegecircle.cc
+                    contact.collegecircle@gmail.com
                   </a>
                 </div>
               </div>
@@ -169,10 +169,10 @@ const Footer = () => {
                 <div>
                   <p className="text-gray-400 text-sm">Support</p>
                   <a
-                    href="tel:+911234567890"
+                    href="tel:+918333849231"
                     className="text-white hover:text-yellow-400 transition-colors duration-300"
                   >
-                    +91 12345 67890
+                    +91 8333849231
                   </a>
                 </div>
               </div>

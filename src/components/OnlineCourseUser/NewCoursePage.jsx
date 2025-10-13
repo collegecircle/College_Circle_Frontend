@@ -121,6 +121,17 @@ const NewCoursePage = () => {
         </div>
       )}
 
+      {list.length <= 0 && (
+        <div className="text-center p-6  rounded-lg border  w-fit mx-auto">
+          <h2 className="text-xl font-bold text-gray-300 mb-2">
+            No course found
+          </h2>
+          {/* <p className="mb-4 text-gray-400">
+            Unable to load Study materials information.
+          </p> */}
+        </div>
+      )}
+
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8 max-w-8xl mx-auto">
         {list.map((course, index) => (
           <OnlineCourseCard

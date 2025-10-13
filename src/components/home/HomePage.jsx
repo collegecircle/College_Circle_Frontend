@@ -48,7 +48,7 @@ const HomePage = ({ user }) => {
 
     window.open(
       "https://www.instagram.com/collegecircle.cc?igsh=MTgxdWJpbDE5NXRhZQ==",
-      "_blank" // Opens in new tab
+      "_blank"
     );
   };
 

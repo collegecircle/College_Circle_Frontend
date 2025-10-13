@@ -10,6 +10,7 @@ const AnnouncementSchema = Yup.object().shape({
   title: Yup.string().trim().required("Title is required"),
   description: Yup.string().trim().required("Description is required"),
   imageUrl: Yup.string().url("Must be a valid URL").nullable(),
+  redirectUrl: Yup.string().url("Must be a valid URL").nullable(),
   priority: Yup.string()
     .oneOf(["low", "medium", "high"], "Invalid priority")
     .required("Priority is required"),
@@ -31,6 +32,7 @@ const CreateAnnouncementForm = () => {
         description: "",
         imageUrl: "",
         priority: "medium",
+        redirectUrl: "",
         bullets: [""],
         isActive: false,
         announcementDate: "",
@@ -133,6 +135,20 @@ const CreateAnnouncementForm = () => {
                 className="text-red-500 text-sm"
               />
             </div>
+          </div>
+
+          <div>
+            <label className="block font-medium">redirectUrl</label>
+            <Field
+              name="redirectUrl"
+              className="w-full border p-2 rounded"
+              placeholder="Enter redirectUrl"
+            />
+            <ErrorMessage
+              name="redirectUrl"
+              component="div"
+              className="text-red-500 text-sm"
+            />
           </div>
 
           {/* Bullets */}

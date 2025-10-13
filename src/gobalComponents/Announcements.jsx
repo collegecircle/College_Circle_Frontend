@@ -26,7 +26,14 @@ const CoursesContainer = () => {
   }, []);
 
   const CourseCard = ({ course, isDark }) => {
-    const { title, description, imageUrl, bullets, announcementDate } = course;
+    const {
+      title,
+      description,
+      imageUrl,
+      bullets,
+      announcementDate,
+      redirectUrl,
+    } = course;
 
     const theme = isDark
       ? {
@@ -103,6 +110,23 @@ const CoursesContainer = () => {
               </div>
             ))}
           </div>
+          {redirectUrl ? (
+            <button
+              className={`flex items-center gap-2 ${theme.badgeBg} w-fit px-4 py-2 rounded-full ${theme.badgeText} shadow-md`}
+              onClick={() => window.open(redirectUrl)}
+            >
+              Register Now
+            </button>
+          ) : (
+            <>
+              <button
+                className={`flex items-center gap-2 ${theme.badgeBg} w-fit px-4 py-2 rounded-full ${theme.badgeText} shadow-md`}
+                onClick={() => window.open(redirectUrl)}
+              >
+                Register Now
+              </button>
+            </>
+          )}
         </div>
 
         <div className="md:col-span-1 lg:col-span-2 flex items-center justify-center h-full">

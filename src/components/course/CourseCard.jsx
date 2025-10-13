@@ -16,83 +16,88 @@ const CourseCard = ({ material, onOpenPDF }) => {
   // auth
   const loggedInUser = user || getUserFromStorage();
 
-  const handleClick = async () => {
-    if (!loggedInUser) {
-      navigate("/userlogin", { state: { from: window.location.pathname } });
-      return null;
-    }
-    try {
-      if (material.price === 0) {
-        onOpenPDF && onOpenPDF();
-        return;
-      }
+  // const handleClick = async () => {
+  //   if (!loggedInUser) {
+  //     navigate("/userlogin", { state: { from: window.location.pathname } });
+  //     return null;
+  //   }
+  //   try {
+  //     if (material.price === 0) {
+  //       onOpenPDF && onOpenPDF();
+  //       return;
+  //     }
 
-      const orderRes = await axios.post(
-        `${BASE_URL}/course-materials/get-material-access`,
-        {
-          materialId: material.id,
-          studentId: user?.id,
-          email: user?.email,
-          name: user?.name,
-        }
-      );
+  //     const orderRes = await axios.post(
+  //       `${BASE_URL}/course-materials/get-material-access`,
+  //       {
+  //         materialId: material.id,
+  //         studentId: user?.id,
+  //         email: user?.email,
+  //         name: user?.name,
+  //       }
+  //     );
 
-      if (
-        orderRes.data?.message ==
-        "you have already registered for this course material"
-      ) {
-        alert("You have already registered for this course material.");
-        navigate("/dashboard", {
-          state: { tab: "materials" },
-        });
-        return;
-      }
+  //     if (
+  //       orderRes.data?.message ==
+  //       "you have already registered for this course material"
+  //     ) {
+  //       alert("You have already registered for this course material.");
+  //       navigate("/dashboard", {
+  //         state: { tab: "materials" },
+  //       });
+  //       return;
+  //     }
 
-      const { key, order_id, paymentId, amount, currency, prefill, theme } =
-        orderRes.data.data;
+  //     const { key, order_id, paymentId, amount, currency, prefill, theme } =
+  //       orderRes.data.data;
 
-      const options = {
-        key,
-        amount,
-        currency,
-        name: material.title,
-        description: "study material  Payment",
-        order_id,
-        prefill,
-        theme,
-        handler: async function (response) {
-          try {
-            const verifyRes = await axios.post(
-              `${BASE_URL}/course-materials/veriify-payment-material-sucess`,
-              {
-                paymentId,
-                razorpay_payment_id: response.razorpay_payment_id,
-                razorpay_signature: response.razorpay_signature,
-              }
-            );
+  //     const options = {
+  //       key,
+  //       amount,
+  //       currency,
+  //       name: material.title,
+  //       description: "study material  Payment",
+  //       order_id,
+  //       prefill,
+  //       theme,
+  //       handler: async function (response) {
+  //         try {
+  //           const verifyRes = await axios.post(
+  //             `${BASE_URL}/course-materials/veriify-payment-material-sucess`,
+  //             {
+  //               paymentId,
+  //               razorpay_payment_id: response.razorpay_payment_id,
+  //               razorpay_signature: response.razorpay_signature,
+  //             }
+  //           );
 
-            alert(verifyRes.data.message || "Payment Successful!");
-            if (verifyRes.data.success) {
-              navigate("/dashboard", {
-                state: { tab: "materials" },
-              });
-            }
-          } catch (err) {
-            console.error(err);
-            alert(
-              err.response?.data?.message ||
-                "Payment verification failed. Contact support."
-            );
-          }
-        },
-      };
+  //           alert(verifyRes.data.message || "Payment Successful!");
+  //           if (verifyRes.data.success) {
+  //             navigate("/dashboard", {
+  //               state: { tab: "materials" },
+  //             });
+  //           }
+  //         } catch (err) {
+  //           console.error(err);
+  //           alert(
+  //             err.response?.data?.message ||
+  //               "Payment verification failed. Contact support."
+  //           );
+  //         }
+  //       },
+  //     };
 
-      const rzp = new window.Razorpay(options);
-      rzp.open();
-    } catch (err) {
-      console.error(err);
-      alert(err.response?.data?.message || "Something went wrong!");
-    }
+  //     const rzp = new window.Razorpay(options);
+  //     rzp.open();
+  //   } catch (err) {
+  //     console.error(err);
+  //     alert(err.response?.data?.message || "Something went wrong!");
+  //   }
+  // };
+
+  const handleClick = () => {
+    navigate(`/study-materials/${material.id}`);
+    return;
   };
 
   return (

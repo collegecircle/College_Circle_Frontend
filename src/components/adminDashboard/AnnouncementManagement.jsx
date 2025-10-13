@@ -15,7 +15,10 @@ import {
 } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { useEffect } from "react";
-import { fetchAnnouncements } from "../userannouncements/announcementSlice";
+import {
+  fetchAnnouncements,
+  deleteAnnouncement,
+} from "../userannouncements/announcementSlice";
 import EditAnnouncementForm from "./announcement/EditAnnouncementForm";
 
 const AnnouncementManagement = () => {
@@ -49,8 +52,9 @@ const AnnouncementManagement = () => {
   //delete
 
   const handleDelete = (id) => {
+    console.log("delte", id);
     if (window.confirm("Are you sure you want to delete this course?")) {
-      dispatch(deleteOnlineCourse(id)).then((result) => {
+      dispatch(deleteAnnouncement(id)).then((result) => {
         if (result.type.endsWith("/fulfilled")) {
           fetchAnnouncementsWithPagination(currentPage);
         }

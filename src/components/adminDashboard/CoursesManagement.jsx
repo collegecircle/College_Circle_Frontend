@@ -149,11 +149,7 @@ const CoursesManagement = () => {
                         : material.title}
                     </div>
                     <div className="text-sm text-gray-500">
-                      Url :{" "}
-                      {material.documentLink &&
-                      material.documentLink.length > 30
-                        ? material.documentLink.substring(0, 30) + "..."
-                        : material.documentLink}
+                      No Of modules : {material.modules.length || 0}
                     </div>
                     <div className="text-sm font-medium text-gray-900 truncate">
                       ID : {material.id}
@@ -198,7 +194,7 @@ const CoursesManagement = () => {
                     title
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    document Link
+                    No of Modules
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Id
@@ -239,10 +235,7 @@ const CoursesManagement = () => {
                         : material.title}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
-                      {material.documentLink &&
-                      material.documentLink.length > 30
-                        ? material.documentLink.substring(0, 30) + "..."
-                        : material.documentLink}
+                      {material.modules.length || 0}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-900">
                       {material.id}

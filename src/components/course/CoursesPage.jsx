@@ -109,6 +109,7 @@ const CoursesPage = () => {
       </div>
     );
   }
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-black to-black flex flex-col">
       <PageHeader
@@ -118,6 +119,22 @@ const CoursesPage = () => {
         underlineColor="yellow-400"
         description="Enhance your expertise with industry-relevant courses and Stuff"
       />
+      {list.length <= 0 && (
+        <div className="text-center p-6  rounded-lg border  w-fit mx-auto">
+          <h2 className="text-xl font-bold text-gray-300 mb-2">
+            No Study materials Data
+          </h2>
+          {/* <p className="mb-4 text-gray-400">
+            Unable to load Study materials information.
+          </p> */}
+          {/* <button
+            onClick={() => navigate("/study-materials")}
+            className="text-[#fdc700] hover:underline"
+          >
+            Back to study-materials
+          </button> */}
+        </div>
+      )}
 
       {error && (
         <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg mb-4 sm:mb-6">

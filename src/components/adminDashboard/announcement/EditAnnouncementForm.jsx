@@ -9,6 +9,7 @@ const AnnouncementSchema = Yup.object().shape({
   title: Yup.string().trim().required("Title is required"),
   description: Yup.string().trim().required("Description is required"),
   imageUrl: Yup.string().url("Must be a valid URL").nullable(),
+  redirectUrl: Yup.string().url("Must be a valid URL").nullable(),
   priority: Yup.string()
     .oneOf(["low", "medium", "high"], "Invalid priority")
     .required("Priority is required"),
@@ -31,6 +32,7 @@ const EditAnnouncementForm = ({ announcementData, onSuccess }) => {
         title: announcementData?.title || "",
         description: announcementData?.description || "",
         imageUrl: announcementData?.imageUrl || "",
+        redirectUrl: announcementData?.redirectUrl || "",
         priority: announcementData?.priority || "medium",
         bullets: announcementData?.bullets?.length
           ? announcementData.bullets
@@ -52,7 +54,9 @@ const EditAnnouncementForm = ({ announcementData, onSuccess }) => {
             })
           );
 
-          if (res?.status_code === 200) {
+          console.log(res.payload, "update annaoouncement");
+
+          if (res?.payload?.status_code === 200) {
             alert(res?.message || "Announcement updated successfully");
             onSuccess?.(); // optional callback to close modal or refresh list
           }
@@ -145,6 +149,19 @@ const EditAnnouncementForm = ({ announcementData, onSuccess }) => {
                 className="text-red-500 text-sm"
               />
             </div>
+          </div>
+          <div>
+            <label className="block font-medium">redirectUrl</label>
+            <Field
+              name="redirectUrl"
+              className="w-full border p-2 rounded"
+              placeholder="Enter redirectUrl"
+            />
+            <ErrorMessage
+              name="redirectUrl"
+              component="div"
+              className="text-red-500 text-sm"
+            />
           </div>
 
           {/* Bullets */}
