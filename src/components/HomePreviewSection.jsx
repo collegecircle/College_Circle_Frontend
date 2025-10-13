@@ -203,7 +203,7 @@ const HomePreviewSection = ({ user }) => {
       <div className="flex items-start space-x-3">
         <div className="w-12 h-12 rounded-lg overflow-hidden bg-gray-700 flex-shrink-0">
           <img
-            src={material.thumbnileImgUrl || || "/assets/cclogo.PNG"}
+            src={material.thumbnileImgUrl || "/assets/cclogo.PNG"}
             alt={material.title}
             className="w-full h-full object-cover"
           />
