@@ -33,7 +33,7 @@ const CoursesPage = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     if (newPage >= 1 && newPage <= totalPages) {
       setCurrentPage(newPage);
-      fetchCollegesWithPagination(newPage);
+      fetchCourseMaterialsWithPagination(newPage);
     }
   };
 
@@ -100,7 +100,7 @@ const CoursesPage = () => {
           </h3>
           <p className="text-gray-400 mb-4">{error}</p>
           <button
-            onClick={() => fetchCollegesWithPagination(currentPage)}
+            onClick={() => fetchCourseMaterialsWithPagination(currentPage)}
             className="bg-yellow-500 text-black px-6 py-3 rounded-xl font-semibold hover:bg-yellow-600 transition-colors"
           >
             Try Again
