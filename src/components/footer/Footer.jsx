@@ -90,7 +90,7 @@ const Footer = () => {
                   path: "/colab",
                 },
                 {
-                  name: "courses",
+                  name: "Courses",
                   path: "/courses",
                 },
                 {
