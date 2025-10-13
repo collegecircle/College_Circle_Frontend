@@ -10,13 +10,13 @@
   "theme_color": "#f8d00d",
   "icons": [
     {
-      "src": "/assets/cclogo.png",
+      "src": "/assets/cclogo-white-black.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any maskable"
     },
     {
-      "src": "/assets/cclogo.png",
+      "src": "/assets/cclogo-white-black.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "any maskable"
