@@ -394,22 +394,70 @@ const JobsPage = () => {
   };
 
   // Loading state
+  // if (status === "loading") {
+  //   return (
+  //     <div className="min-h-screen bg-black flex items-center justify-center">
+  //       <div className="text-center">
+  //         <div className="relative flex items-center justify-center">
+  //           <div className="animate-spin h-32 w-32 border-4 border-yellow-500 border-t-transparent rounded-full mb-4"></div>
+  //           <img
+  //             src="/assets/cclogo.PNG"
+  //             alt="Logo"
+  //             className="absolute h-20 w-20 rounded-full object-cover"
+  //           />
+  //         </div>
+  //       </div>
+  //     </div>
+  //   );
+  // }
+
   if (status === "loading") {
     return (
-      <div className="min-h-screen bg-black flex items-center justify-center">
-        <div className="text-center">
-          <div className="relative flex items-center justify-center">
-            <div className="animate-spin h-32 w-32 border-4 border-yellow-500 border-t-transparent rounded-full mb-4"></div>
+      <div
+        style={{
+          minHeight: "100vh",
+          backgroundColor: "black",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <div style={{ textAlign: "center" }}>
+          <div
+            style={{
+              position: "relative",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <div
+              style={{
+                animation: "spin 1s linear infinite",
+                borderRadius: "50%",
+                height: "8rem",
+                width: "8rem",
+                borderBottom: "2px solid #facc15",
+                marginBottom: "1rem",
+              }}
+            ></div>
             <img
               src="/assets/cclogo.PNG"
               alt="Logo"
-              className="absolute h-20 w-20 rounded-full object-cover"
+              style={{
+                position: "absolute",
+                height: "5rem",
+                width: "5rem",
+                borderRadius: "50%",
+                objectFit: "cover",
+              }}
             />
           </div>
         </div>
       </div>
     );
   }
+
 
   // Error state
   if (status === "failed") {
@@ -511,8 +559,8 @@ const JobsPage = () => {
                         key={page}
                         onClick={() => handlePageChange(page)}
                         className={`px-3 py-1 border border-gray-600 rounded-lg text-sm font-medium ${currentPage === page
-                            ? "bg-yellow-500 text-black"
-                            : "text-gray-300 hover:bg-gray-800"
+                          ? "bg-yellow-500 text-black"
+                          : "text-gray-300 hover:bg-gray-800"
                           }`}
                       >
                         {page}

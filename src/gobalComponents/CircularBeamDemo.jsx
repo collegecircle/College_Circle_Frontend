@@ -1265,7 +1265,7 @@ const CircularBeamDemo = () => {
         ))} */}
 
         {/* Central element - fully responsive */}
-        <div
+        {/* <div
           className="absolute inset-0 flex items-center justify-center"
           style={{ zIndex: 20 }} // Higher than beams but lower than navbar
         >
@@ -1278,7 +1278,7 @@ const CircularBeamDemo = () => {
             style={{ zIndex: 20 }}
           >
             <motion.h1
-              className="text-xl xs:text-2xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-white to-yellow-300 mb-2 sm:mb-3 tracking-wide sm:tracking-wider leading-tight"
+              className="text-xl xs:text-5xl sm:text-4xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-white to-yellow-300 mb-2 sm:mb-3 tracking-wide sm:tracking-wider leading-tight"
               initial={{ y: 20 }}
               animate={{ y: 0 }}
               transition={{ duration: 0.6 }}
@@ -1323,8 +1323,68 @@ const CircularBeamDemo = () => {
               JOIN CIRCLE
             </motion.button>
           </motion.div>
-        </div>
+        </div> */}
 
+
+        <div
+          className="absolute inset-0 flex items-center justify-center"
+          style={{ zIndex: 20 }} // Higher than beams but lower than navbar
+        >
+          <motion.div
+            ref={centerRef}
+            className="w-full max-w-sm sm:max-w-md md:max-w-2xl lg:max-w-4xl xl:max-w-5xl px-4 sm:px-4 md:px-6 text-center relative"
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+            style={{ zIndex: 20 }}
+          >
+            <motion.h1
+              className="text-4xl xs:text-5xl sm:text-5xl md:text-5xl lg:text-6xl xl:text-7xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 via-white to-yellow-300 mb-3 sm:mb-3 tracking-wide sm:tracking-wider leading-tight"
+              initial={{ y: 20 }}
+              animate={{ y: 0 }}
+              transition={{ duration: 0.6 }}
+            >
+              COLLEGE CIRCLE
+            </motion.h1>
+
+            <motion.p
+              className="text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl text-gray-300 mb-2 sm:mb-2 font-medium leading-relaxed"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.2 }}
+            >
+              8,00,000+ STUDENT COMMUNITY
+            </motion.p>
+
+            <motion.p
+              className="text-xs xs:text-sm sm:text-base md:text-lg lg:text-xl text-gray-400 mb-4 sm:mb-4 md:mb-6 lg:mb-8 leading-relaxed"
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.3 }}
+            >
+              ACROSS SOCIAL MEDIA PLATFORMS
+            </motion.p>
+
+            <motion.button
+              type="button"
+              onClick={handleRedirect}
+              onPointerDown={handleRedirect} // Additional event for better mobile support
+              className="relative bg-gradient-to-r from-yellow-100 to-yellow-200 text-black px-6 xs:px-7 sm:px-8 md:px-10 lg:px-12 py-3 xs:py-3.5 sm:py-4 md:py-4 lg:py-4 rounded-full font-bold text-sm xs:text-base sm:text-lg md:text-xl lg:text-2xl hover:from-yellow-300 hover:to-yellow-400 transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-yellow-400/20 focus:outline-none focus:ring-2 focus:ring-yellow-300 focus:ring-opacity-50 active:scale-95 cursor-pointer"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+              initial={{ y: 20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              transition={{ duration: 0.6, delay: 0.4 }}
+              style={{
+                zIndex: 25, // Higher than center content
+                pointerEvents: "auto",
+                touchAction: "manipulation", // Prevents zoom on double tap
+              }}
+            >
+              JOIN CIRCLE
+            </motion.button>
+          </motion.div>
+        </div>
         {/* Outer Points with fully responsive styling */}
         {/* {points.map((point, index) => (
           <motion.div

@@ -12,50 +12,50 @@ const Carousel = ({ items = [] }) => {
     items.length > 0
       ? items
       : [
-          {
-            id: 1,
-            title: " Reel 1",
-            subtitle: " Reel 1",
-            thumbnail: "/assets/reel1.jpg",
-            link: "https://www.instagram.com/reel/DHc9XbpOhHy",
-          },
-          {
-            id: 2,
-            title: " Reel 1",
-            subtitle: " Reel 1y",
-            thumbnail: "/assets/reel2.jpg",
-            link: "https://www.instagram.com/reel/DMiKMXgToZQ",
-          },
-          {
-            id: 3,
-            title: " Reel 1",
-            subtitle: " Reel 1",
-            thumbnail: "/assets/reel4.jpg",
-            link: "https://www.instagram.com/reel/DNN1MA6T9gs",
-          },
-          {
-            id: 4,
-            title: " Reel 1",
-            subtitle: " Reel 1",
-            thumbnail: "/assets/reel6.jpg",
-            link: "https://www.instagram.com/reel/DMu3HPnTfAp",
-          },
+        {
+          id: 1,
+          title: " Reel 1",
+          subtitle: " Reel 1",
+          thumbnail: "/assets/reel1.jpg",
+          link: "https://www.instagram.com/reel/DHc9XbpOhHy",
+        },
+        {
+          id: 2,
+          title: " Reel 1",
+          subtitle: " Reel 1y",
+          thumbnail: "/assets/reel2.jpg",
+          link: "https://www.instagram.com/reel/DMiKMXgToZQ",
+        },
+        {
+          id: 3,
+          title: " Reel 1",
+          subtitle: " Reel 1",
+          thumbnail: "/assets/reel4.jpg",
+          link: "https://www.instagram.com/reel/DNN1MA6T9gs",
+        },
+        {
+          id: 4,
+          title: " Reel 1",
+          subtitle: " Reel 1",
+          thumbnail: "/assets/reel6.jpg",
+          link: "https://www.instagram.com/reel/DMu3HPnTfAp",
+        },
 
-          {
-            id: 5,
-            title: " Reel 1",
-            subtitle: " Reel 1y",
-            thumbnail: "/assets/reel5.jpg",
-            link: "https://www.instagram.com/reel/DMK0D6xTJrE",
-          },
-          {
-            id: 6,
-            title: " Reel 1",
-            subtitle: " Reel 1",
-            thumbnail: "/assets/reel3.jpg",
-            link: "https://www.instagram.com/reel/DM2qmycTjrG",
-          },
-        ];
+        {
+          id: 5,
+          title: " Reel 1",
+          subtitle: " Reel 1y",
+          thumbnail: "/assets/reel5.jpg",
+          link: "https://www.instagram.com/reel/DMK0D6xTJrE",
+        },
+        {
+          id: 6,
+          title: " Reel 1",
+          subtitle: " Reel 1",
+          thumbnail: "/assets/reel3.jpg",
+          link: "https://www.instagram.com/reel/DM2qmycTjrG",
+        },
+      ];
 
   useEffect(() => {
     const updateItemsPerView = () => {
@@ -124,9 +124,8 @@ const Carousel = ({ items = [] }) => {
         <div
           className="flex py-2 transition-transform duration-500 ease-out"
           style={{
-            transform: `translateX(${
-              -(activeIndex * 100) / totalPages
-            }%) translateX(${dragOffset}px)`,
+            transform: `translateX(${-(activeIndex * 100) / totalPages
+              }%) translateX(${dragOffset}px)`,
             width: `${totalPages * 100}%`,
           }}
           onTouchStart={handleTouchStart}
@@ -151,10 +150,9 @@ const Carousel = ({ items = [] }) => {
                     className="group h-full flex justify-center items-center text-white rounded-xl relative overflow-hidden cursor-pointer transform transition-all duration-300 hover:scale-105 hover:shadow-xl"
                     style={{
                       width: `${100 / itemsPerView}%`,
-                      backgroundImage: `url(${
-                        item.thumbnail ||
+                      backgroundImage: `url(${item.thumbnail ||
                         "https://via.placeholder.com/400x600?text=Image+Not+Found"
-                      })`,
+                        })`,
                       backgroundSize: "cover",
                       backgroundPosition: "center",
                       backgroundRepeat: "no-repeat",
@@ -222,7 +220,7 @@ const Carousel = ({ items = [] }) => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-arrow-left-icon lucide-arrow-left"
+            className="lucide lucide-arrow-left-icon lucide-arrow-left"
           >
             <path d="m12 19-7-7 7-7" />
             <path d="M19 12H5" />
@@ -245,7 +243,7 @@ const Carousel = ({ items = [] }) => {
             stroke-width="2"
             stroke-linecap="round"
             stroke-linejoin="round"
-            class="lucide lucide-arrow-right-icon lucide-arrow-right"
+            className="lucide lucide-arrow-right-icon lucide-arrow-right"
           >
             <path d="M5 12h14" />
             <path d="m12 5 7 7-7 7" />
@@ -259,11 +257,10 @@ const Carousel = ({ items = [] }) => {
           <button
             key={index}
             onClick={() => handleDotClick(index)}
-            className={`h-2 rounded-full transition-all duration-300 ${
-              index === activeIndex
-                ? "bg-[#fbbf24] w-8 shadow-lg"
-                : "bg-white h-2 w-2"
-            }`}
+            className={`h-2 rounded-full transition-all duration-300 ${index === activeIndex
+              ? "bg-[#fbbf24] w-8 shadow-lg"
+              : "bg-white h-2 w-2"
+              }`}
             aria-label={`Go to page ${index + 1}`}
           />
         ))}

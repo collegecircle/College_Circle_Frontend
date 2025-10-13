@@ -260,6 +260,49 @@ export const loginUser = createAsyncThunk(
     }
   }
 );
+export const forgotPassword = createAsyncThunk(
+  "auth/forgotPassword",
+  async ({ email }, thunkAPI) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/forgot-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.success !== 1) {
+        return thunkAPI.rejectWithValue(data.message || "Failed to send OTP");
+      }
+      return { email, message: data.message };
+    } catch {
+      return thunkAPI.rejectWithValue(
+        "Network error. Please check your connection."
+      );
+    }
+  }
+);
+
+// 🔹 Reset Password
+export const resetPassword = createAsyncThunk(
+  "auth/resetPassword",
+  async ({ email, password, otp }, thunkAPI) => {
+    try {
+      const res = await fetch(`${API_BASE_URL}/auth/reset-password`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, password, otp }),
+      });
+      const data = await res.json();
+      if (!res.ok || data.success !== 1) {
+        return thunkAPI.rejectWithValue(data.message || "Password reset failed");
+      }
+      return { email, message: data.message };
+    } catch {
+      return thunkAPI.rejectWithValue("Network error. Please try again.");
+    }
+  }
+);
+
 
 const authSlice = createSlice({
   name: "auth",
@@ -339,7 +382,40 @@ const authSlice = createSlice({
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
-      });
+      })
+
+        .addCase(forgotPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = null;
+      })
+      .addCase(forgotPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isOtpSent = true;
+        state.forgotEmail = action.payload.email;
+        state.success = action.payload.message;
+      })
+      .addCase(forgotPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+
+      // 🔹 Reset Password
+      .addCase(resetPassword.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+        state.success = null;
+      })
+      .addCase(resetPassword.fulfilled, (state, action) => {
+        state.loading = false;
+        state.isOtpSent = false;
+        state.forgotEmail = null;
+        state.success = action.payload.message;
+      })
+      .addCase(resetPassword.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
   },
 });
 export const { resetMessages } = authSlice.actions;

@@ -150,9 +150,8 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
 
   return (
     <div
-      className={`w-full max-w-md transition-all duration-500 transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
+      className={`w-full max-w-md transition-all duration-500 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
     >
       {notification && (
         <Notification
@@ -186,9 +185,8 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter your email"
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.email ? "border-red-500 bg-red-50" : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email ? "border-red-500 bg-red-50" : "border-gray-300"
+                }`}
             />
           </div>
           {errors.email && (
@@ -212,9 +210,8 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
               onChange={handleChange}
               onKeyDown={handleKeyDown}
               placeholder="Enter your password"
-              className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.password ? "border-red-500 bg-red-50" : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-12 py-3 border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password ? "border-red-500 bg-red-50" : "border-gray-300"
+                }`}
             />
             <button
               type="button"
@@ -528,7 +525,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
         localStorage.setItem("userData", JSON.stringify(response.data));
 
         setTimeout(() => {
-          navigate("/");
+          navigate("/userlogin", { replace: true });
+          window.location.reload();
         }, 1000);
       }
     } catch (err) {
@@ -554,9 +552,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
 
   return (
     <div
-      className={`w-full max-w-md mx-auto px-4 transition-all duration-500 transform ${
-        isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
-      }`}
+      className={`w-full max-w-md mx-auto px-4 transition-all duration-500 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+        }`}
     >
       {notification && (
         <Notification
@@ -590,11 +587,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Full Name"
-              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.name && touched.name
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.name && touched.name
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+                }`}
             />
           </div>
           {errors.name && touched.name && (
@@ -617,11 +613,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               onBlur={handleBlur}
               placeholder="Phone Number"
               maxLength="10"
-              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.phone && touched.phone
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.phone && touched.phone
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+                }`}
             />
           </div>
           {errors.phone && touched.phone && (
@@ -643,11 +638,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Email"
-              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.email && touched.email
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email && touched.email
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+                }`}
             />
           </div>
           {errors.email && touched.email && (
@@ -669,11 +663,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Password"
-              className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.password && touched.password
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password && touched.password
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+                }`}
             />
             <button
               type="button"
@@ -706,11 +699,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Confirm Password"
-              className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                errors.confirmPassword && touched.confirmPassword
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-              }`}
+              className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.confirmPassword && touched.confirmPassword
+                ? "border-red-500 bg-red-50"
+                : "border-gray-300"
+                }`}
             />
             <button
               type="button"
@@ -747,11 +739,10 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                 onBlur={handleBlur}
                 placeholder="Enter 6-digit OTP"
                 maxLength="6"
-                className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${
-                  errors.otp && touched.otp
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-300"
-                }`}
+                className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.otp && touched.otp
+                  ? "border-red-500 bg-red-50"
+                  : "border-gray-300"
+                  }`}
               />
             </div>
             <button
@@ -764,25 +755,24 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
                   (key) => !["otp"].includes(key)
                 ).length > 0
               }
-              className={`px-3 py-2.5 text-sm rounded-lg font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0 ${
-                otpSent && !canResendOtp
-                  ? "bg-green-100 text-green-700 cursor-default"
-                  : isOtpSending
+              className={`px-3 py-2.5 text-sm rounded-lg font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0 ${otpSent && !canResendOtp
+                ? "bg-green-100 text-green-700 cursor-default"
+                : isOtpSending
                   ? "bg-gray-100 text-gray-500 cursor-not-allowed"
                   : Object.keys(validateAll()).filter(
-                      (key) => !["otp"].includes(key)
-                    ).length > 0
-                  ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                  : "bg-yellow-400 text-black hover:bg-yellow-600 transform hover:scale-105"
-              }`}
+                    (key) => !["otp"].includes(key)
+                  ).length > 0
+                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+                    : "bg-yellow-400 text-black hover:bg-yellow-600 transform hover:scale-105"
+                }`}
             >
               {isOtpSending
                 ? "Sending..."
                 : otpSent && !canResendOtp
-                ? `Sent (${timer}s)`
-                : canResendOtp
-                ? "Resend"
-                : "Send OTP"}
+                  ? `Sent (${timer}s)`
+                  : canResendOtp
+                    ? "Resend"
+                    : "Send OTP"}
             </button>
           </div>
           {errors.otp && touched.otp && (
@@ -867,9 +857,8 @@ const AuthContainer = () => {
       <div className="hidden lg:flex w-full h-screen relative">
         {/* Left Section - Gradient Background */}
         <div
-          className={`absolute inset-y-0 w-1/2 bg-black transform transition-all duration-1000 ease-out ${
-            isLogin ? "left-0 translate-x-0" : "left-1/2 translate-x-0"
-          }`}
+          className={`absolute inset-y-0 w-1/2 bg-black transform transition-all duration-1000 ease-out ${isLogin ? "left-0 translate-x-0" : "left-1/2 translate-x-0"
+            }`}
         >
           {/* Navigation Tabs */}
           <div className="absolute top-8 left-8 right-8 z-20">
@@ -877,22 +866,20 @@ const AuthContainer = () => {
               <button
                 onClick={() => setIsLogin(true)}
                 disabled={isTransitioning}
-                className={`flex-1 py-4 px-6 rounded-full text-black font-bold transition-all duration-500 ${
-                  isLogin
-                    ? "bg-yellow-400 shadow-2xl transform scale-105"
-                    : "text-white hover:bg-white/20"
-                } ${isTransitioning ? "opacity-50" : ""}`}
+                className={`flex-1 py-4 px-6 rounded-full text-black font-bold transition-all duration-500 ${isLogin
+                  ? "bg-yellow-400 shadow-2xl transform scale-105"
+                  : "text-white hover:bg-white/20"
+                  } ${isTransitioning ? "opacity-50" : ""}`}
               >
                 LOGIN
               </button>
               <button
                 onClick={() => setIsLogin(false)}
                 disabled={isTransitioning}
-                className={`flex-1 py-4 px-6 rounded-full text-black font-bold transition-all duration-500 ${
-                  !isLogin
-                    ? "bg-yellow-400 shadow-2xl transform scale-105"
-                    : "text-white hover:bg-white/20"
-                } ${isTransitioning ? "opacity-50" : ""}`}
+                className={`flex-1 py-4 px-6 rounded-full text-black font-bold transition-all duration-500 ${!isLogin
+                  ? "bg-yellow-400 shadow-2xl transform scale-105"
+                  : "text-white hover:bg-white/20"
+                  } ${isTransitioning ? "opacity-50" : ""}`}
               >
                 REGISTER
               </button>
@@ -912,20 +899,18 @@ const AuthContainer = () => {
 
             <div className="relative mt-6">
               <h2
-                className={`text-2xl font-bold my-3 pt-4 transition-all duration-700 transform text-white ${
-                  isTransitioning
-                    ? "opacity-0 translate-y-4"
-                    : "opacity-100 translate-y-0"
-                }`}
+                className={`text-2xl font-bold my-3 pt-4 transition-all duration-700 transform text-white ${isTransitioning
+                  ? "opacity-0 translate-y-4"
+                  : "opacity-100 translate-y-0"
+                  }`}
               >
                 {isLogin ? "Welcome Back!" : "Join Us Today!"}
               </h2>
               <p
-                className={`text-gray-300 text-lg leading-relaxed transition-all duration-700 transform ${
-                  isTransitioning
-                    ? "opacity-0 translate-y-4"
-                    : "opacity-100 translate-y-0"
-                }`}
+                className={`text-gray-300 text-lg leading-relaxed transition-all duration-700 transform ${isTransitioning
+                  ? "opacity-0 translate-y-4"
+                  : "opacity-100 translate-y-0"
+                  }`}
               >
                 {isLogin
                   ? "Access your College Circle account and continue your educational journey."
@@ -937,9 +922,8 @@ const AuthContainer = () => {
 
         {/* Right Section - Form */}
         <div
-          className={`absolute inset-y-0 w-1/2 bg-white shadow-2xl transform transition-all duration-1000 ease-out ${
-            isLogin ? "right-0 translate-x-0" : "right-1/2 translate-x-0"
-          }`}
+          className={`absolute inset-y-0 w-1/2 bg-white shadow-2xl transform transition-all duration-1000 ease-out ${isLogin ? "right-0 translate-x-0" : "right-1/2 translate-x-0"
+            }`}
         >
           <div className="flex items-center justify-center w-full h-full p-12">
             <div className="w-full max-w-md">
@@ -971,22 +955,20 @@ const AuthContainer = () => {
               <button
                 onClick={() => setIsLogin(true)}
                 disabled={isTransitioning}
-                className={`flex-1 py-3 px-4 rounded-full text-black font-bold transition-all duration-500 text-sm ${
-                  isLogin
-                    ? "bg-yellow-400 shadow-lg transform scale-105"
-                    : "text-white hover:bg-white/20"
-                } ${isTransitioning ? "opacity-50" : ""}`}
+                className={`flex-1 py-3 px-4 rounded-full text-black font-bold transition-all duration-500 text-sm ${isLogin
+                  ? "bg-yellow-400 shadow-lg transform scale-105"
+                  : "text-white hover:bg-white/20"
+                  } ${isTransitioning ? "opacity-50" : ""}`}
               >
                 LOGIN
               </button>
               <button
                 onClick={() => setIsLogin(false)}
                 disabled={isTransitioning}
-                className={`flex-1 py-3 px-4 rounded-full text-black font-bold transition-all duration-500 text-sm ${
-                  !isLogin
-                    ? "bg-yellow-400 shadow-lg transform scale-105"
-                    : "text-white hover:bg-white/20"
-                } ${isTransitioning ? "opacity-50" : ""}`}
+                className={`flex-1 py-3 px-4 rounded-full text-black font-bold transition-all duration-500 text-sm ${!isLogin
+                  ? "bg-yellow-400 shadow-lg transform scale-105"
+                  : "text-white hover:bg-white/20"
+                  } ${isTransitioning ? "opacity-50" : ""}`}
               >
                 REGISTER
               </button>
@@ -1008,20 +990,18 @@ const AuthContainer = () => {
 
             <div className="px-4">
               <h2
-                className={`text-2xl font-bold mb-2 transition-all duration-700 transform text-white ${
-                  isTransitioning
-                    ? "opacity-0 translate-y-4"
-                    : "opacity-100 translate-y-0"
-                }`}
+                className={`text-2xl font-bold mb-2 transition-all duration-700 transform text-white ${isTransitioning
+                  ? "opacity-0 translate-y-4"
+                  : "opacity-100 translate-y-0"
+                  }`}
               >
                 {isLogin ? "Welcome Back!" : "Join Us Today!"}
               </h2>
               <p
-                className={`text-gray-300 text-sm leading-relaxed transition-all duration-700 transform ${
-                  isTransitioning
-                    ? "opacity-0 translate-y-4"
-                    : "opacity-100 translate-y-0"
-                }`}
+                className={`text-gray-300 text-sm leading-relaxed transition-all duration-700 transform ${isTransitioning
+                  ? "opacity-0 translate-y-4"
+                  : "opacity-100 translate-y-0"
+                  }`}
               >
                 {isLogin
                   ? "Access your College Circle account."
