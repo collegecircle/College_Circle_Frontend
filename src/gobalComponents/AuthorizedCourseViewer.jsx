@@ -412,10 +412,12 @@ const AuthorizedCourseViewer = () => {
                 </li>
               </ul>
 
-              <div className="bg-yellow-500 float-right mt-8 w-fit mx-auto text-slate-900 px-4 py-2  font-semibold text-sm flex gap-2 justify-center items-center rounded-full">
-                <button onClick={() => handleEnroll()}>Enroll now </button>
-                <ArrowRight size={20} />
-              </div>
+              {!hasAccess && (
+                <div className="bg-yellow-500 float-right mt-8 w-fit mx-auto text-slate-900 px-4 py-2  font-semibold text-sm flex gap-2 justify-center items-center rounded-full">
+                  <button onClick={() => handleEnroll()}>Enroll now </button>
+                  <ArrowRight size={20} />
+                </div>
+              )}
             </div>
           </div>
         </div>
