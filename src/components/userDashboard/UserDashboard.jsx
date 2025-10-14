@@ -438,7 +438,7 @@ export default function Dashboard() {
                     }}
                   >
                     <Eye className="h-4 w-4 mr-1" />
-                    pen Material
+                    Open Material
                   </button>
                 </div>
               </div>
