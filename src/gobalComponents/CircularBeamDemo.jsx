@@ -893,17 +893,17 @@ const AnimatedBeam = ({
 
   const gradientCoordinates = reverse
     ? {
-      x1: ["90%", "-10%"],
-      x2: ["100%", "0%"],
-      y1: ["0%", "0%"],
-      y2: ["0%", "0%"],
-    }
+        x1: ["90%", "-10%"],
+        x2: ["100%", "0%"],
+        y1: ["0%", "0%"],
+        y2: ["0%", "0%"],
+      }
     : {
-      x1: ["10%", "110%"],
-      x2: ["0%", "100%"],
-      y1: ["0%", "0%"],
-      y2: ["0%", "0%"],
-    };
+        x1: ["10%", "110%"],
+        x2: ["0%", "100%"],
+        y1: ["0%", "0%"],
+        y2: ["0%", "0%"],
+      };
 
   React.useEffect(() => {
     const updatePath = () => {
@@ -928,7 +928,8 @@ const AnimatedBeam = ({
 
         const controlY = startY - curvature;
         setPathD(
-          `M ${startX},${startY} Q ${(startX + endX) / 2
+          `M ${startX},${startY} Q ${
+            (startX + endX) / 2
           },${controlY} ${endX},${endY}`
         );
       }
@@ -1325,7 +1326,6 @@ const CircularBeamDemo = () => {
     //       </motion.div>
     //     </div> */}
 
-
     //     <div
     //       className="absolute inset-0 flex items-center justify-center"
     //       style={{ zIndex: 20 }} // Higher than beams but lower than navbar
@@ -1435,7 +1435,7 @@ const CircularBeamDemo = () => {
     // </div>
 
     <div
-      className="w-full overflow-hidden h-[70vh] sm:h-[75vh] md:h-screen"
+      className="w-full overflow-hidden h-[60vh] md:h-screen"
       style={{ position: "relative", zIndex: 1 }}
     >
       <div
@@ -1462,7 +1462,9 @@ const CircularBeamDemo = () => {
                 top: `${Math.random() * 100}%`,
                 left: `${Math.random() * 100}%`,
                 opacity: Math.random() * 0.5 + 0.2,
-                animation: `twinkle ${Math.random() * 3 + 2}s infinite ${Math.random() * 2}s`,
+                animation: `twinkle ${Math.random() * 3 + 2}s infinite ${
+                  Math.random() * 2
+                }s`,
                 zIndex: 1,
               }}
             />
