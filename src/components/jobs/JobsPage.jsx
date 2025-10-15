@@ -359,10 +359,10 @@ const JobsPage = () => {
 
   // Jobs list + total count from API
   const jobsList = useMemo(() => {
-    return Array.isArray(list?.data?.jobs) ? list.data.jobs : [];
+    return Array.isArray(list?.data?.data?.jobs) ? list.data?.data?.jobs : [];
   }, [list?.data?.jobs]);
 
-  const totalCount = list?.data?.count || 0;
+  const totalCount = list?.data?.data?.count || 0;
   const totalPages = Math.ceil(totalCount / itemsPerPage);
 
   // Fetch jobs with pagination + filter
