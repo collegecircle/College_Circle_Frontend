@@ -43,8 +43,8 @@ const HomePreviewSection = ({ user }) => {
   const isCoursesLocked = true; // Hardcoded for testing; replace with Redux state or prop
 
   // Get featured items
-  const featuredJobs = Array.isArray(jobsList?.data?.jobs)
-    ? jobsList.data?.jobs.slice(0, 2)
+  const featuredJobs = Array.isArray(jobsList?.data?.data?.jobs)
+    ? jobsList.data?.data?.jobs.slice(0, 2)
     : [];
   const featuredColleges = Array.isArray(collegesList?.data?.colleges)
     ? collegesList.data.colleges.slice(0, 2)
