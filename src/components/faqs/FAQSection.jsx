@@ -137,56 +137,35 @@ const FAQSection = () => {
 
   const faqs = [
     {
-      question: "Do you provide home interior design only in Hyderabad?",
+      question: "What is College Circle?",
       answer:
-        "While our studio is based in Hyderabad, we offer our premium interior design services across India, depending on the project scope and requirements.",
+        "College Circle is an all-in-one platform for students to learn, apply, and grow — offering college enrollment, job applications, online courses, exam coaching (IPE, EAMCET, NEET, JEE), free notes, materials, and events.",
     },
     {
-      question: "How long does it take to complete a project?",
+      question: "Is it free to join?",
       answer:
-        "The timeline depends on the complexity and scope of the project.",
-      li1: "Full home interiors: 6 to 12 weeks",
-      li2: "Single-room design: 3 to 6 weeks",
-      li3: "Renovations: Varies based on scope",
-      end: "We provide a detailed timeline after understanding your specific needs.",
+        "Yes! Creating an account and accessing most of our content, notes, and materials is completely free. Some premium courses and training sessions are paid.",
     },
     {
-      question: "What is included in your interior design services?",
-      answer: "Our comprehensive interior design services include:",
-      li1: "Space planning and layout design",
-      li2: "Color schemes and material selection",
-      li3: "Furniture and decor recommendations",
-      li4: "3D visualization and renders",
-      end: "We handle everything from concept to completion.",
+      question: "Are all colleges verified?",
+      answer:
+        "Yes. We collaborate only with verified and reputed institutions across Telangana and Andhra Pradesh.",
     },
     {
-      question: "Do you work within specific budgets?",
+      question: "What kind of courses do you offer?",
       answer:
-        "Yes, we work with various budget ranges and always discuss costs upfront.",
-      li1: "Budget consultation and planning",
-      li2: "Transparent pricing with no hidden costs",
-      li3: "Flexible payment options available",
-      end: "We believe great design should be accessible to everyone.",
+        "We offer both free and paid courses on technical skills, IT skills, soft skills, and coaching for exams like EAMCET, NEET, and JEE.",
     },
     {
-      question: "Can I see examples of your previous work?",
+      question: "What kind of events can I attend?",
       answer:
-        "Absolutely! We have an extensive portfolio showcasing our diverse projects.",
-      li1: "Residential apartments and villas",
-      li2: "Commercial spaces and offices",
-      li3: "Renovations and makeovers",
-      end: "Contact us to view our complete portfolio and client testimonials.",
+        "We conduct career guidance sessions, webinars, tech talks, and campus events for students.",
     },
     {
-      question: "What makes your design approach unique?",
+      question: "Can I collaborate as a tutor or college partner or any other?",
       answer:
-        "Our design philosophy combines functionality with aesthetic appeal.",
-      li1: "Personalized design solutions",
-      li2: "Sustainable and eco-friendly materials",
-      li3: "Latest trends with timeless appeal",
-      end: "Every project reflects our client's personality and lifestyle.",
-    },
-  ];
+        "Yes! Visit our 'Collaborate' section to join as a tutor, college partner, or other collaborator.",
+    }];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-black via-black to-black py-8 sm:py-12 md:py-16 px-4 sm:px-6 lg:px-8">
