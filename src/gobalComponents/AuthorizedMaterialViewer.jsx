@@ -11,6 +11,7 @@ import {
   BookOpen,
   Eye,
   ArrowRight,
+  View,
 } from "lucide-react";
 import { div } from "motion/react-client";
 
@@ -202,8 +203,8 @@ const AuthorizedMaterialViewer = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-black via-black to-slate-900 p-4 md:p-8">
-      <div className="max-w-6xl mx-auto">
+    <div className="min-h-screen bg-gradient-to-br from-black via-black to-slate-900 p-4 md:p-8 flex items-center justify-center">
+      <div className="max-w-6xl w-full mx-auto">
         {/* Header */}
         <div className="mb-8">
           <h1 className="text-3xl md:text-4xl font-bold text-white mb-2">
@@ -237,7 +238,7 @@ const AuthorizedMaterialViewer = () => {
 
                 {/* Meta Info */}
                 <div className="grid grid-cols-2 md:grid-cols-3 gap-4 mb-8 pb-8 border-b bg-[#262626]">
-                  <div className="flex items-center gap-2 text-slate-300">
+                  {/* <div className="flex items-center gap-2 text-slate-300">
                     <BookOpen size={18} className="text-yellow-500" />
                     <span className="text-sm">
                       {hasAccess
@@ -245,7 +246,7 @@ const AuthorizedMaterialViewer = () => {
                         : material?.countOfModules}
                       Modules
                     </span>
-                  </div>
+                  </div> */}
                   <div className="flex items-center gap-2 text-slate-300">
                     <Users size={18} className="text-yellow-500" />
                     <span className="text-sm">
@@ -264,7 +265,7 @@ const AuthorizedMaterialViewer = () => {
                 <div>
                   <div className="flex justify-between  items-center">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Course Modules
+                      Resource Links
                     </h3>
                     {!hasAccess && (
                       <div className="bg-yellow-500 text-slate-900 px-4 py-2  font-semibold text-sm flex gap-2 justify-center items-center rounded-full">
@@ -303,7 +304,8 @@ const AuthorizedMaterialViewer = () => {
                               className="bg-yellow-500 hover:bg-yellow-600 text-gray-900 p-2 md:p-3 rounded-lg transition-transform transform hover:scale-105"
                               title="View Document"
                             >
-                              <Eye size={20} />
+                              {/* <View size={20} /> */}
+                              View
                             </button>
                           </div>
                         ))}
@@ -320,7 +322,7 @@ const AuthorizedMaterialViewer = () => {
             {/* Course ID Card */}
             <div className="bg-[#262626] p-6 rounded-xl">
               <h4 className="text-slate-400 text-sm font-semibold mb-2">
-                COURSE ID
+                Resource ID
               </h4>
               <p className="text-white font-mono text-lg break-all">
                 {material.id}
@@ -328,7 +330,7 @@ const AuthorizedMaterialViewer = () => {
             </div>
 
             {/* Quick Stats */}
-            <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-slate-900">
+            {/* <div className="bg-gradient-to-br from-yellow-500 to-yellow-600 p-6 rounded-xl text-slate-900">
               <h4 className="font-semibold text-lg mb-4">Quick Stats</h4>
               <div className="space-y-3">
                 <div>
@@ -340,10 +342,10 @@ const AuthorizedMaterialViewer = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
 
             {/* Timeline */}
-            <div className="bg-[#262626] p-6 rounded-xl">
+            {/* <div className="bg-[#262626] p-6 rounded-xl">
               <h4 className="text-white font-semibold mb-4">Timeline</h4>
               <div className="space-y-3 text-sm">
                 <div>
@@ -359,7 +361,7 @@ const AuthorizedMaterialViewer = () => {
                   </p>
                 </div>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
 

@@ -298,6 +298,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
     name: "",
     phone: "",
     email: "",
+    studyField: "",
     password: "",
     confirmPassword: "",
     otp: "",
@@ -430,6 +431,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
       const payload = {
         name: formData.name.trim(),
         email: formData.email.trim(),
+        studyField: formData.studyField,
         phone: parseInt(formData.phone),
         password: formData.password,
         confirmPassword: formData.confirmPassword,
@@ -648,6 +650,43 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
             <p className="text-red-500 text-xs pl-1">{errors.email}</p>
           )}
         </div>
+        <select
+          name="studyField"
+          value={formData.studyField}
+          onChange={handleInputChange}
+          onBlur={handleBlur}
+          className={`w-full pl-3 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.studyField && touched.studyField
+            ? "border-red-500 bg-red-50"
+            : "border-gray-300"
+            }`}
+        >
+          <option value="" disabled>
+            Select your study field
+          </option>
+          <optgroup label="Btech">
+            <option value="Btech-1">Btech - 1</option>
+            <option value="Btech-2">Btech - 2</option>
+            <option value="Btech-3">Btech - 3</option>
+            <option value="Btech-4">Btech - 4</option>
+          </optgroup>
+          <optgroup label="Diploma">
+            <option value="Diploma-1">Diploma - 1</option>
+            <option value="Diploma-2">Diploma - 2</option>
+            <option value="Diploma-3">Diploma - 3</option>
+          </optgroup>
+          <optgroup label="Degree">
+            <option value="Degree-1">Degree - 1</option>
+            <option value="Degree-2">Degree - 2</option>
+            <option value="Degree-3">Degree - 3</option>
+          </optgroup>
+          <optgroup label="Intermediate">
+            <option value="Inter-1">Inter - 1</option>
+            <option value="Inter-2">Inter - 2</option>
+          </optgroup>
+          <option value="School">School</option>
+          <option value="Other">Other</option>
+        </select>
+
 
         {/* Password Field */}
         <div className="space-y-1">

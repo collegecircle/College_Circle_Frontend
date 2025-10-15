@@ -267,9 +267,15 @@ const FAQSection = () => {
           <p className="text-gray-400 mb-4 py-2 sm:py-4 text-sm sm:text-base">
             Still have questions? We're here to help!
           </p>
-          <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-colors duration-200 text-sm sm:text-base">
-            Contact Us
-          </button>
+          <a
+            href="https://wa.me/91833384923"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <button className="bg-yellow-400 hover:bg-yellow-500 text-black font-semibold py-2 sm:py-3 px-6 sm:px-8 rounded-full transition-colors duration-200 text-sm sm:text-base">
+              Contact Us
+            </button>
+          </a>
         </div>
       </div>
     </div>
