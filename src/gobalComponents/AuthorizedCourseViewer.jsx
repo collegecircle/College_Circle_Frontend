@@ -154,7 +154,7 @@ const AuthorizedCourseViewer = () => {
             console.error(err);
             alert(
               err.response?.data?.message ||
-                "Payment verification failed. Contact support."
+              "Payment verification failed. Contact support."
             );
           }
         },
@@ -180,7 +180,7 @@ const AuthorizedCourseViewer = () => {
       } else {
         setError(
           err.response?.data?.message ||
-            "Failed to load course. Please try again."
+          "Failed to load course. Please try again."
         );
       }
     }
@@ -523,11 +523,10 @@ const AuthorizedCourseViewer = () => {
                 course.modules.map((module, index) => (
                   <div
                     key={index}
-                    className={`bg-gradient-to-r ${
-                      expandedModuleIndex === index
-                        ? "from-gray-800 to-gray-900"
-                        : "from-gray-900 to-gray-800"
-                    } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
+                    className={`bg-gradient-to-r ${expandedModuleIndex === index
+                      ? "from-gray-800 to-gray-900"
+                      : "from-gray-900 to-gray-800"
+                      } rounded-lg overflow-hidden border border-gray-800 shadow-md transition-all duration-300`}
                   >
                     <button
                       onClick={(e) => toggleModuleExpansion(index, e)}
@@ -535,11 +534,10 @@ const AuthorizedCourseViewer = () => {
                     >
                       <div className="flex items-center">
                         <div
-                          className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${
-                            expandedModuleIndex === index
-                              ? "bg-[#fdc700] text-black"
-                              : "bg-black text-white border border-gray-700"
-                          } transition-colors duration-300`}
+                          className={`w-9 h-9 rounded-full flex items-center justify-center mr-4 ${expandedModuleIndex === index
+                            ? "bg-[#fdc700] text-black"
+                            : "bg-black text-white border border-gray-700"
+                            } transition-colors duration-300`}
                         >
                           <span className="text-sm font-medium">
                             {index + 1}
@@ -587,20 +585,18 @@ const AuthorizedCourseViewer = () => {
                       </div>
                       <div className="flex items-center">
                         <span
-                          className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${
-                            expandedModuleIndex === index
-                              ? "bg-[#fdc700] text-black"
-                              : "bg-gray-800 text-gray-400"
-                          }`}
+                          className={`mr-3 text-xs font-medium px-2 py-0.5 rounded-full ${expandedModuleIndex === index
+                            ? "bg-[#fdc700] text-black"
+                            : "bg-gray-800 text-gray-400"
+                            }`}
                         >
                           {expandedModuleIndex === index
                             ? "Viewing"
                             : "Preview"}
                         </span>
                         <svg
-                          className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${
-                            expandedModuleIndex === index ? "rotate-180" : ""
-                          }`}
+                          className={`h-5 w-5 text-gray-400 transform transition-transform duration-300 ${expandedModuleIndex === index ? "rotate-180" : ""
+                            }`}
                           fill="none"
                           viewBox="0 0 24 24"
                           stroke="currentColor"
@@ -687,12 +683,12 @@ const AuthorizedCourseViewer = () => {
                                     Course Document
                                   </h4>
                                   <p className="text-gray-400 text-xs mb-3">
-                                    Module reference materials
+                                    Resource reference materials
                                   </p>
-                                  <button
-                                    onClick={() =>
-                                      openPdfViewer(module.documentLink)
-                                    }
+                                  <a
+                                    href={module.documentLink}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
                                     className="text-xs bg-blue-900/50 hover:bg-blue-800 text-blue-300 hover:text-blue-200 px-3 py-1.5 rounded-md transition-colors inline-flex items-center"
                                   >
                                     <svg
@@ -715,7 +711,8 @@ const AuthorizedCourseViewer = () => {
                                       />
                                     </svg>
                                     View Document
-                                  </button>
+                                  </a>
+
                                 </div>
                               </div>
                             </div>
