@@ -215,14 +215,14 @@ const Footer = () => {
         {/* Social Media */}
         <div className="flex justify-center gap-6 mb-8" data-animate>
           {[
-            { icon: FaFacebookF, href: "#", color: "hover:bg-yellow-500" },
-            { icon: FaTwitter, href: "#", color: "hover:bg-yellow-400" },
+            // { icon: FaFacebookF, href: "#", color: "hover:bg-yellow-500" },
+            // { icon: FaTwitter, href: "#", color: "hover:bg-yellow-400" },
             {
               icon: FaInstagram,
-              href: "https://www.instagram.com/collegecircle_cc",
+              href: "https://www.instagram.com/collegecircle.cc/",
               color: "hover:bg-yellow-500",
             },
-            { icon: FaLinkedinIn, href: "#", color: "hover:bg-yellow-600" },
+            { icon: FaLinkedinIn, href: "https://www.linkedin.com/company/collegecircle.cc", color: "hover:bg-yellow-600" },
           ].map((social, index) => (
             <a
               key={index}
