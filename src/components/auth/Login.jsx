@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 import {
   registerUser,
-  verifyUserOtp,
+  // verifyUserOtp,
   loginUser,
 } from "../adminDashboard/authSlice";
 
@@ -286,14 +286,573 @@ const LoginComponent = ({ onToggleMode, isVisible, onLogin }) => {
   );
 };
 
+// const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
+//   const [showPassword, setShowPassword] = useState(false);
+//   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+//   const [otpSent, setOtpSent] = useState(false);
+//   const [notification, setNotification] = useState(null);
+//   const [isOtpSending, setIsOtpSending] = useState(false);
+//   const [timer, setTimer] = useState(0);
+//   const [canResendOtp, setCanResendOtp] = useState(false);
+//   const [formData, setFormData] = useState({
+//     name: "",
+//     phone: "",
+//     email: "",
+//     studyField: "",
+//     password: "",
+//     confirmPassword: "",
+//     otp: "",
+//   });
+//   const navigate = useNavigate();
+//   const [errors, setErrors] = useState({});
+//   const [touched, setTouched] = useState({});
+//   const [loading, setLoading] = useState(false);
+//   const dispatch = useDispatch();
+
+//   useEffect(() => {
+//     let interval;
+//     if (otpSent && timer > 0) {
+//       interval = setInterval(() => {
+//         setTimer((prev) => prev - 1);
+//       }, 1000);
+//     } else if (timer === 0 && otpSent) {
+//       setCanResendOtp(true);
+//       clearInterval(interval);
+//     }
+//     return () => clearInterval(interval);
+//   }, [otpSent, timer]);
+
+//   const validateField = (fieldName, value) => {
+//     switch (fieldName) {
+//       case "name":
+//         if (!value?.trim()) return "Name is required";
+//         if (value.trim().length < 2)
+//           return "Name must be at least 2 characters";
+//         if (!/^[a-zA-Z\s]*$/.test(value))
+//           return "Name can only contain letters and spaces";
+//         return null;
+
+//       case "phone":
+//         if (!value?.trim()) return "Phone number is required";
+//         if (!/^\d{10}$/.test(value))
+//           return "Phone number must be exactly 10 digits";
+//         return null;
+
+//       case "email":
+//         if (!value?.trim()) return "Email is required";
+//         if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value))
+//           return "Invalid email format";
+//         return null;
+
+//       case "password":
+//         if (!value) return "Password is required";
+//         if (value.length < 6) return "Password must be at least 6 characters";
+//         return null;
+
+//       case "confirmPassword":
+//         if (!value) return "Please confirm your password";
+//         if (value !== formData.password) return "Passwords must match";
+//         return null;
+
+//       case "otp":
+//         if (otpSent && !value?.trim()) return "OTP is required";
+//         if (otpSent && !/^\d{6}$/.test(value)) return "OTP must be 6 digits";
+//         return null;
+
+//       default:
+//         return null;
+//     }
+//   };
+
+//   const validateAll = () => {
+//     const validationErrors = {};
+//     Object.keys(formData).forEach((key) => {
+//       if (key === "otp" && !otpSent) return; // Skip OTP validation if not sent
+//       const error = validateField(key, formData[key]);
+//       if (error) validationErrors[key] = error;
+//     });
+//     return validationErrors;
+//   };
+
+//   const handleInputChange = (e) => {
+//     const { name, value } = e.target;
+
+//     // Input restrictions
+//     if (name === "phone" && !/^\d*$/.test(value)) return;
+//     if (name === "name" && !/^[a-zA-Z\s]*$/.test(value)) return;
+//     if (name === "otp" && !/^[0-9]*$/.test(value)) return;
+
+//     setFormData((prev) => ({
+//       ...prev,
+//       [name]: value,
+//     }));
+
+//     if (touched[name]) {
+//       const fieldError = validateField(name, value);
+//       setErrors((prev) => ({
+//         ...prev,
+//         [name]: fieldError,
+//       }));
+//     }
+//   };
+
+//   const handleBlur = (e) => {
+//     const { name, value } = e.target;
+//     setTouched((prev) => ({ ...prev, [name]: true }));
+//     const fieldError = validateField(name, value);
+//     setErrors((prev) => ({ ...prev, [name]: fieldError }));
+//   };
+
+//   const handleSendOTP = async (e) => {
+//     e.preventDefault();
+//     setNotification(null);
+
+//     // Validate all fields except OTP
+//     const validationErrors = validateAll();
+//     delete validationErrors.otp; // Remove OTP validation for sending
+
+//     if (Object.keys(validationErrors).length > 0) {
+//       const touchedFields = {};
+//       Object.keys(formData).forEach((key) => {
+//         touchedFields[key] = true;
+//       });
+//       setTouched(touchedFields);
+//       setErrors(validationErrors);
+//       setNotification({
+//         type: "error",
+//         message: "Please fill all required fields correctly.",
+//       });
+//       return;
+//     }
+
+//     setIsOtpSending(true);
+
+//     try {
+//       const payload = {
+//         name: formData.name.trim(),
+//         email: formData.email.trim(),
+//         studyField: formData.studyField,
+//         phone: parseInt(formData.phone),
+//         password: formData.password,
+//         confirmPassword: formData.confirmPassword,
+//       };
+
+//       // const result = await registerUser(payload);
+//       const result = await dispatch(registerUser(payload)).unwrap();
+
+//       if (result?.success) {
+//         setOtpSent(true);
+//         setTimer(120);
+//         setCanResendOtp(false);
+//         setNotification({
+//           type: "success",
+//           message: result.message || "OTP sent to your email!",
+//         });
+//       }
+//     } catch (err) {
+//       if (err?.message?.includes("pending")) {
+//         try {
+//           const otpPayload = { email: formData.email.trim() };
+//           await OTP(otpPayload);
+//           setOtpSent(true);
+//           setTimer(120);
+//           setCanResendOtp(false);
+//           setNotification({
+//             type: "success",
+//             message: "OTP resent to your email!",
+//           });
+//         } catch (otpErr) {
+//           setNotification({
+//             type: "error",
+//             message: otpErr?.message || "Failed to send OTP",
+//           });
+//         }
+//       } else {
+//         setNotification({
+//           type: "error",
+//           message: err?.message || "Failed to register",
+//         });
+//       }
+//     } finally {
+//       setIsOtpSending(false);
+//     }
+//   };
+
+//   const handleSubmit = async (e) => {
+//     e.preventDefault();
+//     setNotification(null);
+
+//     const validationErrors = validateAll();
+//     setErrors(validationErrors);
+
+//     if (Object.keys(validationErrors).length > 0) {
+//       const touchedFields = {};
+//       Object.keys(formData).forEach((key) => {
+//         touchedFields[key] = true;
+//       });
+//       setTouched(touchedFields);
+//       setNotification({
+//         type: "error",
+//         message: "Please correct the highlighted fields.",
+//       });
+//       return;
+//     }
+
+//     if (!otpSent) {
+//       setNotification({
+//         type: "error",
+//         message: "Please send OTP first.",
+//       });
+//       return;
+//     }
+
+//     setLoading(true);
+
+//     try {
+//       const verifyPayload = {
+//         email: formData.email.trim(),
+//         otp: formData.otp,
+//       };
+
+//       // const response = await verifyUserOtp(verifyPayload);
+//       const response = await dispatch(verifyUserOtp(verifyPayload)).unwrap();
+
+//       if (response?.success) {
+//         setNotification({
+//           type: "success",
+//           message: response?.message || "Registration completed successfully!",
+//         });
+
+//         localStorage.setItem("token", response.data.token);
+//         localStorage.setItem("userData", JSON.stringify(response.data));
+
+//         setTimeout(() => {
+//           navigate("/userlogin", { replace: true });
+//           window.location.reload();
+//         }, 1000);
+//       }
+//     } catch (err) {
+//       setNotification({
+//         type: "error",
+//         message: err?.message || "Verification failed",
+//       });
+//     } finally {
+//       setLoading(false);
+//     }
+//   };
+
+//   const handleKeyDown = (e) => {
+//     if (e.key === "Enter" && !loading && !isOtpSending) {
+//       e.preventDefault();
+//       if (!otpSent) {
+//         handleSendOTP(e);
+//       } else if (otpSent && formData.otp.trim()) {
+//         handleSubmit(e);
+//       }
+//     }
+//   };
+
+//   return (
+//     <div
+//       className={`w-full max-w-md mx-auto px-4 transition-all duration-500 transform ${isVisible ? "opacity-100 translate-y-0" : "opacity-0 translate-y-4"
+//         }`}
+//     >
+//       {notification && (
+//         <Notification
+//           type={notification.type}
+//           message={notification.message}
+//           onClose={() => setNotification(null)}
+//         />
+//       )}
+
+//       <div className="text-center mb-6">
+//         <h1 className="text-2xl font-bold text-black mb-2 uppercase">
+//           Register
+//         </h1>
+//         <p className="text-sm text-gray-600">
+//           Create your College Circle account
+//         </p>
+//       </div>
+
+//       <form onSubmit={handleSubmit} className="space-y-4">
+//         {/* Name Field */}
+//         <div className="space-y-1">
+//           <div className="relative">
+//             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//               <User className="h-4 w-4 text-gray-400" />
+//             </div>
+//             <input
+//               type="text"
+//               name="name"
+//               value={formData.name}
+//               onChange={handleInputChange}
+//               onKeyDown={handleKeyDown}
+//               onBlur={handleBlur}
+//               placeholder="Full Name"
+//               className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.name && touched.name
+//                 ? "border-red-500 bg-red-50"
+//                 : "border-gray-300"
+//                 }`}
+//             />
+//           </div>
+//           {errors.name && touched.name && (
+//             <p className="text-red-500 text-xs pl-1">{errors.name}</p>
+//           )}
+//         </div>
+
+//         {/* Phone Field */}
+//         <div className="space-y-1">
+//           <div className="relative">
+//             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//               <Phone className="h-4 w-4 text-gray-400" />
+//             </div>
+//             <input
+//               type="tel"
+//               name="phone"
+//               value={formData.phone}
+//               onChange={handleInputChange}
+//               onKeyDown={handleKeyDown}
+//               onBlur={handleBlur}
+//               placeholder="Phone Number"
+//               maxLength="10"
+//               className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.phone && touched.phone
+//                 ? "border-red-500 bg-red-50"
+//                 : "border-gray-300"
+//                 }`}
+//             />
+//           </div>
+//           {errors.phone && touched.phone && (
+//             <p className="text-red-500 text-xs pl-1">{errors.phone}</p>
+//           )}
+//         </div>
+
+//         {/* Email Field */}
+//         <div className="space-y-1">
+//           <div className="relative">
+//             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//               <Mail className="h-4 w-4 text-gray-400" />
+//             </div>
+//             <input
+//               type="email"
+//               name="email"
+//               value={formData.email}
+//               onChange={handleInputChange}
+//               onKeyDown={handleKeyDown}
+//               onBlur={handleBlur}
+//               placeholder="Email"
+//               className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email && touched.email
+//                 ? "border-red-500 bg-red-50"
+//                 : "border-gray-300"
+//                 }`}
+//             />
+//           </div>
+//           {errors.email && touched.email && (
+//             <p className="text-red-500 text-xs pl-1">{errors.email}</p>
+//           )}
+//         </div>
+//         <select
+//           name="studyField"
+//           value={formData.studyField}
+//           onChange={handleInputChange}
+//           onBlur={handleBlur}
+//           className={`w-full pl-3 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.studyField && touched.studyField
+//             ? "border-red-500 bg-red-50"
+//             : "border-gray-300"
+//             }`}
+//         >
+//           <option value="" disabled>
+//             Select your study field
+//           </option>
+//           <optgroup label="Btech">
+//             <option value="Btech-1">Btech - 1</option>
+//             <option value="Btech-2">Btech - 2</option>
+//             <option value="Btech-3">Btech - 3</option>
+//             <option value="Btech-4">Btech - 4</option>
+//           </optgroup>
+//           <optgroup label="Diploma">
+//             <option value="Diploma-1">Diploma - 1</option>
+//             <option value="Diploma-2">Diploma - 2</option>
+//             <option value="Diploma-3">Diploma - 3</option>
+//           </optgroup>
+//           <optgroup label="Degree">
+//             <option value="Degree-1">Degree - 1</option>
+//             <option value="Degree-2">Degree - 2</option>
+//             <option value="Degree-3">Degree - 3</option>
+//           </optgroup>
+//           <optgroup label="Intermediate">
+//             <option value="Inter-1">Inter - 1</option>
+//             <option value="Inter-2">Inter - 2</option>
+//           </optgroup>
+//           <option value="School">School</option>
+//           <option value="Other">Other</option>
+//         </select>
+
+
+//         {/* Password Field */}
+//         <div className="space-y-1">
+//           <div className="relative">
+//             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//               <Lock className="h-4 w-4 text-gray-400" />
+//             </div>
+//             <input
+//               type={showPassword ? "text" : "password"}
+//               name="password"
+//               value={formData.password}
+//               onChange={handleInputChange}
+//               onKeyDown={handleKeyDown}
+//               onBlur={handleBlur}
+//               placeholder="Password"
+//               className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password && touched.password
+//                 ? "border-red-500 bg-red-50"
+//                 : "border-gray-300"
+//                 }`}
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowPassword(!showPassword)}
+//               className="absolute inset-y-0 right-0 pr-3 flex items-center hover:bg-gray-50 rounded-r-lg transition-colors"
+//             >
+//               {showPassword ? (
+//                 <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+//               ) : (
+//                 <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+//               )}
+//             </button>
+//           </div>
+//           {errors.password && touched.password && (
+//             <p className="text-red-500 text-xs pl-1">{errors.password}</p>
+//           )}
+//         </div>
+
+//         {/* Confirm Password Field */}
+//         <div className="space-y-1">
+//           <div className="relative">
+//             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//               <Lock className="h-4 w-4 text-gray-400" />
+//             </div>
+//             <input
+//               type={showConfirmPassword ? "text" : "password"}
+//               name="confirmPassword"
+//               value={formData.confirmPassword}
+//               onChange={handleInputChange}
+//               onKeyDown={handleKeyDown}
+//               onBlur={handleBlur}
+//               placeholder="Confirm Password"
+//               className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.confirmPassword && touched.confirmPassword
+//                 ? "border-red-500 bg-red-50"
+//                 : "border-gray-300"
+//                 }`}
+//             />
+//             <button
+//               type="button"
+//               onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+//               className="absolute inset-y-0 right-0 pr-3 flex items-center hover:bg-gray-50 rounded-r-lg transition-colors"
+//             >
+//               {showConfirmPassword ? (
+//                 <EyeOff className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+//               ) : (
+//                 <Eye className="h-4 w-4 text-gray-400 hover:text-gray-600" />
+//               )}
+//             </button>
+//           </div>
+//           {errors.confirmPassword && touched.confirmPassword && (
+//             <p className="text-red-500 text-xs pl-1">
+//               {errors.confirmPassword}
+//             </p>
+//           )}
+//         </div>
+
+//         {/* OTP Field */}
+//         <div className="space-y-1">
+//           <div className="flex gap-2">
+//             <div className="relative flex-1">
+//               <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+//                 <Shield className="h-4 w-4 text-gray-400" />
+//               </div>
+//               <input
+//                 type="text"
+//                 name="otp"
+//                 value={formData.otp}
+//                 onChange={handleInputChange}
+//                 onKeyDown={handleKeyDown}
+//                 onBlur={handleBlur}
+//                 placeholder="Enter 6-digit OTP"
+//                 maxLength="6"
+//                 className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.otp && touched.otp
+//                   ? "border-red-500 bg-red-50"
+//                   : "border-gray-300"
+//                   }`}
+//               />
+//             </div>
+//             <button
+//               type="button"
+//               onClick={handleSendOTP}
+//               disabled={
+//                 isOtpSending ||
+//                 (otpSent && !canResendOtp) ||
+//                 Object.keys(validateAll()).filter(
+//                   (key) => !["otp"].includes(key)
+//                 ).length > 0
+//               }
+//               className={`px-3 py-2.5 text-sm rounded-lg font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0 ${otpSent && !canResendOtp
+//                 ? "bg-green-100 text-green-700 cursor-default"
+//                 : isOtpSending
+//                   ? "bg-gray-100 text-gray-500 cursor-not-allowed"
+//                   : Object.keys(validateAll()).filter(
+//                     (key) => !["otp"].includes(key)
+//                   ).length > 0
+//                     ? "bg-gray-200 text-gray-400 cursor-not-allowed"
+//                     : "bg-yellow-400 text-black hover:bg-yellow-600 transform hover:scale-105"
+//                 }`}
+//             >
+//               {isOtpSending
+//                 ? "Sending..."
+//                 : otpSent && !canResendOtp
+//                   ? `Sent (${timer}s)`
+//                   : canResendOtp
+//                     ? "Resend"
+//                     : "Send OTP"}
+//             </button>
+//           </div>
+//           {errors.otp && touched.otp && (
+//             <p className="text-red-500 text-xs pl-1">{errors.otp}</p>
+//           )}
+//         </div>
+
+//         {/* Register Button */}
+//         <button
+//           type="submit"
+//           disabled={
+//             loading ||
+//             !otpSent ||
+//             !formData.otp.trim() ||
+//             Object.keys(validateAll()).length > 0
+//           }
+//           className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-2.5 px-4 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm uppercase"
+//         >
+//           {loading ? "Verifying..." : "Register"}
+//         </button>
+//       </form>
+
+//       <div className="mt-4 text-center">
+//         <p className="text-sm text-gray-600">
+//           Already have an account?{" "}
+//           <button
+//             onClick={onToggleMode}
+//             className="text-yellow-600 hover:text-yellow-700 font-medium"
+//           >
+//             Sign in
+//           </button>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
+
 const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-  const [otpSent, setOtpSent] = useState(false);
   const [notification, setNotification] = useState(null);
-  const [isOtpSending, setIsOtpSending] = useState(false);
-  const [timer, setTimer] = useState(0);
-  const [canResendOtp, setCanResendOtp] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     phone: "",
@@ -301,33 +860,19 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
     studyField: "",
     password: "",
     confirmPassword: "",
-    otp: "",
   });
-  const navigate = useNavigate();
   const [errors, setErrors] = useState({});
   const [touched, setTouched] = useState({});
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    let interval;
-    if (otpSent && timer > 0) {
-      interval = setInterval(() => {
-        setTimer((prev) => prev - 1);
-      }, 1000);
-    } else if (timer === 0 && otpSent) {
-      setCanResendOtp(true);
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [otpSent, timer]);
-
+  // ✅ Validation logic
   const validateField = (fieldName, value) => {
     switch (fieldName) {
       case "name":
         if (!value?.trim()) return "Name is required";
-        if (value.trim().length < 2)
-          return "Name must be at least 2 characters";
+        if (value.trim().length < 2) return "Name must be at least 2 characters";
         if (!/^[a-zA-Z\s]*$/.test(value))
           return "Name can only contain letters and spaces";
         return null;
@@ -354,9 +899,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
         if (value !== formData.password) return "Passwords must match";
         return null;
 
-      case "otp":
-        if (otpSent && !value?.trim()) return "OTP is required";
-        if (otpSent && !/^\d{6}$/.test(value)) return "OTP must be 6 digits";
+      case "studyField":
+        if (!value?.trim()) return "Please select your study field";
         return null;
 
       default:
@@ -367,20 +911,18 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
   const validateAll = () => {
     const validationErrors = {};
     Object.keys(formData).forEach((key) => {
-      if (key === "otp" && !otpSent) return; // Skip OTP validation if not sent
       const error = validateField(key, formData[key]);
       if (error) validationErrors[key] = error;
     });
     return validationErrors;
   };
 
+  // ✅ Input handlers
   const handleInputChange = (e) => {
     const { name, value } = e.target;
 
-    // Input restrictions
     if (name === "phone" && !/^\d*$/.test(value)) return;
     if (name === "name" && !/^[a-zA-Z\s]*$/.test(value)) return;
-    if (name === "otp" && !/^[0-9]*$/.test(value)) return;
 
     setFormData((prev) => ({
       ...prev,
@@ -403,81 +945,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
     setErrors((prev) => ({ ...prev, [name]: fieldError }));
   };
 
-  const handleSendOTP = async (e) => {
-    e.preventDefault();
-    setNotification(null);
-
-    // Validate all fields except OTP
-    const validationErrors = validateAll();
-    delete validationErrors.otp; // Remove OTP validation for sending
-
-    if (Object.keys(validationErrors).length > 0) {
-      const touchedFields = {};
-      Object.keys(formData).forEach((key) => {
-        touchedFields[key] = true;
-      });
-      setTouched(touchedFields);
-      setErrors(validationErrors);
-      setNotification({
-        type: "error",
-        message: "Please fill all required fields correctly.",
-      });
-      return;
-    }
-
-    setIsOtpSending(true);
-
-    try {
-      const payload = {
-        name: formData.name.trim(),
-        email: formData.email.trim(),
-        studyField: formData.studyField,
-        phone: parseInt(formData.phone),
-        password: formData.password,
-        confirmPassword: formData.confirmPassword,
-      };
-
-      // const result = await registerUser(payload);
-      const result = await dispatch(registerUser(payload)).unwrap();
-
-      if (result?.success) {
-        setOtpSent(true);
-        setTimer(120);
-        setCanResendOtp(false);
-        setNotification({
-          type: "success",
-          message: result.message || "OTP sent to your email!",
-        });
-      }
-    } catch (err) {
-      if (err?.message?.includes("pending")) {
-        try {
-          const otpPayload = { email: formData.email.trim() };
-          await OTP(otpPayload);
-          setOtpSent(true);
-          setTimer(120);
-          setCanResendOtp(false);
-          setNotification({
-            type: "success",
-            message: "OTP resent to your email!",
-          });
-        } catch (otpErr) {
-          setNotification({
-            type: "error",
-            message: otpErr?.message || "Failed to send OTP",
-          });
-        }
-      } else {
-        setNotification({
-          type: "error",
-          message: err?.message || "Failed to register",
-        });
-      }
-    } finally {
-      setIsOtpSending(false);
-    }
-  };
-
+  // ✅ Submit logic (no OTP)
   const handleSubmit = async (e) => {
     e.preventDefault();
     setNotification(null);
@@ -498,33 +966,28 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
       return;
     }
 
-    if (!otpSent) {
-      setNotification({
-        type: "error",
-        message: "Please send OTP first.",
-      });
-      return;
-    }
-
     setLoading(true);
 
     try {
-      const verifyPayload = {
+      const payload = {
+        name: formData.name.trim(),
         email: formData.email.trim(),
-        otp: formData.otp,
+        studyField: formData.studyField,
+        phone: parseInt(formData.phone),
+        password: formData.password,
+        confirmPassword: formData.confirmPassword,
       };
 
-      // const response = await verifyUserOtp(verifyPayload);
-      const response = await dispatch(verifyUserOtp(verifyPayload)).unwrap();
+      const result = await dispatch(registerUser(payload)).unwrap();
 
-      if (response?.success) {
+      if (result?.success) {
         setNotification({
           type: "success",
-          message: response?.message || "Registration completed successfully!",
+          message: result.message || "Registration successful!",
         });
 
-        localStorage.setItem("token", response.data.token);
-        localStorage.setItem("userData", JSON.stringify(response.data));
+        localStorage.setItem("token", result.data.token);
+        localStorage.setItem("userData", JSON.stringify(result.data));
 
         setTimeout(() => {
           navigate("/userlogin", { replace: true });
@@ -534,7 +997,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
     } catch (err) {
       setNotification({
         type: "error",
-        message: err?.message || "Verification failed",
+        message: err?.message || "Failed to register",
       });
     } finally {
       setLoading(false);
@@ -542,13 +1005,9 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
   };
 
   const handleKeyDown = (e) => {
-    if (e.key === "Enter" && !loading && !isOtpSending) {
+    if (e.key === "Enter" && !loading) {
       e.preventDefault();
-      if (!otpSent) {
-        handleSendOTP(e);
-      } else if (otpSent && formData.otp.trim()) {
-        handleSubmit(e);
-      }
+      handleSubmit(e);
     }
   };
 
@@ -574,8 +1033,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
         </p>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4">
-        {/* Name Field */}
+      <form onSubmit={handleSubmit} className="space-y-4" onKeyDown={handleKeyDown}>
+        {/* -------------------- Name Field -------------------- */}
         <div className="space-y-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -586,7 +1045,6 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               name="name"
               value={formData.name}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Full Name"
               className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.name && touched.name
@@ -600,7 +1058,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
           )}
         </div>
 
-        {/* Phone Field */}
+        {/* -------------------- Phone Field -------------------- */}
         <div className="space-y-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -611,7 +1069,6 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               name="phone"
               value={formData.phone}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Phone Number"
               maxLength="10"
@@ -626,7 +1083,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
           )}
         </div>
 
-        {/* Email Field */}
+        {/* -------------------- Email Field -------------------- */}
         <div className="space-y-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -637,7 +1094,6 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               name="email"
               value={formData.email}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Email"
               className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.email && touched.email
@@ -650,6 +1106,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
             <p className="text-red-500 text-xs pl-1">{errors.email}</p>
           )}
         </div>
+
+        {/* -------------------- Study Field Dropdown -------------------- */}
         <select
           name="studyField"
           value={formData.studyField}
@@ -686,9 +1144,11 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
           <option value="School">School</option>
           <option value="Other">Other</option>
         </select>
+        {errors.studyField && touched.studyField && (
+          <p className="text-red-500 text-xs pl-1">{errors.studyField}</p>
+        )}
 
-
-        {/* Password Field */}
+        {/* -------------------- Password Field -------------------- */}
         <div className="space-y-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -699,7 +1159,6 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               name="password"
               value={formData.password}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Password"
               className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.password && touched.password
@@ -724,7 +1183,7 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
           )}
         </div>
 
-        {/* Confirm Password Field */}
+        {/* -------------------- Confirm Password Field -------------------- */}
         <div className="space-y-1">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -735,7 +1194,6 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
               name="confirmPassword"
               value={formData.confirmPassword}
               onChange={handleInputChange}
-              onKeyDown={handleKeyDown}
               onBlur={handleBlur}
               placeholder="Confirm Password"
               className={`w-full pl-10 pr-10 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.confirmPassword && touched.confirmPassword
@@ -745,7 +1203,9 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
             />
             <button
               type="button"
-              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              onClick={() =>
+                setShowConfirmPassword(!showConfirmPassword)
+              }
               className="absolute inset-y-0 right-0 pr-3 flex items-center hover:bg-gray-50 rounded-r-lg transition-colors"
             >
               {showConfirmPassword ? (
@@ -762,78 +1222,17 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
           )}
         </div>
 
-        {/* OTP Field */}
-        <div className="space-y-1">
-          <div className="flex gap-2">
-            <div className="relative flex-1">
-              <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-                <Shield className="h-4 w-4 text-gray-400" />
-              </div>
-              <input
-                type="text"
-                name="otp"
-                value={formData.otp}
-                onChange={handleInputChange}
-                onKeyDown={handleKeyDown}
-                onBlur={handleBlur}
-                placeholder="Enter 6-digit OTP"
-                maxLength="6"
-                className={`w-full pl-10 pr-3 py-2.5 text-sm border rounded-lg focus:ring-2 focus:ring-yellow-400 focus:border-yellow-400 outline-none transition-all duration-200 ${errors.otp && touched.otp
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300"
-                  }`}
-              />
-            </div>
-            <button
-              type="button"
-              onClick={handleSendOTP}
-              disabled={
-                isOtpSending ||
-                (otpSent && !canResendOtp) ||
-                Object.keys(validateAll()).filter(
-                  (key) => !["otp"].includes(key)
-                ).length > 0
-              }
-              className={`px-3 py-2.5 text-sm rounded-lg font-medium whitespace-nowrap transition-all duration-200 flex-shrink-0 ${otpSent && !canResendOtp
-                ? "bg-green-100 text-green-700 cursor-default"
-                : isOtpSending
-                  ? "bg-gray-100 text-gray-500 cursor-not-allowed"
-                  : Object.keys(validateAll()).filter(
-                    (key) => !["otp"].includes(key)
-                  ).length > 0
-                    ? "bg-gray-200 text-gray-400 cursor-not-allowed"
-                    : "bg-yellow-400 text-black hover:bg-yellow-600 transform hover:scale-105"
-                }`}
-            >
-              {isOtpSending
-                ? "Sending..."
-                : otpSent && !canResendOtp
-                  ? `Sent (${timer}s)`
-                  : canResendOtp
-                    ? "Resend"
-                    : "Send OTP"}
-            </button>
-          </div>
-          {errors.otp && touched.otp && (
-            <p className="text-red-500 text-xs pl-1">{errors.otp}</p>
-          )}
-        </div>
-
-        {/* Register Button */}
+        {/* -------------------- Register Button -------------------- */}
         <button
           type="submit"
-          disabled={
-            loading ||
-            !otpSent ||
-            !formData.otp.trim() ||
-            Object.keys(validateAll()).length > 0
-          }
-          className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-2.5 px-4 rounded-full font-semibold hover:from-yellow-400 hover:to-yellow-400 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none text-sm uppercase"
+          disabled={loading}
+          className="w-full bg-gradient-to-r from-yellow-400 to-yellow-400 text-black py-2.5 px-4 rounded-full font-semibold hover:from-yellow-500 hover:to-yellow-500 focus:ring-2 focus:ring-yellow-400 focus:ring-offset-2 transform hover:scale-[1.02] transition-all duration-200 shadow-lg disabled:opacity-50 disabled:cursor-not-allowed text-sm uppercase"
         >
-          {loading ? "Verifying..." : "Register"}
+          {loading ? "Registering..." : "Register"}
         </button>
       </form>
 
+      {/* -------------------- Toggle to Login -------------------- */}
       <div className="mt-4 text-center">
         <p className="text-sm text-gray-600">
           Already have an account?{" "}
@@ -848,6 +1247,8 @@ const RegisterComponent = ({ onToggleMode, isVisible, onRegister }) => {
     </div>
   );
 };
+
+
 
 // Main Auth Container Component
 const AuthContainer = () => {
