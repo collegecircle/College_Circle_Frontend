@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import JobsManagement from "../adminDashboard/JobsManagement";
 import CollegesManagement from "../adminDashboard/CollegesManagement";
 import CoursesManagement from "../adminDashboard/CoursesManagement";
+import UsersManagement from "../adminDashboard/UserManagement";
 import {
   Menu,
   X,
@@ -24,6 +25,7 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
     { id: "study-materials", label: "study-materials", icon: BookOpen },
     { id: "online-courses", label: "Online Courses", icon: Video },
     { id: "announcements", label: "Announcements", icon: BookOpen },
+    { id: "users", label: "Users", icon: BookOpen },
   ];
 
   const handleTabChange = (tabId) => {
@@ -43,6 +45,8 @@ const AdminDashboard = ({ navigateTo, handleLogout }) => {
         return <OnlineCourseManagement />;
       case "announcements":
         return <AnnouncementManagement />;
+      case "users":
+        return <UsersManagement />;
       default:
         return <JobsManagement />;
     }
